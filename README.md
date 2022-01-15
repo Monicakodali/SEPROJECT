@@ -1,4 +1,3 @@
-# SEPROJECT
 ######TRAVELER’S BLOG
 By: Carol Navya Pagolu, Monica Bhargavi Kodali,Manjari Misra, Andrew Kuczynski
 
