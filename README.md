@@ -18,5 +18,5 @@ b.Travelers can give their ratings or reviews for the places they visited.Travel
 4.Help for users will also be rendered through email.
 
 ## Technology stack
-Frontend - React
+Frontend - React <br />
 Backend  - Golang
