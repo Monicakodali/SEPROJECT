@@ -1,5 +1,5 @@
 # TRAVELER’S BLOG
-# By: Carol Navya Pagolu, Monica Bhargavi Kodali,Manjari Misra, Andrew Kuczynski
+## By: Carol Navya Pagolu, Monica Bhargavi Kodali,Manjari Misra, Andrew Kuczynski
 
 Traveler’s blog is an application that will allow users to have a look at different shopping spots, restaurants and stay suggestions as per their requests in Gainesville. It would let the user make an itinerary as we can also include top rated places to visit around the desired location. Below are some of the functionalities we are aiming to try and achieve. 
 ## MOTIVATION:
