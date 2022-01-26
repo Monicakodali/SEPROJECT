@@ -1,0 +1,1012 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34316087863382,
+          29.64636443982178,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0551",
+        "ROOM": "173",
+        "Name": "P.O.D. Market",
+        "ID": "82",
+        "CUSTOM_ICON": "pod.png",
+        "CUSTOM_POPUP": "<b>P.O.D. Market<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34128718387561,
+          29.648720068154468,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0556",
+        "ROOM": "0104",
+        "Name": "Boar's Head",
+        "ID": "76",
+        "CUSTOM_ICON": "",
+        "CUSTOM_POPUP": "<b>Boar's Head<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.3414409477829,
+          29.64870803710225,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0556",
+        "ROOM": "0102",
+        "Name": "KFC",
+        "ID": "78",
+        "CUSTOM_ICON": "",
+        "CUSTOM_POPUP": "<b>KFC<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34126510387047,
+          29.64867421519185,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0556",
+        "ROOM": "0106",
+        "Name": "We Proudly Serve Starbucks",
+        "ID": "81",
+        "CUSTOM_ICON": "",
+        "CUSTOM_POPUP": "<b>We Proudly Serve Starbucks<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.35012991223326,
+          29.64799308394271,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0359",
+        "ROOM": "0102",
+        "Name": "Gator Corner Dining Center",
+        "ID": "10",
+        "CUSTOM_ICON": "",
+        "CUSTOM_POPUP": "<b>Gator Corner Dining Center<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34129944675398,
+          29.648674933021745,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0556",
+        "ROOM": "0105",
+        "Name": "P.O.D Market",
+        "ID": "80",
+        "CUSTOM_ICON": "",
+        "CUSTOM_POPUP": "<b>P.O.D Market<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34316177893429,
+          29.64629935956117,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0551",
+        "ROOM": "171",
+        "Name": "Subway",
+        "ID": "83",
+        "CUSTOM_ICON": "subway.png",
+        "CUSTOM_POPUP": "<b>Subway<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34136187251782,
+          29.648717829577794,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0556",
+        "ROOM": "0103",
+        "Name": "Freshens",
+        "ID": "77",
+        "CUSTOM_ICON": "",
+        "CUSTOM_POPUP": "<b>Freshens<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34132405460136,
+          29.648778346169184,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0556",
+        "ROOM": "0101",
+        "Name": "Little Hall Express",
+        "ID": "79",
+        "CUSTOM_ICON": "",
+        "CUSTOM_POPUP": "<b>Little Hall Express<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.35019648493981,
+          29.63353529190224,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0075",
+        "ROOM": "115 ",
+        "Name": "Einstein Bros. Bagels",
+        "ID": "32",
+        "CUSTOM_ICON": "einstein.png",
+        "CUSTOM_POPUP": "<b>Einstein Bros. Bagels<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.37401193569875,
+          29.638559970198507,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "1178",
+        "ROOM": "1311 ",
+        "Name": "Chomp & Go",
+        "ID": "18",
+        "CUSTOM_ICON": "",
+        "CUSTOM_POPUP": "<b>Chomp & Go<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34148054394188,
+          29.64710949518669,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "1011",
+        "ROOM": "0113 ",
+        "Name": "Chick-fil-A",
+        "ID": "49",
+        "CUSTOM_ICON": "chickfila.png",
+        "CUSTOM_POPUP": "<b>Chick-fil-A<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34116449362168,
+          29.647010059092832,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "1011",
+        "ROOM": "0100 ",
+        "Name": "Fresh Food Company",
+        "ID": "8",
+        "CUSTOM_ICON": "freshfoodco.png",
+        "CUSTOM_POPUP": "<b>Fresh Food Company<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34517652737598,
+          29.64818419877828,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0032",
+        "ROOM": "109 ",
+        "Name": "P.O.D. Market",
+        "ID": "45",
+        "CUSTOM_ICON": "pod.png",
+        "CUSTOM_POPUP": "<b>P.O.D. Market<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34544404943249,
+          29.648242275485124,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0032",
+        "ROOM": "121 ",
+        "Name": "Starbucks",
+        "ID": "22",
+        "CUSTOM_ICON": "starbs.png",
+        "CUSTOM_POPUP": "<b>Starbucks<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.3451407691284,
+          29.648388096492884,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0032",
+        "ROOM": "101 ",
+        "Name": "Chick-fil-A",
+        "ID": "12",
+        "CUSTOM_ICON": "chickfila.png",
+        "CUSTOM_POPUP": "<b>Chick-fil-A<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.3444954697845,
+          29.64075000215797,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0203",
+        "ROOM": "C1-151 ",
+        "Name": "Salad Creations",
+        "ID": "27",
+        "CUSTOM_ICON": "",
+        "CUSTOM_POPUP": "<b>Salad Creations<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34442415238232,
+          29.640783549041284,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0203",
+        "ROOM": "C1-141 ",
+        "Name": "Einstein Bros. Bagels",
+        "ID": "28",
+        "CUSTOM_ICON": "einstein.png",
+        "CUSTOM_POPUP": "<b>Einstein Bros. Bagels<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34435237757702,
+          29.640753380071992,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0203",
+        "ROOM": "C1-142 ",
+        "Name": "Chick-fil-A",
+        "ID": "26",
+        "CUSTOM_ICON": "chickfila.png",
+        "CUSTOM_POPUP": "<b>Chick-fil-A<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.3449694605825,
+          29.640559031258903,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0203",
+        "ROOM": "C1-161 ",
+        "Name": "Panda Express",
+        "ID": "29",
+        "CUSTOM_ICON": "panda.png",
+        "CUSTOM_POPUP": "<b>Panda Express<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34470941755644,
+          29.64068396424927,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0203",
+        "ROOM": "C1-168 ",
+        "Name": "Starbucks",
+        "ID": "25",
+        "CUSTOM_ICON": "starbs.png",
+        "CUSTOM_POPUP": "<b>Starbucks<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34445876483842,
+          29.648659473145347,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0267",
+        "ROOM": "1409 ",
+        "Name": "Firehouse Subs",
+        "ID": "31",
+        "CUSTOM_ICON": "firehouse.png",
+        "CUSTOM_POPUP": "<b>Firehouse Subs<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34455097587797,
+          29.64876185101999,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0267",
+        "ROOM": "1406 ",
+        "Name": "Jamba Juice",
+        "ID": "30",
+        "CUSTOM_ICON": "jamba.png",
+        "CUSTOM_POPUP": "<b>Jamba Juice<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34723598227596,
+          29.642180645600835,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0033",
+        "ROOM": "0108 ",
+        "Name": "Java City\/ We Proudly Brew Starbucks",
+        "ID": "17",
+        "CUSTOM_ICON": "",
+        "CUSTOM_POPUP": "<b>Java City\/ We Proudly Brew Starbucks<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.35168730091816,
+          29.637939149829908,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "1376",
+        "ROOM": "194 ",
+        "Name": "Chomp & Go",
+        "ID": "15",
+        "CUSTOM_ICON": "",
+        "CUSTOM_POPUP": "<b>Chomp & Go<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34030595493499,
+          29.651669601727452,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0065",
+        "ROOM": "102 ",
+        "Name": "Rising Roll",
+        "ID": "55",
+        "CUSTOM_ICON": "risingroll.png",
+        "CUSTOM_POPUP": "<b>Rising Roll<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34791371167911,
+          29.645760050693234,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0886",
+        "ROOM": "1480A ",
+        "Name": "Pollo Tropical",
+        "ID": "41",
+        "CUSTOM_ICON": "pollo.png",
+        "CUSTOM_POPUP": "<b>Pollo Tropical<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34079154122497,
+          29.650458338257657,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0064",
+        "ROOM": "138 ",
+        "Name": "Chomp & Go",
+        "ID": "6",
+        "CUSTOM_ICON": "",
+        "CUSTOM_POPUP": "<b>Chomp & Go<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34790109015029,
+          29.64604448536702,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0686",
+        "ROOM": "1440 ",
+        "Name": "Panda Express",
+        "ID": "39",
+        "CUSTOM_ICON": "panda.png",
+        "CUSTOM_POPUP": "<b>Panda Express<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.3478103705652,
+          29.64600913164863,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0686",
+        "ROOM": "1430 ",
+        "Name": "Local Restaurant Row",
+        "ID": "97",
+        "CUSTOM_ICON": "local_restaurant_row.png",
+        "CUSTOM_POPUP": "<b>Local Restaurant Row<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34773714097274,
+          29.646043664864667,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0686",
+        "ROOM": "1420 ",
+        "Name": "Papa John's",
+        "ID": "40",
+        "CUSTOM_ICON": "papajohns.png",
+        "CUSTOM_POPUP": "<b>Papa John's<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34770805183919,
+          29.646185123514524,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0686",
+        "ROOM": "1410 ",
+        "Name": "Wendy's",
+        "ID": "52",
+        "CUSTOM_ICON": "wendys.png",
+        "CUSTOM_POPUP": "<b>Wendy's<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34782447951673,
+          29.645855051545187,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0686",
+        "ROOM": "1450 ",
+        "Name": "Starbucks",
+        "ID": "42",
+        "CUSTOM_ICON": "starbs.png",
+        "CUSTOM_POPUP": "<b>Starbucks<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34787265694659,
+          29.6464811520961,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0686",
+        "ROOM": "G410 ",
+        "Name": "Subway",
+        "ID": "43",
+        "CUSTOM_ICON": "subway.png",
+        "CUSTOM_POPUP": "<b>Subway<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34777523074666,
+          29.646476825888328,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0686",
+        "ROOM": "G430 ",
+        "Name": "P.O.D. Market",
+        "ID": "69",
+        "CUSTOM_ICON": "pod.png",
+        "CUSTOM_POPUP": "<b>P.O.D. Market<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34768372246837,
+          29.646466237660754,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0686",
+        "ROOM": "G440 ",
+        "Name": "Shake Smart",
+        "ID": "70",
+        "CUSTOM_ICON": "",
+        "CUSTOM_POPUP": "<b>Shake Smart<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34772792628222,
+          29.646211690707123,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0686",
+        "ROOM": "G106 ",
+        "Name": "Wing Zone Orange & Brew",
+        "ID": "62",
+        "CUSTOM_ICON": "",
+        "CUSTOM_POPUP": "<b>Wing Zone Orange & Brew<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.3477554011734,
+          29.646417399696634,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0686",
+        "ROOM": "4015 ",
+        "Name": "Arredondo Cafe",
+        "ID": "33",
+        "CUSTOM_ICON": "",
+        "CUSTOM_POPUP": "<b>Arredondo Cafe<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34284964805623,
+          29.651184205694417,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0689",
+        "ROOM": "147 ",
+        "Name": "Starbucks",
+        "ID": "24",
+        "CUSTOM_ICON": "starbs.png",
+        "CUSTOM_POPUP": "<b>Starbucks<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.36848198295021,
+          29.638167640058096,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0316",
+        "ROOM": "0100B ",
+        "Name": "Shake Smart",
+        "ID": "9",
+        "CUSTOM_ICON": "",
+        "CUSTOM_POPUP": "<b>Shake Smart<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34063756253492,
+          29.644301870243943,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0752",
+        "ROOM": "0108 ",
+        "Name": "P.O.D. Market",
+        "ID": "50",
+        "CUSTOM_ICON": "pod.png",
+        "CUSTOM_POPUP": "<b>P.O.D. Market<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.85930231400066,
+          29.553464284672113,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0589",
+        "ROOM": "0009 ",
+        "Name": "P.O.D. Market",
+        "ID": "85",
+        "CUSTOM_ICON": "pod.png",
+        "CUSTOM_POPUP": "<b>P.O.D. Market<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.85911459660882,
+          29.553540973471453,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0589",
+        "ROOM": "0009A ",
+        "Name": "Chomp It",
+        "ID": "61",
+        "CUSTOM_ICON": "chompit.png",
+        "CUSTOM_POPUP": "<b>Chomp It<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34413128575179,
+          29.647934702525063,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0043",
+        "ROOM": "L206 ",
+        "Name": "Starbucks",
+        "ID": "56",
+        "CUSTOM_ICON": "starbs.png",
+        "CUSTOM_POPUP": "<b>Starbucks<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.3453371628803,
+          29.649015062660474,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0013",
+        "ROOM": "102 ",
+        "Name": "Au Bon Pain",
+        "ID": "64",
+        "CUSTOM_ICON": "aubonpain.png",
+        "CUSTOM_POPUP": "<b>Au Bon Pain<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.3587311100039,
+          29.64920360944333,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0759",
+        "ROOM": "0151B ",
+        "Name": "Chomp It",
+        "ID": "23",
+        "CUSTOM_ICON": "chompit.png",
+        "CUSTOM_POPUP": "<b>Chomp It<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.35878042317617,
+          29.649301711756284,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0759",
+        "ROOM": "0151A ",
+        "Name": "Starbucks",
+        "ID": "65",
+        "CUSTOM_ICON": "starbs.png",
+        "CUSTOM_POPUP": "<b>Starbucks<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.33834641626558,
+          29.646486409708288,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0101",
+        "ROOM": "0117 ",
+        "Name": "Starbucks",
+        "ID": "86",
+        "CUSTOM_ICON": "starbs.png",
+        "CUSTOM_POPUP": "<b>Starbucks<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.33827131532293,
+          29.64658694299048,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0101",
+        "ROOM": "0115 ",
+        "Name": "The Market",
+        "ID": "87",
+        "CUSTOM_ICON": "",
+        "CUSTOM_POPUP": "<b>The Market<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.3443554548433,
+          29.642028338695535,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0214",
+        "ROOM": "129 ",
+        "Name": "We Proudly Serve Starbucks",
+        "ID": "60",
+        "CUSTOM_ICON": "",
+        "CUSTOM_POPUP": "<b>We Proudly Serve Starbucks<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34634038186434,
+          29.650182375855586,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0266",
+        "ROOM": "0100A ",
+        "Name": "Moe's Southwest Grill",
+        "ID": "21",
+        "CUSTOM_ICON": "moes.png",
+        "CUSTOM_POPUP": "<b>Moe's Southwest Grill<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.34632657842418,
+          29.650088012733526,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0266",
+        "ROOM": "0100B ",
+        "Name": "Chomp It",
+        "ID": "44",
+        "CUSTOM_ICON": "chompit.png",
+        "CUSTOM_POPUP": "<b>Chomp It<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.37062743865658,
+          29.636725476837285,
+          0
+        ]
+      },
+      "properties": {
+        "BLDG": "0309",
+        "ROOM": "G050 ",
+        "Name": "Camellia Court Cafe",
+        "ID": "4",
+        "CUSTOM_ICON": "camellia.png",
+        "CUSTOM_POPUP": "<b>Camellia Court Cafe<\/b><br><p>Hours Coming Soon!<\/p>"
+      }
+    }
+  ]
+}
