@@ -1,10 +1,12 @@
 # HAPPY HAP'S BLOG
-## By: Carol Navya Pagolu, Monica Bhargavi Kodali,Manjari Misra, Andrew Kuczynski
+By: Carol Navya Pagolu, Monica Bhargavi Kodali,Manjari Misra, Andrew Kuczynski
 
-Happy Hap’s blog is an application that will allow students to have a look at different events, food joints and cool spots suggestions as per their requests on campus. It would let the student make an itinerary as we can also include most happening events/top rated food joints/most visited cool spots to visit around the campus. Below are some of the functionalities we are aiming to try and achieve. 
-## MOTIVATION:
+## Overview
+Happy Hap’s blog is an application that will allow students to have a look at different events, food joints and cool spots suggestions as per their requests on campus. It would let the student make an itinerary as we can also include most happening events/top rated food joints/most visited cool spots to visit around the campus. Below are some of the functionalities we are aiming to try and achieve.
+
 Happy Hap’s Blog will be a one-stop application where students can navigate and ease into campus life without any difficulties.
-## FUNCTIONALITY:
+
+## Functionality:
 1. When a student is looking for a food joints/events: <br />
 a. Different places amongst the categories mentioned above (food joints, events) could be displayed with the help of previous reviews and ratings by other students. <br />
 b. Students can give their ratings or reviews for the events/food joints they visited.Students can bookmark their favorite food joints/events which could pop up as a notification in future in case they revisit that event/food joint. <br />
@@ -13,7 +15,27 @@ a. Different cool spots(Lake Alice, Butterfly museum...) to visit close to the s
 b. Students can give their ratings or reviews for the spots they visited.Students can bookmark their favorite spot which could pop up as a notification in future in case they revisit that spot. <br />
 3. Help for students will be provided in the form of FAQs. <br />
 
-
 ## Technology stack
-Frontend - React <br />
+Frontend - React
 Backend  - Golang
+
+---
+
+## Development
+
+### Frontend
+
+To run the frontend locally alone, navigate to the `frontend` and directory and run `npm run start`:
+
+```
+cd frontend
+npm install
+npm run start
+```
+
+### Backend
+
+
+
+
+
