@@ -1,14 +1,12 @@
 html, 
-body,
-#root,
-main {
+body {
     height: 100%;
 }
 
-#root, main {
+/* #root, main {
   display: flex;
   flex-direction: column;
-}
+} */
 
 body {
   margin: 0;

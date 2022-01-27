@@ -7,6 +7,17 @@ const theme = createTheme({
       main: red[500],
     },
   },
+  mixins: {
+    toolbar: {
+      '@media (min-width:0px) and (orientation: landscape)': {
+        minHeight: 64
+      },
+      '@media (min-width:600px)': {
+        minHeight: 88
+      },
+      minHeight: 88
+    }
+  },
   components: {
     MuiButton: {
       styleOverrides: {
@@ -17,7 +28,5 @@ const theme = createTheme({
     },
   },
 });
-
-
 
 export default theme

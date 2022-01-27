@@ -70,15 +70,8 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
   borderBottomStyle: 'solid',
   borderBottomWidth: 1,
   borderBottomColor: theme.palette.grey[200],
+  backgroundColor: 'white'
 }));
-
-const StyledToolbar = styled(Toolbar)(({ theme }) => ({
-  minHeight: '64px',
-  [theme.breakpoints.up('sm')]: {
-    minHeight: '88px'
-  },
-}));
-
 
 const siteTitle = "YelpUF"
 
@@ -237,8 +230,8 @@ export default function Header({ loggedIn }: HeaderProps) {
 
   return (
     <>
-      <StyledAppBar color="transparent" elevation={0} position="static">
-        <StyledToolbar>
+      <StyledAppBar color="transparent" elevation={0} position="fixed">
+        <Toolbar>
           <Typography
             variant="h6"
             noWrap
@@ -262,7 +255,7 @@ export default function Header({ loggedIn }: HeaderProps) {
           <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-end' }}>
             { loggedIn ? profileArea : loginButtons }
           </Box>
-        </StyledToolbar>
+        </Toolbar>
       </StyledAppBar>
       {renderMobileMenu}
       {renderMenu}

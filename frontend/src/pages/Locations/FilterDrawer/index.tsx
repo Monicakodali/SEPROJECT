@@ -1,4 +1,4 @@
-import { Drawer, Typography} from '@mui/material';
+import { Drawer, Toolbar, Typography} from '@mui/material';
 import { styled } from '@mui/material/styles';
 import * as React from 'react';
 
@@ -7,13 +7,11 @@ const drawerWidth = 240
 const StyledDrawer = styled(Drawer)(({ theme }) => ({
   // flexShrink: 0,
   '& .MuiDrawer-paper': {
-    position: 'absolute',
     boxSizing: 'border-box',
     padding: theme.spacing(2),
+    zIndex: 0,
   },
-  '& .MuiDrawer-modal': {
-    position: 'absolute',
-  },
+
 }));
 
 type FilterDrawerProps = {
@@ -32,6 +30,7 @@ export default function FilterDrawer({drawerWidth}: FilterDrawerProps) {
         }
       }}
     >
+    <Toolbar />
     <Typography sx={{fontWeight: 'bold'}}>
       Filters
     </Typography>
