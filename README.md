@@ -1,19 +1,70 @@
-# HAPPY HAP'S BLOG
-## By: Carol Navya Pagolu, Monica Bhargavi Kodali,Manjari Misra, Andrew Kuczynski
+# Getting Started with Create React App
 
-Happy Hap’s blog is an application that will allow students to have a look at different events, food joints and cool spots suggestions as per their requests on campus. It would let the student make an itinerary as we can also include most happening events/top rated food joints/most visited cool spots to visit around the campus. Below are some of the functionalities we are aiming to try and achieve. 
-## MOTIVATION:
-Happy Hap’s Blog will be a one-stop application where students can navigate and ease into campus life without any difficulties.
-## FUNCTIONALITY:
-1. When a student is looking for a food joints/events: <br />
-a. Different places amongst the categories mentioned above (food joints, events) could be displayed with the help of previous reviews and ratings by other students. <br />
-b. Students can give their ratings or reviews for the events/food joints they visited.Students can bookmark their favorite food joints/events which could pop up as a notification in future in case they revisit that event/food joint. <br />
-2. When a student reaches his/her destination: <br />
-a. Different cool spots(Lake Alice, Butterfly museum...) to visit close to the student’s location on campus will be displayed based on the reviews and ratings given by other students under top ‘n’ local favorites. <br />
-b. Students can give their ratings or reviews for the spots they visited.Students can bookmark their favorite spot which could pop up as a notification in future in case they revisit that spot. <br />
-3. Help for students will be provided in the form of FAQs. <br />
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Available Scripts
 
-## Technology stack
-Frontend - React <br />
-Backend  - Golang
+In the project directory, you can run:
+
+### `npm start`
+
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
+
+### `npm test`
+
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+### `npm run build`
+
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `npm run eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
