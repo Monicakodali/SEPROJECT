@@ -44,11 +44,6 @@ export default function Map({locations}: MapProps) {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {/* <Marker position={position}>
-        <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
-        </Popup>
-      </Marker> */}
       {userLocation && <Marker position={userLocation} icon={currentLocationIcon}/>}
       {
         locations.map(({id, coordinates, name}) => {
