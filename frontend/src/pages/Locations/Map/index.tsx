@@ -25,6 +25,9 @@ var poiIcon = L.divIcon({
 });
 
 
+
+
+
 export default function Map({locations}: MapProps) {
 
   const [userLocation, setUserLocation] = React.useState<LatLngTuple | null>(null)
