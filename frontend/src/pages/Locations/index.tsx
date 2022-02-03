@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Map from './Map'
 import LocationsList from './LocationsList'
+import ListHeader from './ListHeader'
 import Filters from './Filters';
 import { styled } from '@mui/material/styles';
 import { InsetDrawer } from '../../components';
@@ -33,6 +34,7 @@ export default function Locations() {
         <Filters />
       </InsetDrawer>
       <LocationListContainer>
+        <ListHeader />
         <LocationsList locations={locations} />
       </LocationListContainer>
       <InsetDrawer anchor="right" width={MAP_DRAWER_WIDTH}>

@@ -27,6 +27,15 @@ const theme = createTheme({
       },
     },
   },
+  typography: {
+    h4: {
+      fontSize: 24,
+      fontWeight: 700,
+      lineHeight: 1.1,
+      letterSpacing: -0.25,
+      color: 'rgba(45,46,47,1)'
+    }
+  }
 });
 
 export default theme
