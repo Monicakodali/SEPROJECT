@@ -9,7 +9,7 @@ type LocationsListProps = {
 
 export default function LocationsList({locations}: LocationsListProps) {
 
-  const [selected, setSelected] = React.useState<number | null>(null)
+  const [selected, setSelected] = React.useState<string | null>(null)
 
   return <>{
     locations.map((d) => <LocationCard selected={selected === d.id} key={d.id} data={d} onClick={() => setSelected(d.id)}/>)

@@ -3,6 +3,8 @@ import { Box, CardContent, Typography, CardMedia, ListItemButton } from '@mui/ma
 import { styled } from '@mui/material/styles';
 
 import { Location } from '../../../../types/location'
+import Rating from './Rating'
+import Tags from './Tags'
 
 type LocationsCardProps = {
   data: Location,
@@ -30,9 +32,26 @@ const StyledListItem = styled(ListItemButton)(({ theme }) => {
   }
 })
 
+const names = ['', 'John', 'Mary', 'Sue', 'Bob', 'Mike']
+
 export default function LocationsCard({data, selected, onClick}: LocationsCardProps) {
 
   const { name, id } = data
+
+  // @TODO: populate with actual rating
+  // randomly generate rating for now
+  const rating = React.useMemo(() => Math.floor(Math.random() * 5) + 1, [])
+
+  // @TODO: populate with actual num ratings
+  // randomly generate num of ratings for now
+  const numRatings = React.useMemo(() => Math.floor(Math.random() * 100) + 10, [])
+
+  // @TODO: populate with actual isOpen
+  // randomly generate whether open or not
+  const isOpen = React.useMemo(() => Math.random() > 0.5, [])
+
+  // @TODO: populate tags from DB
+  const tags = ['Coffee & Tea', 'Fast Food', 'Example Tag 3']
   
   return (
     <StyledListItem selected={selected} alignItems="flex-start" focusRipple={false} onClick={onClick}>
@@ -44,11 +63,18 @@ export default function LocationsCard({data, selected, onClick}: LocationsCardPr
       />
       <Box sx={{ display: 'flex', flexGrow: 1, flexDirection: 'column' }}>
         <CardContent sx={{ flex: '1 0 auto', px: 1, py: 3 }}>
-          <Typography component="div" variant="h5">
+          <Typography component="div" sx={{fontWeight: 'normal'}} variant="h4">
             {name}
           </Typography>
-          <Typography variant="subtitle1" color="text.secondary" component="div">
-            {id}
+          <Box sx={{my: 1}}>
+            <Rating rating={rating} numRatings={numRatings} />
+          </Box>
+          <Box sx={{my: 1}}>
+            <Tags tags={tags} />
+          </Box>
+          <Typography variant="caption" color="text.secondary" component="div">
+            {`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vitae erat vestibulum, convallis risus sit amet, ultrices nisl.`}
+            <span style={{fontWeight: 'bold', marginLeft: 5}}>{'–'}{names[rating]}</span>
           </Typography>
         </CardContent>
       </Box>

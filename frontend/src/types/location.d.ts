@@ -1,9 +1,10 @@
-import { LatLngTuple } from 'leaflet';
-
 export type Location = {
+  id: string,
   name: string
-  id: number,
   building: string,
   room: string,
-  coordinates: LatLngTuple
+  url: string,
+  x: number,
+  y: number,
+  type: 'DINING' | 'MUSEUM'
 }
