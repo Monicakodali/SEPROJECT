@@ -71,6 +71,19 @@ func (a *App) createEstablishments(c *gin.Context) {
 	c.JSON(http.StatusCreated, &res)
 }
 
+func (a *App) deleteEstablishment(c *gin.Context) {
+	id := c.Param("id")
+
+	if result := db.Delete(&Establishment{}, id); result.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": result.Error.Error(),
+		})
+		return
+	}
+
+	c.Status(http.StatusNoContent)
+}
+
 func main() {
 
 	var err error
@@ -91,14 +104,12 @@ func main() {
 	})
 
 	// Create API route group
-	api := r.Group("/establishments")
+	api := r.Group("/api/establishments")
 	{
 		api.POST("/", a.createEstablishments)
 		api.GET("/", a.listEstHandler)
-		//api.DELETE("/:id", a.deleteEstablishment)
+		api.DELETE("/:id", a.deleteEstablishment)
 	}
-	//r.POST("/establishments", a.createEstablishments)
-	//r.GET("/establishments", a.listEstHandler)
 
 	r.Run()
 }
