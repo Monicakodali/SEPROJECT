@@ -37,9 +37,9 @@ func (a *App) Initialize(dbDriver string, dbURI string) {
 
 func (a *App) listEstHandler(c *gin.Context) {
 	//db := c.MustGet("db").(*gorm.DB)
-	var spots []Establishment
+	var establishments []Establishment
 
-	if result := a.DB.Find(&spots); result.Error != nil {
+	if result := a.DB.Find(&establishments); result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": result.Error.Error(),
 		})
@@ -48,7 +48,7 @@ func (a *App) listEstHandler(c *gin.Context) {
 
 	//a.DB.Find(&restaurants)
 
-	c.JSON(http.StatusOK, &spots)
+	c.JSON(http.StatusOK, &establishments)
 }
 
 func (a *App) createEstablishments(c *gin.Context) {
@@ -80,7 +80,7 @@ func main() {
 		panic("failed to connect database")
 	}
 
-	a := &App{}
+	a := &App{db}
 	a.Initialize("sqlite3", "seproj.db")
 
 	r := gin.New()
@@ -90,13 +90,15 @@ func main() {
 		})
 	})
 
-	//api := r.Group("/api/restaurants")
-	//{
-	//api.GET("/", a.listEstHandler)
-	r.POST("/restaurants", a.createEstablishments)
-	r.GET("/restaurants", a.listEstHandler)
-
-	//}
+	// Create API route group
+	api := r.Group("/establishments")
+	{
+		api.POST("/", a.createEstablishments)
+		api.GET("/", a.listEstHandler)
+		//api.DELETE("/:id", a.deleteEstablishment)
+	}
+	//r.POST("/establishments", a.createEstablishments)
+	//r.GET("/establishments", a.listEstHandler)
 
 	r.Run()
 }
