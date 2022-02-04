@@ -52,7 +52,7 @@ func (a *App) listEstHandler(c *gin.Context) {
 }
 
 func (a *App) createEstablishments(c *gin.Context) {
-	var res []Establishment
+	var res Establishment
 
 	if err := c.ShouldBindJSON(&res); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
