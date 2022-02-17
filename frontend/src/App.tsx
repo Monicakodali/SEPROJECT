@@ -7,7 +7,7 @@ import {
   Routes,
   Route
 } from "react-router-dom";
-import { LandingPage, Locations, Establishment } from './pages'
+import { LandingPage, Locations, Establishment, LoginPage } from './pages'
 
 function App() {
   return (
@@ -16,6 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout header={false}><LandingPage /></Layout>} />
           <Route path="/search" element={<Layout><Locations /></Layout>} />
+          <Route path="/login" element={<Layout><LoginPage /></Layout>} />
           <Route path="/est/:id" element={<Layout><Establishment /></Layout>} />
         </Routes>
       </Router>
