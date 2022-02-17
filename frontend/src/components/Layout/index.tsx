@@ -1,23 +1,25 @@
 import * as React from 'react';
 import Header from './Header'
-
 import Toolbar from '@mui/material/Toolbar';
-import { styled } from '@mui/material/styles';
 
-
-type LayoutProps = {
-  children: React.ReactNode 
+export type LayoutProps = {
+  children: React.ReactNode,
+  header?: boolean
 }
 
-export default function Layout({children}: LayoutProps) {
-  
+export default function Layout({children, header}: LayoutProps) {
+
   return (
     <>
-    <Header loggedIn={false}/>
-    <Toolbar />
+    {header && <><Header loggedIn={false}/>
+    <Toolbar /></>}
     <main>
       {children}
     </main>
     </>
   );
 };
+
+Layout.defaultProps = {
+  header: true
+}
