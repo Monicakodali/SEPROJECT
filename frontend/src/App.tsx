@@ -4,19 +4,20 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme'
 import {
   BrowserRouter as Router,
-  Routes, Route, 
+  Routes,
+  Route
 } from "react-router-dom";
-import { Locations } from './pages'
+import { LandingPage, Locations, Establishment } from './pages'
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<Locations />} />
-          </Routes>
-        </Layout>
+        <Routes>
+          <Route path="/" element={<Layout header={false}><LandingPage /></Layout>} />
+          <Route path="/search" element={<Layout><Locations /></Layout>} />
+          <Route path="/biz/:id" element={<Layout><Establishment /></Layout>} />
+        </Routes>
       </Router>
     </ThemeProvider>
   );
