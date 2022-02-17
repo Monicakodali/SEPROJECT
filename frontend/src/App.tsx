@@ -16,7 +16,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout header={false}><LandingPage /></Layout>} />
           <Route path="/search" element={<Layout><Locations /></Layout>} />
-          <Route path="/biz/:id" element={<Layout><Establishment /></Layout>} />
+          <Route path="/est/:id" element={<Layout><Establishment /></Layout>} />
         </Routes>
       </Router>
     </ThemeProvider>
