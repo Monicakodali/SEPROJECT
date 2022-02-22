@@ -35,6 +35,23 @@ func (a *App) Initialize(dbDriver string, dbURI string) {
 	db.AutoMigrate(&Establishment{})
 }
 
+func (a *App) getOneEstHandler(c *gin.Context) {
+
+	var establishment Establishment
+	id := c.Param("id")
+
+	if result := a.DB.Where("id = ?", id).First(&establishment); result.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": result.Error.Error(),
+		})
+		return
+	}
+
+	//a.DB.Find(&restaurants)
+
+	c.JSON(http.StatusOK, &establishment)
+}
+
 func (a *App) listEstHandler(c *gin.Context) {
 	//db := c.MustGet("db").(*gorm.DB)
 	var establishments []Establishment
@@ -108,6 +125,7 @@ func main() {
 	{
 		api.POST("/", a.createEstablishments)
 		api.GET("/", a.listEstHandler)
+		api.GET("/:id", a.getOneEstHandler)
 		api.DELETE("/:id", a.deleteEstablishment)
 	}
 
