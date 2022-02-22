@@ -53,7 +53,7 @@ type InteractiveElementType = {
 }
 
 function InteractiveElement({name, id, tags, rating, numRatings}: InteractiveElementType) {
-  return (<Box sx={{position: 'absolute', left: 191, top: 24}}>
+  return (<Box sx={{position: 'absolute', left: 191, top: 24, backgroundColor: 'transparent'}}>
       <StyledLink to={`/est/${id}`} variant="h4">
         {name}
       </StyledLink>

@@ -1,4 +1,5 @@
-import { Container, Box, ContainerProps, Typography } from '@mui/material';
+import { Container, Box, ContainerProps, Typography, Grid, Button as MuiButton, Divider, Paper, List, ListItem, Link, ListItemText } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import axios from 'axios';
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
@@ -7,6 +8,10 @@ import {
 } from "react-router-dom";
 import { Rating } from '../../components';
 import Tags from '../../components/Tags/index';
+import StarOutlineIcon from '@mui/icons-material/StarOutline';
+import IosShareIcon from '@mui/icons-material/IosShare';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
 
 type HeaderProps = {
   name: string,
@@ -34,6 +39,15 @@ function Header({name, maxWidth, rating, numRatings, tags}: HeaderProps) {
   </Box>
   )
 }
+
+const Button = styled(MuiButton)(({ theme }) => {
+  return {
+    marginBottom: theme.spacing(1),
+    '&:not(:last-child)': {
+      marginRight: theme.spacing(1)
+    }
+  }
+})
 
 
 export default function Establishment() {
@@ -80,7 +94,45 @@ export default function Establishment() {
     <Container maxWidth="lg" disableGutters>
       <Header maxWidth="md" {...{name, rating, numRatings, tags}} />
       <Container maxWidth="md">
-        {name}
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+
+          </Grid>
+          <Grid item xs={8}>
+            <Box sx={{mt: 2, mb: 1}}>
+              <Button size="small" color="primary" variant="contained" startIcon={<StarOutlineIcon />}>
+                Write a Review
+              </Button>
+              <Button size="small" variant="outlined" startIcon={<CameraAltIcon />}>
+                Add Photo
+              </Button>
+              <Button size="small" variant="outlined" startIcon={<IosShareIcon />}>
+                Share
+              </Button>
+              <Button size="small" variant="outlined" startIcon={<BookmarkBorderIcon />}>
+                Save
+              </Button>
+            </Box>
+            <Divider />
+
+
+          </Grid>
+          <Grid item xs={4} >
+            <Paper square variant="outlined" sx={{p: 1.5}}>
+              <List dense disablePadding>
+                <ListItem divider>
+                  <ListItemText primary={<Link href={'http://www.example.com'}>http://www.example.com</Link>} />
+                </ListItem>
+                <ListItem divider>
+                  <ListItemText primary={'(352) 371-2323'} />
+                </ListItem>
+                <ListItem>
+                  <ListItemText primary={<Link href={'#'}>Get Directions</Link>} secondary={'123 Main St.'}/>
+                </ListItem>
+              </List>
+            </Paper>
+          </Grid>
+        </Grid>
       </Container>
     </Container>
   );
