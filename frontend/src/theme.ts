@@ -29,7 +29,7 @@ const theme = createTheme({
   },
   typography: {
     h1: {
-      fontSize: 44,
+      fontSize: 40,
       fontWeight: 600,
     },
     h4: {

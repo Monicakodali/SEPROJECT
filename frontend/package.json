@@ -15,6 +15,8 @@
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
     "axios": "^0.25.0",
+    "cypress-react-router": "^2.0.1",
+    "date-fns": "^2.28.0",
     "leaflet": "^1.7.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -27,7 +29,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "cypress open-ct",
+    "cypress:open": "cypress open",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -49,7 +52,11 @@
     ]
   },
   "devDependencies": {
-    "@types/leaflet": "^1.7.9"
+    "@cypress/react": "^5.12.3",
+    "@cypress/webpack-dev-server": "^1.8.1",
+    "@types/leaflet": "^1.7.9",
+    "cypress": "^9.5.1",
+    "html-webpack-plugin": "^4.5.2"
   },
   "proxy": "http://localhost:8080"
 }
