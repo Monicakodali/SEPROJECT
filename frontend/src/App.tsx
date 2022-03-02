@@ -8,11 +8,14 @@ import {
   Route
 } from "react-router-dom";
 import { LandingPage, Locations, Establishment, LoginPage } from './pages'
+import { CypressHistorySupport } from 'cypress-react-router';
 
 function App() {
+  
   return (
     <ThemeProvider theme={theme}>
       <Router>
+        <CypressHistorySupport />
         <Routes>
           <Route path="/" element={<Layout header={false}><LandingPage /></Layout>} />
           <Route path="/search" element={<Layout><Locations /></Layout>} />
