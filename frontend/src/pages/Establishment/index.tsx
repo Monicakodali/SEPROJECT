@@ -24,10 +24,13 @@ type HeaderProps = {
   numRatings: number,
   tags: string[],
   isOpen: boolean | null,
-  hoursOfOperation: Date[] | null
+  hoursOfOperation: string | null
 }
 
-function Header({name, maxWidth, rating, numRatings, tags}: HeaderProps) {
+function Header({name, maxWidth, rating, numRatings, tags, isOpen, hoursOfOperation}: HeaderProps) {
+
+  const hasHourInfo = isOpen !==null && hoursOfOperation !==null
+
   return(
     <Box sx={{backgroundColor: 'tomato', display: 'flex', alignItems: 'flex-end', height: 300}}>
     <Container maxWidth={maxWidth} sx={{p: 3}}>
@@ -38,9 +41,10 @@ function Header({name, maxWidth, rating, numRatings, tags}: HeaderProps) {
       <Box sx={{mb: 2}}>
        <Tags variant="links" tags={tags} linkStyle={{color: 'white'}}/>
       </Box>
-      <Box>
-        <Typography>More info...</Typography>
-      </Box>
+      {hasHourInfo && <Box>
+        <Typography sx={{fontWeight: 'bold', color: isOpen ? 'green' : 'red'}} component="span">{isOpen ? 'Open' : 'Closed'}</Typography>
+        <Typography sx={{color: 'white', ml: 2}} component="span">{hoursOfOperation}</Typography>
+      </Box>}
     </Container>
   </Box>
   )
@@ -135,7 +139,7 @@ export default function Establishment() {
 
   return (
     <Container maxWidth="lg" disableGutters>
-      <Header maxWidth="md" {...{name, rating, numRatings, tags, isOpen, hoursOfOperation}} />
+      <Header maxWidth="md" hoursOfOperation={hours ? hours[day].hoursOfOperation : null} {...{name, rating, numRatings, tags, isOpen}} />
       <Container maxWidth="md">
         <Grid container spacing={3}>
           <Grid item xs={8}>
