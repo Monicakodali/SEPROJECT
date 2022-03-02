@@ -1,14 +1,15 @@
 import React from "react"
 import hours from './spring2022.json'
-import buildings from './boundaries.json'
+import useBuilding from '../buildings'
 
 const useDiningHours = (e: Establishment | null) => {
 
+  const building = useBuilding(e)
+
   return React.useMemo(() => {
-    if(!e) {
+    if(!building || !e) {
       return null
     }
-    const building = buildings.features.find(f => f.properties.PropCID === e.building)?.properties
     const hour = hours.data.find(h => {
       return h.name.includes(e.name) && (building?.PropName || '').split(' ').some((word: string) => h.fullName.includes(word))
     })
@@ -16,7 +17,7 @@ const useDiningHours = (e: Establishment | null) => {
       return null
     }
     return hour?.hours ?? null
-  }, [e])
+  }, [building, e])
 
 }
 

@@ -14,13 +14,17 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import useDiningHours from '../../hooks/dininghours';
 import { addDays, getDay, isAfter, isBefore, isValid, parse } from 'date-fns';
+import MiniMap from './MiniMap'
+import useBuilding from '../../hooks/buildings/index';
 
 type HeaderProps = {
   name: string,
   maxWidth: ContainerProps['maxWidth'],
   rating: number,
   numRatings: number,
-  tags: string[]
+  tags: string[],
+  isOpen: boolean | null,
+  hoursOfOperation: Date[] | null
 }
 
 function Header({name, maxWidth, rating, numRatings, tags}: HeaderProps) {
@@ -54,10 +58,11 @@ const Button = styled(MuiButton)(({ theme }) => {
 
 export default function Establishment() {
   const { id } = useParams()
-  const [data, setData] = React.useState(null)
+  const [data, setData] = React.useState<null | Establishment>(null)
   const [err, setErr] = React.useState(false)
 
   const hours = useDiningHours(data)
+  const building = useBuilding(data)
 
   // @TODO: populate with actual rating
   // randomly generate rating for now
@@ -69,7 +74,7 @@ export default function Establishment() {
   const tags = ['Coffee & Tea', 'Fast Food', 'Example Tag 3']
 
 
-  const day = getDay(new Date())
+  const day = (getDay(new Date()) + 6) % 7
   
   // for today
   const hoursOfOperation = React.useMemo<null | Date[]>(() => {
@@ -124,18 +129,15 @@ export default function Establishment() {
     return <div>Loading...</div>
   }
 
-  console.log({data, hoursOfOperation, isOpen})
+  console.log({data, hoursOfOperation, isOpen, hours, building})
 
   const { name } = data
 
   return (
     <Container maxWidth="lg" disableGutters>
-      <Header maxWidth="md" {...{name, rating, numRatings, tags}} />
+      <Header maxWidth="md" {...{name, rating, numRatings, tags, isOpen, hoursOfOperation}} />
       <Container maxWidth="md">
         <Grid container spacing={3}>
-          <Grid item xs={12}>
-
-          </Grid>
           <Grid item xs={8}>
             <Box sx={{mt: 2, mb: 1}}>
               <Button size="small" color="primary" variant="contained" startIcon={<StarOutlineIcon />}>
@@ -152,11 +154,62 @@ export default function Establishment() {
               </Button>
             </Box>
             <Divider />
+            <Box sx={{mt: 2, mb: 1}}>
+              <Typography component="h2" variant="h5" gutterBottom>Location &amp; Hours</Typography>
+              <Grid container spacing={3}>
+                <Grid item xs={5}>
+                  {data?.x && data?.y && <MiniMap height={150} coordinates={[data.x, data.y]} />}
+
+
+                  <Box sx={{display: 'flex', alignItems: 'flex-start', py: 2, justifyContent: 'space-between' }}>
+                    {building !== null && <Box sx={{mr: 1}}>
+                      <Typography style={{lineHeight: 1}}>{building.PropName}</Typography>
+                      <Typography variant="caption">
+                        Gainesville, FL
+                      </Typography>
+                    </Box>}
+                    <Button variant="contained" size="small">
+                      Directions
+                    </Button>
+                  </Box>
+
+                </Grid>
+                {hours !== null && <Grid item xs={7}>
+                  {
+                    hours.map((hr, i) => {
+
+                      const fontWeight = i === day ? 'bold' : 'normal'
+
+                      return <Box key={hr.day} sx={{display: 'flex' }}>
+                      <Typography sx={{flex: '0 1 60px', fontWeight}}>
+                        {hr.day.slice(0, 3)}
+                      </Typography>
+                      <Typography sx={{flex: '1 1 auto', fontWeight}}>
+                        {hr.hoursOfOperation}
+                      </Typography>
+                      {i === day && <Typography sx={{flex: '1 1 auto', fontWeight: 'bold', color: isOpen ? 'green' : 'red'}}>
+                        {isOpen ? 'Open now' : 'Closed'}
+                      </Typography>}
+                    </Box>
+                    })
+                  }
+                </Grid>}
+              </Grid>
+
+
+            </Box>
+            <Divider />
+            <Box sx={{mt: 2, mb: 1}}>
+              <Typography component="h2" variant="h5">Reviews</Typography>
+
+
+            </Box>
+
 
 
           </Grid>
           <Grid item xs={4} >
-            <Paper square variant="outlined" sx={{p: 1.5}}>
+            <Paper square variant="outlined" sx={{p: 1.5, mt: 3}}>
               <List dense disablePadding>
                 <ListItem divider>
                   <ListItemText primary={<Link href={'http://www.example.com'}>http://www.example.com</Link>} />
