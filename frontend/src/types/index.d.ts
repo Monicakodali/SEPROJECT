@@ -1,4 +1,5 @@
-export type Location = {
+
+type Establishment = {
   id: string,
   name: string
   building: string,

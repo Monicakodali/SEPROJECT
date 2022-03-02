@@ -3,10 +3,10 @@ import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
 import L, { LatLngTuple, LocationEvent } from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import './index.css'
-import { Location } from '../../../types/location'
+
 
 type MapProps = {
-  locations: Location[]
+  locations: Establishment[]
 }
 
 const position: LatLngTuple = [29.6382, -82.3566]

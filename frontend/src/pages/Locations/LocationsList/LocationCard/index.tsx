@@ -2,10 +2,9 @@ import * as React from 'react';
 import { Box, CardContent, Typography, CardMedia, ListItemButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Link, Rating, Tags } from '../../../../components'
-import { Location } from '../../../../types/location'
 
 type LocationsCardProps = {
-  data: Location,
+  data: Establishment,
   selected?: boolean,
   onClick: () => void
 }
@@ -45,7 +44,7 @@ const names = ['', 'John', 'Mary', 'Sue', 'Bob', 'Mike']
 
 
 type InteractiveElementType = {
-  name: Location['name'],
+  name: Establishment['name'],
   id: number | string
   tags: string[],
   rating: number,

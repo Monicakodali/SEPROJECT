@@ -12,6 +12,8 @@ import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import useDiningHours from '../../hooks/dininghours';
+import { addDays, getDay, isAfter, isBefore, isValid, parse } from 'date-fns';
 
 type HeaderProps = {
   name: string,
@@ -55,6 +57,7 @@ export default function Establishment() {
   const [data, setData] = React.useState(null)
   const [err, setErr] = React.useState(false)
 
+  const hours = useDiningHours(data)
 
   // @TODO: populate with actual rating
   // randomly generate rating for now
@@ -62,12 +65,46 @@ export default function Establishment() {
   // @TODO: populate with actual num ratings
   // randomly generate num of ratings for now
   const numRatings = React.useMemo(() => Math.floor(Math.random() * 100) + 10, [])
-  // @TODO: populate with actual isOpen
-  // randomly generate whether open or not
-  const isOpen = React.useMemo(() => Math.random() > 0.5, [])
   // @TODO: populate tags from DB
   const tags = ['Coffee & Tea', 'Fast Food', 'Example Tag 3']
 
+
+  const day = getDay(new Date())
+  
+  // for today
+  const hoursOfOperation = React.useMemo<null | Date[]>(() => {
+    if(!hours) {
+      return null
+    } else {
+      const h = hours[day]
+      if(h.hoursOfOperation === 'CLOSED') {
+        return null
+      } else {
+        const [start, end] = h.hoursOfOperation.split(' ‑ ')
+        let open = parse(start, 'h:mm aa', new Date())
+        let close = parse(end, 'h:mm aa', new Date())
+        if(!isValid(open) || !isValid(close)) {
+          return null
+        }
+        if(isBefore(close, open)) {
+          close = addDays(close, 1)
+        }
+        return [open, close]
+      }
+
+    }
+
+  }, [hours, day])
+
+  const isOpen = React.useMemo(() => {
+    if(!hoursOfOperation) {
+      return null
+    } else {
+      const now = new Date()
+      return isAfter(now, hoursOfOperation[0]) && isBefore(now, hoursOfOperation[1])
+    }
+  }, [hoursOfOperation])
+ 
   React.useEffect(() => {
     if(id) {
       axios.get(`/api/establishments/${id}`).then(res => {
@@ -87,6 +124,7 @@ export default function Establishment() {
     return <div>Loading...</div>
   }
 
+  console.log({data, hoursOfOperation, isOpen})
 
   const { name } = data
 
