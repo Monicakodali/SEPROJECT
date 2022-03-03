@@ -4,19 +4,24 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme'
 import {
   BrowserRouter as Router,
-  Routes, Route, 
+  Routes,
+  Route
 } from "react-router-dom";
-import { Locations } from './pages'
+import { LandingPage, Locations, Establishment, LoginPage } from './pages'
+import { CypressHistorySupport } from 'cypress-react-router';
 
 function App() {
+  
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<Locations />} />
-          </Routes>
-        </Layout>
+        <CypressHistorySupport />
+        <Routes>
+          <Route path="/" element={<Layout header={false}><LandingPage /></Layout>} />
+          <Route path="/search" element={<Layout><Locations /></Layout>} />
+          <Route path="/login" element={<Layout><LoginPage /></Layout>} />
+          <Route path="/est/:id" element={<Layout><Establishment /></Layout>} />
+        </Routes>
       </Router>
     </ThemeProvider>
   );

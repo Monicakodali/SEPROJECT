@@ -6,15 +6,15 @@ Happy Hap’s Yelp is an application that will allow students to look up, sort, 
 
 Happy Hap’s Yelp will be a one-stop application where students can find what they want and need on campus and read honest reviews.
 
-## Basic Functionality:
+## Basic Functionality
 1. Students will be able to create an account with a UFL email
 2. Students will be able to browse, search, filter, and sort establishments by different criteria and view them in a list and on a map.
 3. Students will be able to get directions, see hours of operation, and read reviews for any such establishments
 4. Students will be able to themselves leave ratings and reviews on establishments including a star rating, comments, and/or pictures.
 
 ## Technology stack
-Frontend - React
-Backend  - Golang
+- Frontend - React
+- Backend  - Golang
 
 ---
 
@@ -39,10 +39,3 @@ cd frontend
 npm install
 npm run start
 ```
-
-### Backend
-
-
-
-
-

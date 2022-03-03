@@ -1,10 +1,9 @@
 import * as React from 'react';
 
 import LocationCard from './LocationCard'
-import { Location } from '../../../types/location'
 
 type LocationsListProps = {
-  locations: Location[]
+  locations: Establishment[]
 }
 
 export default function LocationsList({locations}: LocationsListProps) {

@@ -1,13 +1,10 @@
 import * as React from 'react';
 import { Box, CardContent, Typography, CardMedia, ListItemButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
-
-import { Location } from '../../../../types/location'
-import Rating from './Rating'
-import Tags from './Tags'
+import { Link, Rating, Tags } from '../../../../components'
 
 type LocationsCardProps = {
-  data: Location,
+  data: Establishment,
   selected?: boolean,
   onClick: () => void
 }
@@ -26,13 +23,49 @@ const StyledListItem = styled(ListItemButton)(({ theme }) => {
       marginBottom: theme.spacing(2)
     },
     '&:hover, &:focus': {
-      boxShadow: theme.shadows[3],
+      //boxShadow: theme.shadows[3],
       //backgroundColor: 'initial' //modify hover bg color?
     }
   }
 })
 
+const StyledLink = styled(Link)(({ theme }) => {
+  return {
+    fontWeight: 'normal',
+    color: 'inherit',
+    textDecoration: 'none',
+    '&:hover, &:focus': {
+      textDecoration: 'underline'
+    }
+  }
+})
+
 const names = ['', 'John', 'Mary', 'Sue', 'Bob', 'Mike']
+
+
+type InteractiveElementType = {
+  name: Establishment['name'],
+  id: number | string
+  tags: string[],
+  rating: number,
+  numRatings: number
+}
+
+function InteractiveElement({name, id, tags, rating, numRatings}: InteractiveElementType) {
+  return (<Box sx={{position: 'absolute', left: 191, top: 24, backgroundColor: 'transparent'}}>
+      <StyledLink to={`/est/${id}`} variant="h4">
+        {name}
+      </StyledLink>
+      <Box sx={{my: 1}}>
+        <Rating rating={rating} numRatings={numRatings} />
+      </Box>
+      <Box sx={{my: 1}}>
+        <Tags variant="chips" tags={tags} />
+      </Box></Box>)
+}
+
+
+
 
 export default function LocationsCard({data, selected, onClick}: LocationsCardProps) {
 
@@ -54,6 +87,7 @@ export default function LocationsCard({data, selected, onClick}: LocationsCardPr
   const tags = ['Coffee & Tea', 'Fast Food', 'Example Tag 3']
   
   return (
+    <Box sx={{position: 'relative'}}>
     <StyledListItem selected={selected} alignItems="flex-start" focusRipple={false} onClick={onClick}>
       <CardMedia
         component="img"
@@ -63,22 +97,15 @@ export default function LocationsCard({data, selected, onClick}: LocationsCardPr
       />
       <Box sx={{ display: 'flex', flexGrow: 1, flexDirection: 'column' }}>
         <CardContent sx={{ flex: '1 0 auto', px: 1, py: 3 }}>
-          <Typography component="div" sx={{fontWeight: 'normal'}} variant="h4">
-            {name}
-          </Typography>
-          <Box sx={{my: 1}}>
-            <Rating rating={rating} numRatings={numRatings} />
-          </Box>
-          <Box sx={{my: 1}}>
-            <Tags tags={tags} />
-          </Box>
+          <Box sx={{minHeight: 100}}/> 
           <Typography variant="caption" color="text.secondary" component="div">
-            {`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vitae erat vestibulum, convallis risus sit amet, ultrices nisl.`}
+            {`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vitae erat vestibulum, convallis risus sit amet, ultrices nisl. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vitae erat vestibulum, convallis risus sit amet, ultrices nisl. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vitae erat vestibulum, convallis risus sit amet, ultrices nisl.`}
             <span style={{fontWeight: 'bold', marginLeft: 5}}>{'–'}{names[rating]}</span>
           </Typography>
         </CardContent>
       </Box>
-
     </StyledListItem>
+    <InteractiveElement id={id} name={name} tags={tags} numRatings={numRatings} rating={rating} />
+    </Box>
   );
 };
