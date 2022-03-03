@@ -8,5 +8,5 @@ In Sprint 2, our team successfully created the login page and the landing page w
 
 ## Completed Stories
 
-#26
+#26 As a user, I want a landing page with a search bar.
 #29
