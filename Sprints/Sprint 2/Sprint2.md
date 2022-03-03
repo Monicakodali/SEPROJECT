@@ -6,6 +6,9 @@
 
 In Sprint 2, our team successfully created the login page and the landing page with a search bar using MaterialUI, react-hooks and react-bootstrap packages. To give a nod to UF our landing page consists of a Gator as the mascot.  
 
+## Links
+[Github Repo](https://github.com/Monicakodali/SEPROJECT)
+
 ## Completed Stories
 
 #26 As a user, I want a landing page with a search bar.
