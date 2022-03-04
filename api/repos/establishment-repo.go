@@ -35,7 +35,7 @@ func (estRepo *EstRepo) GetAllEst() ([]models.Establishment, error) {
 	return establishments, nil
 }
 
-func (estRepo *EstRepo) CreateEst(estab *models.Establishment) error {
+func (estRepo *EstRepo) CreateEst(estab models.Establishment) error {
 
 	query := estRepo.db.Create(&estab)
 	if query.Error != nil {
