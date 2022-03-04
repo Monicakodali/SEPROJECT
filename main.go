@@ -1,37 +1,42 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/Monicakodali/SEPROJECT/api/controller"
+	"github.com/Monicakodali/SEPROJECT/api/models"
+	"github.com/Monicakodali/SEPROJECT/api/utils"
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )
 
 func main() {
 
-	db, err := gorm.Open("sqlite3", "seproj.db")
+	db, err := utils.GetDBInstance()
 	if err != nil {
 		panic("failed to connect database")
 	}
-	db.Close()
+	db.Debug().AutoMigrate(&models.Establishment{})
+	defer db.Close()
+	fmt.Println(db)
 
 	router := gin.New()
 
-	establishmentController := controller.App{}
-	establishmentController.Initialize("sqlite3", "seproj.db")
+	establishmentController := controller.EstController{}
+	establishmentController.Init(db)
 
-	router.GET("/", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, gin.H{
-			"message": "Hello World!",
-		})
+	router.Use(func(ctx *gin.Context) {
+
+		if ctx.Request.Header["Content-Length"][0] == "0" {
+			ctx.JSON(http.StatusBadRequest, gin.H{"message": "Payload should not be empty"})
+			ctx.AbortWithStatus(http.StatusBadRequest)
+			return
+		}
 	})
 
-	api := router.Group("/api/establishments")
-	{
-		api.POST("/", establishmentController.createEstablishments)
-	}
+	router.GET("/api/establishments", establishmentController.ListEstHandler)
+	router.POST("/api/establishments", establishmentController.CreateEstablishments)
 
 	router.Run()
 

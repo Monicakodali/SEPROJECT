@@ -1,96 +1,91 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
 
-	"github.com/MonicaKodali/SEPROJECT/api/models"
+	"github.com/Monicakodali/SEPROJECT/api/models"
+	"github.com/Monicakodali/SEPROJECT/api/repos"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )
 
-var db *gorm.DB
-
-type App struct {
-	DB *gorm.DB
+type EstController struct {
+	estRepo *repos.EstRepo
 }
 
-func (r *App) Init(DB *gorm.DB) {
-	r.DB = DB
+func (eRepo *EstController) Init(db *gorm.DB) {
+	eRepo.estRepo = &repos.EstRepo{}
+	eRepo.estRepo.Init(db)
 }
 
-func (a *App) Initialize(dbDriver string, dbURI string) {
-	db, err := gorm.Open(dbDriver, dbURI)
+func (est *EstController) GetOneEstHandler(ctx *gin.Context) {
+
+	eid := ctx.Param("id")
+	res, err := est.estRepo.GetEstByID(eid)
 	if err != nil {
-		panic("failed to connect database")
-	}
-	a.DB = db
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
 
-	db.AutoMigrate(&models.Establishment{})
+		ctx.JSON(http.StatusOK, &res)
+	}
 }
 
-func (a *App) GetOneEstHandler(c *gin.Context) {
+func (est *EstController) ListEstHandler(c *gin.Context) {
 
-	var establishment models.Establishment
-	id := c.Param("id")
-
-	if result := a.DB.Where("id = ?", id).First(&establishment); result.Error != nil {
+	res, err := est.estRepo.GetAllEst()
+	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": result.Error.Error(),
+			"error": err.Error(),
 		})
 		return
 	}
-
-	//a.DB.Find(&restaurants)
-
-	c.JSON(http.StatusOK, &establishment)
+	c.JSON(http.StatusOK, &res)
 }
 
-func (a *App) ListEstHandler(c *gin.Context) {
-	//db := c.MustGet("db").(*gorm.DB)
-	var establishments []models.Establishment
+func (est *EstController) CreateEstablishments(ctx *gin.Context) {
 
-	if result := a.DB.Find(&establishments); result.Error != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": result.Error.Error(),
+	var eInstance models.Establishment
+
+	if err := ctx.ShouldBindJSON(&eInstance); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
 		})
 		return
 	}
+	fmt.Println(eInstance.ID)
 
-	//a.DB.Find(&restaurants)
+	/*new_est := models.Establishment{
+		ID:           eInstance.ID,
+		TYPE:         eInstance.TYPE,
+		NAME:         eInstance.NAME,
+		BUILDING:     eInstance.BUILDING,
+		URL:          eInstance.URL,
+		X_COORDINATE: eInstance.X_COORDINATE,
+		Y_COORDINATE: eInstance.Y_COORDINATE,
+	}*/
 
-	c.JSON(http.StatusOK, &establishments)
-}
-
-func (a *App) CreateEstablishments(c *gin.Context) {
-	var res models.Establishment
-
-	if err := c.ShouldBindJSON(&res); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
+	err := est.estRepo.CreateEst(&eInstance)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
 		})
 		return
 	}
 
-	if result := a.DB.Create(&res); result.Error != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": result.Error.Error(),
-		})
-		return
-	}
-
-	c.JSON(http.StatusCreated, &res)
+	ctx.JSON(http.StatusCreated, eInstance)
 }
 
-func (a *App) DeleteEstablishment(c *gin.Context) {
-	id := c.Param("id")
-
-	if result := db.Delete(&models.Establishment{}, id); result.Error != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": result.Error.Error(),
+func (est *EstController) DeleteEstablishment(ctx *gin.Context) {
+	eid := ctx.Param("id")
+	err := est.estRepo.DeleteEst(eid)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
 		})
 		return
 	}
-
-	c.Status(http.StatusNoContent)
+	ctx.Status(http.StatusNoContent)
 }
