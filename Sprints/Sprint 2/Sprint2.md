@@ -11,7 +11,7 @@ Further work will be done to link the login pages, landing page, and restaurant 
 In the backend, we _
 
 ## Links
-[Github Repo](https://github.com/Monicakodali/SEPROJECT) [Github Project link](https://github.com/Monicakodali/SEPROJECT/projects/2)
+[Github Repo](https://github.com/Monicakodali/SEPROJECT) 
 
 ## Completed Stories
 
