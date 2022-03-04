@@ -24,6 +24,8 @@ func main() {
 
 	establishmentController := controller.EstController{}
 	establishmentController.Init(db)
+	userController := controller.UserController{}
+	userController.Init(db)
 
 	router.Use(func(ctx *gin.Context) {
 
@@ -37,7 +39,9 @@ func main() {
 	router.GET("/api/establishments", establishmentController.ListEstHandler)
 	router.POST("/api/establishments", establishmentController.CreateEstablishments)
 	router.DELETE("/api/establishments", establishmentController.DeleteEstablishment)
-	//router.GET("/api/establishments", establishmentController.GetOneEstHandler)
+	router.GET("/api/users", userController.ListUsers)
+	router.POST("/api/users", userController.SignUp)
+	router.DELETE("/api/users", userController.DeleteUser)
 
 	router.Run()
 
