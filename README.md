@@ -1,19 +1,41 @@
-# HAPPY HAP'S BLOG
-## By: Carol Navya Pagolu, Monica Bhargavi Kodali,Manjari Misra, Andrew Kuczynski
+# HAPPY HAP'S YELP
+By: Carol Navya Pagolu, Monica Bhargavi Kodali, Manjari Misra, Andrew Kuczynski
 
-Happy Hap’s blog is an application that will allow students to have a look at different events, food joints and cool spots suggestions as per their requests on campus. It would let the student make an itinerary as we can also include most happening events/top rated food joints/most visited cool spots to visit around the campus. Below are some of the functionalities we are aiming to try and achieve. 
-## MOTIVATION:
-Happy Hap’s Blog will be a one-stop application where students can navigate and ease into campus life without any difficulties.
-## FUNCTIONALITY:
-1. When a student is looking for a food joints/events: <br />
-a. Different places amongst the categories mentioned above (food joints, events) could be displayed with the help of previous reviews and ratings by other students. <br />
-b. Students can give their ratings or reviews for the events/food joints they visited.Students can bookmark their favorite food joints/events which could pop up as a notification in future in case they revisit that event/food joint. <br />
-2. When a student reaches his/her destination: <br />
-a. Different cool spots(Lake Alice, Butterfly museum...) to visit close to the student’s location on campus will be displayed based on the reviews and ratings given by other students under top ‘n’ local favorites. <br />
-b. Students can give their ratings or reviews for the spots they visited.Students can bookmark their favorite spot which could pop up as a notification in future in case they revisit that spot. <br />
-3. Help for students will be provided in the form of FAQs. <br />
+## Overview
+Happy Hap’s Yelp is an application that will allow students to look up, sort, and review different establishments around Gainesville with a great focus on campus. Users will be able to leave detailed reviews, comments, and photos on places in Gainesville including restaurants, attractions, and services, similar to Yelp.com
 
+Happy Hap’s Yelp will be a one-stop application where students can find what they want and need on campus and read honest reviews.
+
+## Basic Functionality
+1. Students will be able to create an account with a UFL email
+2. Students will be able to browse, search, filter, and sort establishments by different criteria and view them in a list and on a map.
+3. Students will be able to get directions, see hours of operation, and read reviews for any such establishments
+4. Students will be able to themselves leave ratings and reviews on establishments including a star rating, comments, and/or pictures.
 
 ## Technology stack
-Frontend - React <br />
-Backend  - Golang
+- Frontend - React
+- Backend  - Golang
+
+---
+
+## Development
+
+To properly view the application during development, both the front and backend servers must be running in separate terminals.
+
+### Backend
+
+To run the backend, ensure all the proper go packages are installed and run
+
+```
+go run .
+```
+
+### Frontend
+
+To run the frontend locally , navigate to the `frontend` and directory and run `npm run start`:
+
+```
+cd frontend
+npm install
+npm run start
+```

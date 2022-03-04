@@ -1,9 +1,10 @@
-GET http://localhost:8080/establishments
 
-POST http://localhost:8080/establishments
+GET http://localhost:8080/api/establishments
+
+POST http://localhost:8080/api/establishments
 Content-Type: application/json
 
-[
+
   {
     "id": "82",
     "type": "DINING",
@@ -13,8 +14,8 @@ Content-Type: application/json
     "url": "",
     "x": 29.64636443982178,
     "y": -82.34316087863382
-  },
-  {
+  }
+  /*{
     "id": "76",
     "type": "DINING",
     "name": "Boar's Head",
@@ -534,4 +535,4 @@ Content-Type: application/json
     "x": 29.650088012733526,
     "y": -82.34632657842418
   }
-]
+]*/

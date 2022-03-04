@@ -1,0 +1,44 @@
+package main
+
+import (
+	"net/http"
+
+	"github.com/Monicakodali/SEPROJECT/api/controller"
+	"github.com/Monicakodali/SEPROJECT/api/models"
+	"github.com/Monicakodali/SEPROJECT/api/utils"
+	"github.com/gin-gonic/gin"
+	_ "github.com/jinzhu/gorm/dialects/sqlite"
+)
+
+func main() {
+
+	db, err := utils.GetDBInstance()
+	if err != nil {
+		panic("failed to connect database")
+	}
+	db.Debug().AutoMigrate(&models.Establishment{})
+	defer db.Close()
+	//fmt.Println(db)
+
+	router := gin.New()
+
+	establishmentController := controller.EstController{}
+	establishmentController.Init(db)
+
+	router.Use(func(ctx *gin.Context) {
+
+		if ctx.Request.Header["Content-Length"][0] == "0" {
+			ctx.JSON(http.StatusBadRequest, gin.H{"message": "Payload should not be empty"})
+			ctx.AbortWithStatus(http.StatusBadRequest)
+			return
+		}
+	})
+
+	router.GET("/api/establishments", establishmentController.ListEstHandler)
+	router.POST("/api/establishments", establishmentController.CreateEstablishments)
+	router.DELETE("/api/establishments", establishmentController.DeleteEstablishment)
+	//router.GET("/api/establishments", establishmentController.GetOneEstHandler)
+
+	router.Run()
+
+}
