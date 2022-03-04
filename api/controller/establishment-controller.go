@@ -3,7 +3,7 @@ package controller
 import (
 	"net/http"
 
-	"github.com/Monicakodali/SEPROJECT/models"
+	"github.com/MonicaKodali/SEPROJECT/api/models"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
@@ -29,7 +29,7 @@ func (a *App) Initialize(dbDriver string, dbURI string) {
 	db.AutoMigrate(&models.Establishment{})
 }
 
-func (a *App) getOneEstHandler(c *gin.Context) {
+func (a *App) GetOneEstHandler(c *gin.Context) {
 
 	var establishment models.Establishment
 	id := c.Param("id")
@@ -46,7 +46,7 @@ func (a *App) getOneEstHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, &establishment)
 }
 
-func (a *App) listEstHandler(c *gin.Context) {
+func (a *App) ListEstHandler(c *gin.Context) {
 	//db := c.MustGet("db").(*gorm.DB)
 	var establishments []models.Establishment
 
@@ -62,7 +62,7 @@ func (a *App) listEstHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, &establishments)
 }
 
-func (a *App) createEstablishments(c *gin.Context) {
+func (a *App) CreateEstablishments(c *gin.Context) {
 	var res models.Establishment
 
 	if err := c.ShouldBindJSON(&res); err != nil {
@@ -82,7 +82,7 @@ func (a *App) createEstablishments(c *gin.Context) {
 	c.JSON(http.StatusCreated, &res)
 }
 
-func (a *App) deleteEstablishment(c *gin.Context) {
+func (a *App) DeleteEstablishment(c *gin.Context) {
 	id := c.Param("id")
 
 	if result := db.Delete(&models.Establishment{}, id); result.Error != nil {

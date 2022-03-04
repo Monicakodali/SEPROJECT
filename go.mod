@@ -1,4 +1,4 @@
-module example.com/m
+module github.com/Monicakodali/SEPROJECT
 
 go 1.17
 
@@ -25,3 +25,4 @@ require (
 	golang.org/x/sys v0.0.0-20200323222414-85ca7c5b95cd // indirect
 	gopkg.in/yaml.v2 v2.2.8 // indirect
 )
+
