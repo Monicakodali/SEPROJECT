@@ -4,7 +4,11 @@
 
 ## Summary
 
-In Sprint 2, our team successfully created the login page and the landing page with a search bar using MaterialUI, react-hooks and react-bootstrap packages. To give a nod to UF our landing page consists of a Gator as the mascot.  
+In Sprint 2, on the frontend, our team successfully created the login page and the landing page with a search bar using MaterialUI, react-hooks and react-bootstrap packages. To give a nod to UF our landing page consists of a Gator as the mascot. We also put in work on the single restaurant page, and added location info and hours, based on data scraped from UF web resources. We also took this time to set up the cypress testing environment and create our very first test. Because our pages are not linked together yet and we don't have a lot of functionality hooked up yet, we only have a single basic UI test at the moment.
+
+Further work will be done to link the login pages, landing page, and restaurant pages together, as well as add more comprehensive end-to-end tests as more functionality is added.
+
+In the backend, we _
 
 ## Links
 [Github Repo](https://github.com/Monicakodali/SEPROJECT)
@@ -13,3 +17,5 @@ In Sprint 2, our team successfully created the login page and the landing page w
 
 #26 As a user, I want a landing page with a search bar.
 #29 As a user, I want to be able to login.
+#27 As a developer, I want some front end tests for some components Frontend User Story
+#28 As a user, I want to view the details for a single establishment Frontend
