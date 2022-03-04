@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/Monicakodali/SEPROJECT/api/controller"
@@ -19,7 +18,7 @@ func main() {
 	}
 	db.Debug().AutoMigrate(&models.Establishment{})
 	defer db.Close()
-	fmt.Println(db)
+	//fmt.Println(db)
 
 	router := gin.New()
 
@@ -37,6 +36,8 @@ func main() {
 
 	router.GET("/api/establishments", establishmentController.ListEstHandler)
 	router.POST("/api/establishments", establishmentController.CreateEstablishments)
+	router.DELETE("/api/establishments", establishmentController.DeleteEstablishment)
+	//router.GET("/api/establishments", establishmentController.GetOneEstHandler)
 
 	router.Run()
 

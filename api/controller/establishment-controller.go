@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/Monicakodali/SEPROJECT/api/models"
@@ -55,19 +54,8 @@ func (est *EstController) CreateEstablishments(ctx *gin.Context) {
 		})
 		return
 	}
-	fmt.Println(eInstance.ID)
 
-	/*new_est := models.Establishment{
-		ID:           eInstance.ID,
-		TYPE:         eInstance.TYPE,
-		NAME:         eInstance.NAME,
-		BUILDING:     eInstance.BUILDING,
-		URL:          eInstance.URL,
-		X_COORDINATE: eInstance.X_COORDINATE,
-		Y_COORDINATE: eInstance.Y_COORDINATE,
-	}*/
-
-	err := est.estRepo.CreateEst(&eInstance)
+	err := est.estRepo.CreateEst(eInstance)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
