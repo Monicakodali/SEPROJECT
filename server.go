@@ -3,131 +3,36 @@ package main
 import (
 	"net/http"
 
+	"github.com/Monicakodali/SEPROJECT/api/controller"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )
 
-type Establishment struct {
-	ID           string  `json:"id"`
-	TYPE         string  `json:"type"`
-	NAME         string  `json:"name"`
-	BUILDING     string  `json:"building"`
-	ROOM         string  `json:"room"`
-	URL          string  `json:"url"`
-	X_COORDINATE float64 `json:"x"`
-	Y_COORDINATE float64 `json:"y"`
-}
-
-var db *gorm.DB
-
-type App struct {
-	DB *gorm.DB
-}
-
-func (a *App) Initialize(dbDriver string, dbURI string) {
-	db, err := gorm.Open(dbDriver, dbURI)
-	if err != nil {
-		panic("failed to connect database")
-	}
-	a.DB = db
-
-	db.AutoMigrate(&Establishment{})
-}
-
-func (a *App) getOneEstHandler(c *gin.Context) {
-
-	var establishment Establishment
-	id := c.Param("id")
-
-	if result := a.DB.Where("id = ?", id).First(&establishment); result.Error != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": result.Error.Error(),
-		})
-		return
-	}
-
-	//a.DB.Find(&restaurants)
-
-	c.JSON(http.StatusOK, &establishment)
-}
-
-func (a *App) listEstHandler(c *gin.Context) {
-	//db := c.MustGet("db").(*gorm.DB)
-	var establishments []Establishment
-
-	if result := a.DB.Find(&establishments); result.Error != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": result.Error.Error(),
-		})
-		return
-	}
-
-	//a.DB.Find(&restaurants)
-
-	c.JSON(http.StatusOK, &establishments)
-}
-
-func (a *App) createEstablishments(c *gin.Context) {
-	var res Establishment
-
-	if err := c.ShouldBindJSON(&res); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
-		})
-		return
-	}
-
-	if result := a.DB.Create(&res); result.Error != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": result.Error.Error(),
-		})
-		return
-	}
-
-	c.JSON(http.StatusCreated, &res)
-}
-
-func (a *App) deleteEstablishment(c *gin.Context) {
-	id := c.Param("id")
-
-	if result := db.Delete(&Establishment{}, id); result.Error != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": result.Error.Error(),
-		})
-		return
-	}
-
-	c.Status(http.StatusNoContent)
-}
-
 func main() {
 
-	var err error
-	db, err = gorm.Open("sqlite3", "seproj.db")
-
+	db, err := gorm.Open("sqlite3", "seproj.db")
 	if err != nil {
 		panic("failed to connect database")
 	}
+	db.Close()
 
-	a := &App{db}
-	a.Initialize("sqlite3", "seproj.db")
+	router := gin.New()
 
-	r := gin.New()
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
+	establishmentController := controller.App{}
+	establishmentController.Initialize("sqlite3", "seproj.db")
+
+	router.GET("/", func(ctx *gin.Context) {
+		ctx.JSON(http.StatusOK, gin.H{
 			"message": "Hello World!",
 		})
 	})
 
-	// Create API route group
-	api := r.Group("/api/establishments")
+	api := router.Group("/api/establishments")
 	{
-		api.POST("/", a.createEstablishments)
-		api.GET("/", a.listEstHandler)
-		api.GET("/:id", a.getOneEstHandler)
-		api.DELETE("/:id", a.deleteEstablishment)
+		api.POST("/", establishmentController.createEstablishments)
 	}
 
-	r.Run()
+	router.Run()
+
 }
