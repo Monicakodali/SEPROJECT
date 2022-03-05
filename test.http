@@ -1,7 +1,17 @@
 
 
+POST http://localhost:8080/api/reviews
+Content-Type: application/json
 
-GET http://localhost:8080/api/users
+  {
+	"Email": "cpagolu@ufl.edu",
+	"Name": "Carol Navya Pagolu",
+	"Est_id": "78",
+	"Est_name": "0",
+  "Review": "Amazing Service",
+  "Rating": 4.5,
+  "revTime": {{$timestamp}}
+  }
 
 POST http://localhost:8080/api/users
 Content-Type: application/json
