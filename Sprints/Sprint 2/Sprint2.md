@@ -17,13 +17,13 @@ Further work would include writing scripts to send verification email to Users d
 
 ## Completed Stories
 
-#21 As a developer, I want the backend files to be split into different files / folders 
-#22 As a developer, I want User and Review tables set up and basic endpoints set up
-#23 As a user, I want to be able to create an account and verify my email address
-#25 As a developer, I want our api routes to be documents
-#26 As a user, I want a landing page with a search bar.
-#29 As a user, I want to be able to login.
-#27 As a developer, I want some front end tests for some components Frontend User Story
-#28 As a user, I want to view the details for a single establishment Frontend
+#21 As a developer, I want the backend files to be split into different files / folders \n
+#22 As a developer, I want User and Review tables set up and basic endpoints set up \n
+#23 As a user, I want to be able to create an account and verify my email address \n
+#25 As a developer, I want our api routes to be documents \n
+#26 As a user, I want a landing page with a search bar. \n
+#29 As a user, I want to be able to login. \n
+#27 As a developer, I want some front end tests for some components Frontend User Story \n
+#28 As a user, I want to view the details for a single establishment Frontend \n
 
 
