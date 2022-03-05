@@ -13,7 +13,9 @@ In the backend, we were successfully able to set up the basic database end point
 Further work would include writing scripts to send verification email to Users during first login. Also, we intend to add other tables into the database to support future functionalities being employed in the front-end.
 
 ## Links
-[Github Repo](https://github.com/Monicakodali/SEPROJECT) [API Documentation](https://github.com/Monicakodali/SEPROJECT.wiki.git)
+[Github Repo](https://github.com/Monicakodali/SEPROJECT)\
+[API Documentation](https://github.com/Monicakodali/SEPROJECT.wiki.git)
+
 
 ## Completed Stories
 
