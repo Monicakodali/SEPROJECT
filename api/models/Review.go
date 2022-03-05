@@ -1,6 +1,8 @@
 package models
 
-import "time"
+import (
+	"time"
+)
 
 type Review struct {
 	Email    string    `json:"Email"`
@@ -8,6 +10,6 @@ type Review struct {
 	Est_id   string    `json:"Est_id"`
 	Est_name string    `json:"Est_name"`
 	Review   string    `json:"Review"`
-	Rating   float32   `json:"Rating"`
-	revTime  time.Time `json:"revTime"`
+	Rating   float64   `json:"Rating"`
+	RevTime  time.Time `json:"revTime"`
 }

@@ -25,10 +25,10 @@ func TestCreateReview(t *testing.T) {
 
 	router := gin.New()
 
-	reviewController := controller.RevController{}
+	reviewController := controller.ReviewController{}
 	reviewController.Init(db)
 
-	router.POST("/api/users", reviewController.CreateReviews)
+	router.POST("/api/users", reviewController.NewReview)
 	var jsonStr = []byte(`{
 		"Email": "mmisra@ufl.edu",
 			"Name":    "m misra",

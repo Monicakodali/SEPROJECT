@@ -26,7 +26,7 @@ func main() {
 	establishmentController.Init(db)
 	userController := controller.UserController{}
 	userController.Init(db)
-	revController := controller.RevController{}
+	revController := controller.ReviewController{}
 	revController.Init(db)
 
 	router.Use(func(ctx *gin.Context) {
@@ -44,8 +44,7 @@ func main() {
 	router.GET("/api/users", userController.ListUsers)
 	router.POST("/api/users", userController.SignUp)
 	router.DELETE("/api/users", userController.DeleteUser)
-	router.GET("/api/reviews", revController.ListRevHandler)
-	router.POST("/api/reviews", revController.CreateReviews)
-	router.DELETE("/api/reviews", revController.DeleteReview)
+	router.GET("/api/reviews", revController.ListReviews)
+	router.POST("/api/reviews", revController.NewReview)
 
 }
