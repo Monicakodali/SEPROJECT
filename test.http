@@ -1,7 +1,33 @@
 GET http://localhost:8080/api/establishments
 
 
+<<<<<<< HEAD
   
+=======
+POST http://localhost:8080/api/reviews
+Content-Type: application/json
+
+  {
+	"Email": "cpagolu@ufl.edu",
+	"Name": "Carol Navya Pagolu",
+	"Est_id": "78",
+	"Est_name": "0",
+  "Review": "Amazing Service",
+  "Rating": 4.5,
+  "revTime": {{$timestamp}}
+  }
+
+POST http://localhost:8080/api/users
+Content-Type: application/json
+
+  {
+  "Username": "carolnavya",
+	"Email": "cpagolu@ufl.edu",
+	"Name": "Carol Navya Pagolu",
+	"Password": "abc123",
+	"Verified": "0"
+  }
+>>>>>>> e4a7c6ae0b178efeb3585ac843c34d3adca892f6
 
 
 POST http://localhost:8080/api/establishments
