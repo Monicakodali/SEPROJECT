@@ -50,4 +50,6 @@ func main() {
 	router.GET("/api/reviews", revController.ListReviews)
 	router.POST("/api/reviews", revController.NewReview)
 
+	//running
+
 }
