@@ -49,7 +49,7 @@ func main() {
 	router.DELETE("/api/users", userController.DeleteUser)
 	router.GET("/api/reviews", revController.ListReviews)
 	router.POST("/api/reviews", revController.NewReview)
-
+	router.Run()
 	//running
 
 }
