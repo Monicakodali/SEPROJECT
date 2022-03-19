@@ -16,7 +16,10 @@ func main() {
 	if err != nil {
 		panic("failed to connect database")
 	}
+
 	db.Debug().AutoMigrate(&models.Establishment{})
+	db.Debug().AutoMigrate(&models.User{})
+	db.Debug().AutoMigrate(&models.Review{})
 	defer db.Close()
 	//fmt.Println(db)
 
