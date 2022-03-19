@@ -21,7 +21,6 @@ func main() {
 	db.Debug().AutoMigrate(&models.User{})
 	db.Debug().AutoMigrate(&models.Review{})
 	defer db.Close()
-	//fmt.Println(db)
 
 	router := gin.New()
 
@@ -33,8 +32,7 @@ func main() {
 	revController.Init(db)
 
 	router.Use(func(ctx *gin.Context) {
-
-		if ctx.Request.Header["Content-Length"][0] == "0" {
+		if ctx.Request.Header["Content-Length"] != nil && ctx.Request.Header["Content-Length"][0] == "0" {
 			ctx.JSON(http.StatusBadRequest, gin.H{"message": "Payload should not be empty"})
 			ctx.AbortWithStatus(http.StatusBadRequest)
 			return
@@ -50,6 +48,4 @@ func main() {
 	router.GET("/api/reviews", revController.ListReviews)
 	router.POST("/api/reviews", revController.NewReview)
 	router.Run()
-	//running
-
 }
