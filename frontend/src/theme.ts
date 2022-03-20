@@ -1,10 +1,9 @@
-import { red } from '@mui/material/colors';
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: red[500],
+      main: 'rgb(0,83,155)',
     },
   },
   mixins: {
