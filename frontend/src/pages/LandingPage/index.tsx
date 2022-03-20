@@ -1,4 +1,4 @@
-import { Container, Box, ContainerProps, Typography, Grid, Button as MuiButton, Divider, Paper, List, ListItem, Link, ListItemText, FormControl, InputLabel, Input, InputAdornment } from '@mui/material';
+import { Container, Box, ContainerProps, Typography, Grid, Button as MuiButton, Divider, Paper, List, ListItem, Link, ListItemText, FormControl, InputLabel, Input, InputAdornment, Card, CardContent, CardMedia } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import React from 'react';
@@ -35,6 +35,12 @@ const headerLinks = [
   {label: "Talk", href: '#'},
 ]
 
+const bodyCategories = [
+  { name: 'restaurants', image: '/images/swamp.jpg', href: '#'},
+  { name: 'buildings', image: '/images/engineering-building.png', href: '#'},
+  { name: 'libraries', image: '/images/library.jpg', href: '#'}
+]
+
 function Header({ maxWidth, handleSearch }: HeaderProps) {
 
   const [search, setSearch] = React.useState('')
@@ -69,7 +75,7 @@ function Header({ maxWidth, handleSearch }: HeaderProps) {
                   id="search-input"
                   value={search}
                   onChange={e => setSearch(e.target.value)}
-                  placeholder="restaurants, buildings, libraries..."
+                  placeholder={bodyCategories.map(c => c.name).join(', ') + "..."}
                   inputProps={{
                     "aria-label": "Search Input"
                   }}
@@ -97,7 +103,33 @@ export default function LandingPage() {
   return (
     <div>
       <Header handleSearch={s => navigate('/search?query=' + s)} maxWidth="md"/>
-      <Container maxWidth="md">
+      <Box sx={{backgroundColor: '#f5f5f5', py: 4}}>
+        <Container maxWidth="md">
+          <Typography variant="h4" color="primary" sx={{textAlign: 'center', fontSize: 20, mb: 3}}>Yelp UF</Typography>
+          <Grid container justifyContent="space-between" spacing={4}>
+            {bodyCategories.map(c => {
+
+              return (<Grid item key={c.name} sx={{flex: 1}}>
+                <Card variant="outlined" sx={{cursor: 'pointer', '&:hover': { borderColor: '#aaa', borderWidth: 1 } }} tabIndex={0} onClick={() => navigate('/search?category=' + c.name)}>
+                <CardMedia
+                  component="img"
+                  height="140"
+                  image={c.image}
+                  alt={`${c.name} example image`}
+                />
+                <CardContent sx={{ '&&': { py: 1.5 }}}>
+                  <Typography style={{textTransform: 'capitalize', textAlign: 'center'}}>{c.name}</Typography>
+                </CardContent>
+                </Card>
+                </Grid>)
+            })}
+
+
+          </Grid>
+        </Container>
+      </Box>
+      <Box minHeight={300}>
+        <Container maxWidth="md">
         <Grid container spacing={3}>
           <Grid item xs={4}>
           </Grid>
@@ -107,6 +139,8 @@ export default function LandingPage() {
           </Grid>
         </Grid>
       </Container>
+      </Box>
+      
     </div>
   );
 };
