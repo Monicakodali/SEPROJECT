@@ -19,7 +19,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout header={false}><LandingPage /></Layout>} />
           <Route path="/search" element={<Layout><Locations /></Layout>} />
-          <Route path="/login" element={<Layout><LoginPage /></Layout>} />
+          <Route path="/login" element={<Layout header={false}><LoginPage /></Layout>} />
           <Route path="/est/:id" element={<Layout><Establishment /></Layout>} />
         </Routes>
       </Router>
