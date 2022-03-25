@@ -18,10 +18,18 @@ func (usrRepo *UsrRepo) GetUser(username string, password string) (models.User, 
 
 	var myUser models.User
 
-	query := usrRepo.db.Where("Username = ? AND Password = ?", username, utils.EncryptPassword(password)).First(&myUser)
+	query := usrRepo.db.Where("Username = ?", username).First(&myUser)
 	if query.Error != nil {
 		return myUser, query.Error
 	}
+
+	passwordMatch := utils.CheckPasswordHash(password, myUser.Password)
+	var err error
+
+	if !passwordMatch {
+		return myUser, err
+	}
+
 	return myUser, nil
 }
 

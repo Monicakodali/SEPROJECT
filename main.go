@@ -42,6 +42,7 @@ func main() {
 	router.GET("/api/establishments", establishmentController.ListEstHandler)
 	router.POST("/api/establishments", establishmentController.CreateEstablishments)
 	router.DELETE("/api/establishments", establishmentController.DeleteEstablishment)
+	router.POST("/api/users/login", userController.GetUser)
 	router.GET("/api/users", userController.ListUsers)
 	router.POST("/api/users", userController.SignUp)
 	router.DELETE("/api/users", userController.DeleteUser)
