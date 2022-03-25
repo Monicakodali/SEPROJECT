@@ -10,6 +10,14 @@ type UsrRepo struct {
 	db *gorm.DB
 }
 
+type UserError struct {
+	message string
+}
+
+func (e UserError) Error() string {
+	return e.message
+}
+
 func (usrRepo *UsrRepo) Init(db *gorm.DB) {
 	usrRepo.db = db
 }
@@ -24,10 +32,9 @@ func (usrRepo *UsrRepo) GetUser(username string, password string) (models.User, 
 	}
 
 	passwordMatch := utils.CheckPasswordHash(password, myUser.Password)
-	var err error
 
 	if !passwordMatch {
-		return myUser, err
+		return myUser, UserError{"Passwords don't match"}
 	}
 
 	return myUser, nil
