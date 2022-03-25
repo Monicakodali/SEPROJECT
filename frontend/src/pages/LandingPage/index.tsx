@@ -1,8 +1,9 @@
-import { Container, Box, ContainerProps, Typography, Grid, Button as MuiButton, Divider, Paper, List, ListItem, Link, ListItemText, FormControl, InputLabel, Input, InputAdornment, Card, CardContent, CardMedia } from '@mui/material';
+import { Container, Box, ContainerProps, Typography, Grid, Button as MuiButton, Divider, Paper, List, ListItem, ListItemText, FormControl, InputLabel, Input, InputAdornment, Card, CardContent, CardMedia } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import React from 'react';
 import { useNavigate } from "react-router-dom";
+import { Link } from '../../components'
 
 type HeaderProps = {
   maxWidth: ContainerProps['maxWidth'],
@@ -45,6 +46,8 @@ function Header({ maxWidth, handleSearch }: HeaderProps) {
 
   const [search, setSearch] = React.useState('')
 
+  const navigate = useNavigate()
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     handleSearch(search)
@@ -55,13 +58,13 @@ function Header({ maxWidth, handleSearch }: HeaderProps) {
     <Container maxWidth={maxWidth} sx={{p: 3, display: 'flex', flexDirection: 'column', height: '100%'}}>
       <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
         <Box style={{paddingTop: 6}}>
-          {headerLinks.map(({href, label}) => <StyledLink underline="hover" color="#FFF" href={href}>{label}</StyledLink>)}
+          {headerLinks.map(({href, label}) => <StyledLink to={href} underline="hover" color="#FFF">{label}</StyledLink>)}
         </Box>
         <Box sx={{color: "white"}}>
-          <Button color="inherit">
+          <Button onClick={() => navigate('/login')} color="inherit">
             Log In
           </Button>
-          <Button color="inherit" variant="outlined">
+          <Button onClick={() => navigate('/signup')} color="inherit" variant="outlined">
             Sign Up
           </Button>
         </Box>
