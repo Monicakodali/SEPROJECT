@@ -1,9 +1,20 @@
 GET http://localhost:8080/api/establishments
 
+POST http://localhost:8080/api/establishments
+Content-Type: application/json
 
-<<<<<<< HEAD
-  
-=======
+
+  {
+    "id": "8990",
+    "type": "DINING",
+    "name": "P.O.D. Market",
+    "building": "0551",
+    "room": "173",
+    "url": "",
+    "x": 29.64636443982178,
+    "y": -82.34148054394188
+    }
+
 POST http://localhost:8080/api/reviews
 Content-Type: application/json
 
