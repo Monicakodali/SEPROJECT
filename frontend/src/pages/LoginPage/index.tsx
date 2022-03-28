@@ -37,6 +37,7 @@ export default function LoginPage() {
   const [isLoading, setLoading] = useState(false)
   const [error, setError] = useState(false)
   const [success, setSuccess] = useState(false)
+  const [init, setInit] = useState(false)
 
   const navigate = useNavigate()
   
@@ -48,27 +49,26 @@ export default function LoginPage() {
     }
     const t = setTimeout(() => {
       navigate('/')
-    }, 3000)
+    }, 2500)
 
     return () => clearTimeout(t)
 
   }, [success, navigate])
 
   React.useEffect(() => {
-    if(isAuthenticated && !success) {
+    if(isAuthenticated && !success && !init) {
       navigate('/', { replace: true })
     }
-  }, [isAuthenticated, navigate, success])
+  }, [isAuthenticated, navigate, success, init])
 
   
-
-
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm(f => ({...f, [e.target.name]: e.target.value}))
     setTouched(f => ({...f, [e.target.name]: true}))
   }
 
   const onLogIn = () => {
+    setInit(true)
     setTouched({username: true, password: true})
     setLoading(true)
     setError(false)

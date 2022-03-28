@@ -40,7 +40,8 @@ const AuthProvider: FC = ({ children }) => {
   const logout = useCallback(() => {
     setUser(null)
     setIsAuthenticated(false)
-  }, [setIsAuthenticated])
+    window.location.reload()
+  }, [])
 
   const value = useMemo<IAuthContext>(() => ({
     isAuthenticated,
