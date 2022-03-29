@@ -2,7 +2,7 @@ import { Container, Box, ContainerProps, Typography, Grid, Button as MuiButton, 
 import { styled } from '@mui/material/styles';
 import axios from 'axios';
 import * as React from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Navigate,
 } from "react-router-dom";
@@ -16,6 +16,8 @@ import useDiningHours from '../../hooks/dininghours';
 import { addDays, getDay, isAfter, isBefore, isValid, parse } from 'date-fns';
 import MiniMap from './MiniMap'
 import useBuilding from '../../hooks/buildings/index';
+import WriteReviewModal from './WriteReviewModal'
+import { useAuth } from '../../context/auth';
 
 type HeaderProps = {
   name: string,
@@ -32,7 +34,7 @@ function Header({name, maxWidth, rating, numRatings, tags, isOpen, hoursOfOperat
   const hasHourInfo = isOpen !==null && hoursOfOperation !==null
 
   return(
-    <Box sx={{backgroundColor: 'tomato', display: 'flex', alignItems: 'flex-end', height: 300}}>
+    <Box sx={{bgcolor: 'primary.dark', display: 'flex', alignItems: 'flex-end', height: 300}}>
     <Container maxWidth={maxWidth} sx={{p: 3}}>
       <Typography variant="h1" sx={{color: 'white'}}>{name}</Typography>
       <Box sx={{mt:1, mb: 2}}>
@@ -46,6 +48,7 @@ function Header({name, maxWidth, rating, numRatings, tags, isOpen, hoursOfOperat
         <Typography sx={{color: 'white', ml: 2}} component="span">{hoursOfOperation}</Typography>
       </Box>}
     </Container>
+
   </Box>
   )
 }
@@ -65,18 +68,22 @@ export default function Establishment() {
   const [data, setData] = React.useState<null | Establishment>(null)
   const [err, setErr] = React.useState(false)
 
+  const navigate = useNavigate()
+  const { isAuthenticated } = useAuth()
+
+  const [modalOpen, setModalOpen] = React.useState(false)
+
   const hours = useDiningHours(data)
   const building = useBuilding(data)
 
   // @TODO: populate with actual rating
   // randomly generate rating for now
-  const rating = React.useMemo(() => Math.floor(Math.random() * 5) + 1, [])
+  const rating = React.useMemo(() => Math.random() * 5 + 1, [])
   // @TODO: populate with actual num ratings
   // randomly generate num of ratings for now
   const numRatings = React.useMemo(() => Math.floor(Math.random() * 100) + 10, [])
   // @TODO: populate tags from DB
   const tags = ['Coffee & Tea', 'Fast Food', 'Example Tag 3']
-
 
   const day = (getDay(new Date()) + 6) % 7
   
@@ -137,6 +144,14 @@ export default function Establishment() {
 
   const { name } = data
 
+  //@TODO: hookup this submission
+  const handleSubmit = (data: { review: string, rating: number}): Promise<void> => {
+    return new Promise<void>(resolve => {
+      console.log(data)
+      resolve()
+    })
+  }
+
   return (
     <Container maxWidth="lg" disableGutters>
       <Header maxWidth="md" hoursOfOperation={hours ? hours[day].hoursOfOperation : null} {...{name, rating, numRatings, tags, isOpen}} />
@@ -144,7 +159,7 @@ export default function Establishment() {
         <Grid container spacing={3}>
           <Grid item xs={8}>
             <Box sx={{mt: 2, mb: 1}}>
-              <Button size="small" color="primary" variant="contained" startIcon={<StarOutlineIcon />}>
+              <Button size="small" color="primary" variant="contained" startIcon={<StarOutlineIcon />} onClick={isAuthenticated ? () => setModalOpen(true) : () => navigate('/login')}>
                 Write a Review
               </Button>
               <Button size="small" variant="outlined" startIcon={<CameraAltIcon />}>
@@ -229,6 +244,7 @@ export default function Establishment() {
           </Grid>
         </Grid>
       </Container>
+      {data !== null && <WriteReviewModal establishment={data} open={modalOpen} handleClose={() => setModalOpen(false)} handleSubmit={handleSubmit}/>}
     </Container>
   );
 };
