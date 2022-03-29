@@ -1,5 +1,13 @@
 # HAPPY HAP'S YELP
-By: Carol Navya Pagolu, Monica Bhargavi Kodali, Manjari Misra, Andrew Kuczynski
+
+
+## Contributers:
+```
+Andrew Kuczynski - Frontend
+Monica Bhargavi Kodali - Frontend
+Carol Navya Pagolu - Backend
+Manjari Misra - Backend
+```
 
 ## Overview
 Happy Hap’s Yelp is an application that will allow students to look up, sort, and review different establishments around Gainesville with a great focus on campus. Users will be able to leave detailed reviews, comments, and photos on places in Gainesville including restaurants, attractions, and services, similar to Yelp.com
