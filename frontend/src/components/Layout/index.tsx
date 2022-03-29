@@ -11,8 +11,7 @@ export default function Layout({children, header}: LayoutProps) {
 
   return (
     <>
-    {header && <><Header loggedIn={false}/>
-    <Toolbar /></>}
+    {header && <><Header /><Toolbar /></>}
     <main>
       {children}
     </main>

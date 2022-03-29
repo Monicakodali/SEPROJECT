@@ -27,9 +27,8 @@ func (est *EstController) GetOneEstHandler(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
 		})
-
-		ctx.JSON(http.StatusOK, &res)
 	}
+	ctx.JSON(http.StatusOK, &res)
 }
 
 func (est *EstController) ListEstHandler(c *gin.Context) {
