@@ -1,23 +1,24 @@
-import { Box, IconButton as MuiIconButton, Avatar, Tooltip, Menu, MenuItem, Divider, ListItemIcon, Typography } from '@mui/material';
+import { Box, IconButton as MuiIconButton, Avatar, Menu, MenuItem, Divider, ListItemIcon, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import React from 'react';
 import { useNavigate } from "react-router-dom";
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { useAuth } from '../../../../context/auth';
+import { useAuth } from '../../context/auth';
 
 import PersonIcon from '@mui/icons-material/Person';
 
 const IconButton = styled(MuiIconButton)(({ theme }) => {
   return {
+    maxHeight: 40,
     '&:not(:last-child)': {
-      marginRight: theme.spacing(1)
+      marginRight: theme.spacing(1.25)
     }
   }
 })
 
-export default function ProfileButtons() {
+export default function ProfileButtons({ variant } : { variant: 'light' | 'dark'}) {
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -31,11 +32,13 @@ export default function ProfileButtons() {
   const navigate = useNavigate()
   const { user, logout } = useAuth()
 
-  const firstLetter = (user?.Name ?? '')[0] ?? 'Y'  
+  const firstLetter = (user?.Name ?? '')[0] ?? 'Y' 
+
+  const avatarSize = variant === 'light' ? 42 : 32
 
   return(
   <React.Fragment>
-  <Box sx={{color: "white", display: 'flex'}}>
+  <Box sx={{color: variant === 'dark' ? "white" : 'primary.light', display: 'flex', height: '100%'}}>
         <IconButton onClick={() => navigate('/')} color="inherit" aria-label="messages">
           <ChatBubbleIcon />
         </IconButton>
@@ -50,7 +53,7 @@ export default function ProfileButtons() {
             aria-expanded={open ? 'true' : undefined}
             disableRipple
           >
-        <Avatar sx={{bgcolor: 'secondary.light', height: 32, width: 32}} variant="rounded">
+        <Avatar sx={{bgcolor: 'secondary.light', height: avatarSize, width: avatarSize}} variant="rounded">
           {firstLetter}
         </Avatar>
         </IconButton>
@@ -67,7 +70,7 @@ export default function ProfileButtons() {
         minWidth: 200,
         overflow: 'visible',
         filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-        marginTop: 0.75,
+        marginTop: variant === 'light' ? 1.2 : 0.9,
         '& .MuiAvatar-root': {
           width: 32,
           height: 32,
@@ -78,8 +81,8 @@ export default function ProfileButtons() {
           content: '""',
           display: 'block',
           position: 'absolute',
-          top: 0,
-          right: 19,
+          top: variant === 'light' ? 2 : 0,
+          right: variant === 'light' ? 24 : 19,
           width: 10,
           height: 10,
           bgcolor: 'background.paper',

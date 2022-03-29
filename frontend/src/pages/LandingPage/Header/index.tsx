@@ -4,7 +4,7 @@ import React from 'react';
 import { bodyCategories } from '../config'
 import LoginButtons from './LoginButtons'
 import Links from './Links'
-import ProfileButtons from './ProfileButtons'
+import { ProfileButtons } from '../../../components'
 import { useAuth } from '../../../context/auth';
 
 
@@ -33,7 +33,7 @@ export default function Header({ maxWidth, handleSearch }: HeaderProps) {
     <Container maxWidth={maxWidth} sx={{p: 3, display: 'flex', flexDirection: 'column', height: '100%'}}>
       <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
         <Links />
-        {isAuthenticated ? <ProfileButtons /> : <LoginButtons />}
+        {isAuthenticated ? <ProfileButtons variant="dark" /> : <LoginButtons />}
       </Box>
       <Box sx={{flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
         <Box sx={{maxWidth: 700, flexGrow: 1, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>

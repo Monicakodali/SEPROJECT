@@ -40,6 +40,7 @@ func main() {
 	})
 
 	router.GET("/api/establishments", establishmentController.ListEstHandler)
+	router.GET("/api/establishments/:id", establishmentController.GetOneEstHandler)
 	router.POST("/api/establishments", establishmentController.CreateEstablishments)
 	router.DELETE("/api/establishments", establishmentController.DeleteEstablishment)
 	router.POST("/api/users/login", userController.GetUser)

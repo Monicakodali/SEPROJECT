@@ -162,7 +162,7 @@ export default function Establishment() {
               <Typography component="h2" variant="h5" gutterBottom>Location &amp; Hours</Typography>
               <Grid container spacing={3}>
                 <Grid item xs={5}>
-                  {data?.x && data?.y && <MiniMap height={150} coordinates={[data.x, data.y]} />}
+                  {data?.x && data?.y && <MiniMap height={150} coordinates={[data.y, data.x]} />}
 
 
                   <Box sx={{display: 'flex', alignItems: 'flex-start', py: 2, justifyContent: 'space-between' }}>
