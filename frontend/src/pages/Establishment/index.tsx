@@ -1,4 +1,4 @@
-import { Container, Box, ContainerProps, Typography, Grid, Button as MuiButton, Divider, Paper, List, ListItem, Link, ListItemText } from '@mui/material';
+import { Container, Box, ContainerProps, Typography, Grid, Button as MuiButton, Divider, Paper, List, ListItem, Link, ListItemText, Snackbar, Alert } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import axios from 'axios';
 import * as React from 'react';
@@ -6,7 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import {
   Navigate,
 } from "react-router-dom";
-import { Rating } from '../../components';
+import { Rating, Stars } from '../../components';
 import Tags from '../../components/Tags/index';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import IosShareIcon from '@mui/icons-material/IosShare';
@@ -66,10 +66,13 @@ const Button = styled(MuiButton)(({ theme }) => {
 export default function Establishment() {
   const { id } = useParams()
   const [data, setData] = React.useState<null | Establishment>(null)
+  const [reviews, setReviews] = React.useState<null | Review[]>(null)
+  const [toastOpen, setToastOpen] = React.useState(false)
   const [err, setErr] = React.useState(false)
+  const [reviewsErr, setReviewsErr] = React.useState(false)
 
   const navigate = useNavigate()
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, user } = useAuth()
 
   const [modalOpen, setModalOpen] = React.useState(false)
 
@@ -131,6 +134,16 @@ export default function Establishment() {
     }
   }, [id])
 
+  React.useEffect(() => {
+    if(data && data.id) {
+      axios.get(`/api/reviews/${data?.id}`).then(res => {
+        setReviews(res.data)
+      }).catch(err => {
+        setReviewsErr(true)
+      })
+    }
+  }, [data])
+
 
   if(!id || err) {
     return (<Navigate to="/search" />)
@@ -140,15 +153,22 @@ export default function Establishment() {
     return <div>Loading...</div>
   }
 
-  console.log({data, hoursOfOperation, isOpen, hours, building})
+  console.log({user, data, hoursOfOperation, isOpen, hours, building})
 
   const { name } = data
 
+
   //@TODO: hookup this submission
   const handleSubmit = (data: { review: string, rating: number}): Promise<void> => {
-    return new Promise<void>(resolve => {
-      console.log(data)
-      resolve()
+    return axios.post('/api/reviews', {
+      "Email": user?.Email,
+      "Name": user?.Name,
+      "Est_id": id,
+      "Review": data.review,
+      "Rating": data.rating
+  }).then(res => {
+      setReviews(r => ([res.data, ...(r || [])]))
+      setToastOpen(true)
     })
   }
 
@@ -220,7 +240,16 @@ export default function Establishment() {
             <Divider />
             <Box sx={{mt: 2, mb: 1}}>
               <Typography component="h2" variant="h5">Reviews</Typography>
-
+              {reviews?.map((r, i) => {
+                return <><Box key={i} sx={{my: 2}}>
+                  <Typography variant="caption" sx={{fontWeight: 'bold'}}>{r.Name}</Typography>
+                  <Stars rating={r.Rating} size={18} sx={{ mb: 1}}/>
+                  <Typography>{r.Review}</Typography>
+                </Box>
+                <Divider />
+                </>
+              })}
+              {reviews?.length === 0 && <Typography>This place has no reviews yet.</Typography>}
 
             </Box>
 
@@ -244,6 +273,11 @@ export default function Establishment() {
           </Grid>
         </Grid>
       </Container>
+      <Snackbar open={toastOpen} autoHideDuration={4000} onClose={() => setToastOpen(false)} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+        <Alert onClose={() => setToastOpen(false)} severity="success">
+          Your review has been posted successfully!
+        </Alert>
+      </Snackbar>
       {data !== null && <WriteReviewModal establishment={data} open={modalOpen} handleClose={() => setModalOpen(false)} handleSubmit={handleSubmit}/>}
     </Container>
   );

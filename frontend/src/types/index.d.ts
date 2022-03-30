@@ -7,5 +7,15 @@ type Establishment = {
   url: string,
   x: number,
   y: number,
-  type: 'DINING' | 'MUSEUM'
+  type: 'restaurant' | 'museum' | 'library' | 'building'
+}
+
+type Review = {
+  Email: string,
+  Name: string,
+  Est_id: string,
+  Est_name: string,
+  Review: string,
+  Rating: number,
+  revTime: string
 }

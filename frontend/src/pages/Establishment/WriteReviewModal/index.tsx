@@ -23,7 +23,7 @@ export default function WriteReviewModal({open, handleClose, establishment, hand
       setRating(0)
       setLoading(false)
       handleClose()
-    }, 2000)
+    }, 1250)
 
   }
 
