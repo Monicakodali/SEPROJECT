@@ -1,5 +1,6 @@
 import axios from 'axios';
-import React, { useState, useCallback, useMemo, FC, useContext } from 'react';
+import React, { useCallback, useMemo, FC, useContext } from 'react';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 interface IAuthContext {
   isAuthenticated: boolean;
@@ -19,8 +20,9 @@ const AuthContext = React.createContext<IAuthContext>(defaultState);
 
 const AuthProvider: FC = ({ children }) => {
   
-  const [isAuthenticated, setIsAuthenticated] = useState(defaultState.isAuthenticated);
-  const [user, setUser] = useState(defaultState.user);
+  // temporary local user management and login status - NOT SECURE
+  const [isAuthenticated, setIsAuthenticated] = useLocalStorage('isAuth', defaultState.isAuthenticated);
+  const [user, setUser] = useLocalStorage('localUser', defaultState.user);
 
   const login = useCallback((user: string, pass: string) => {
     return axios.post('/api/users/login', {
@@ -35,7 +37,7 @@ const AuthProvider: FC = ({ children }) => {
       return false
     })
     
-  }, [setIsAuthenticated])
+  }, [setIsAuthenticated, setUser])
 
   const logout = useCallback(() => {
     setUser(null)

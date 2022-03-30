@@ -48,6 +48,7 @@ func main() {
 	router.POST("/api/users", userController.SignUp)
 	router.DELETE("/api/users", userController.DeleteUser)
 	router.GET("/api/reviews", revController.ListReviews)
+	router.GET("/api/reviews/:establishmentId", revController.GetReviewsForEst)
 	router.POST("/api/reviews", revController.NewReview)
 	router.Run()
 }
