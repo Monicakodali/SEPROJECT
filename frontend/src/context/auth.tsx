@@ -5,13 +5,15 @@ import useLocalStorage from '../hooks/useLocalStorage';
 interface IAuthContext {
   isAuthenticated: boolean;
   login: (u: string, p: string) => Promise<boolean>
-  logout: () => any
+  logout: () => any,
+  signUp: (user: User) => Promise<boolean>
   user: Record<string, string> | null
 }
 
 const defaultState: IAuthContext = {
   isAuthenticated: false,
   login: () => Promise.resolve(false),
+  signUp: () => Promise.resolve(false),
   logout: () => {},
   user: null
 };
@@ -42,15 +44,33 @@ const AuthProvider: FC = ({ children }) => {
   const logout = useCallback(() => {
     setUser(null)
     setIsAuthenticated(false)
-    window.location.reload()
+    window.location.href = '/login'
   }, [])
+
+  const signUp = useCallback((user: User) => {
+    return axios.post('/api/users', {
+      Username: user.Username,
+      Password: user.Password,
+      Name: user.Name,
+      //Email: user.Email
+    }).then((res) => {
+      setUser(res.data)
+      setIsAuthenticated(true)
+      return true
+    }).catch(err => {
+      setIsAuthenticated(false)
+      return false
+    })
+    
+  }, [setIsAuthenticated, setUser])
 
   const value = useMemo<IAuthContext>(() => ({
     isAuthenticated,
     login,
     user,
-    logout
-  }), [isAuthenticated, login, user, logout])
+    logout,
+    signUp
+  }), [isAuthenticated, login, user, logout, signUp])
 
   return (
     <AuthContext.Provider value={value}>
