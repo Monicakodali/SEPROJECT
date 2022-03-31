@@ -5,17 +5,8 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Toolbar from '@mui/material/Toolbar';
 import Paper from '@mui/material/Paper';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import MoreIcon from '@mui/icons-material/MoreVert';
 import { useAuth } from '../../../context/auth';
 import ProfileButtons from '../../ProfileButtons';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -75,8 +66,6 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
   borderBottomColor: theme.palette.grey[200],
   backgroundColor: 'white'
 }));
-
-const siteTitle = "YelpUF"
 
 export default function Header() {
   
