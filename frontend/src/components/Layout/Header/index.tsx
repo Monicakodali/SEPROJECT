@@ -107,15 +107,9 @@ export default function Header() {
     <>
       <StyledAppBar color="transparent" elevation={0} position="fixed">
         <Toolbar>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: 'none', sm: 'block' }, flexGrow: 1 }}
-            color="primary"
-          >
-            {siteTitle}
-          </Typography>
+          <Box sx={{ display: { xs: 'none', sm: 'block' }, flexGrow: 1 }}>
+            <img src="/images/logo.png" alt="logo" style={{width: 110, height:'auto', cursor: 'pointer'}} onClick={() => navigate('/')} />
+          </Box>
           <Box sx={{ flexGrow: 1.5 }} component="form" onSubmit={handleSubmit}>
             <Search>
               <SearchIconWrapper>
