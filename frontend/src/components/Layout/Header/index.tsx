@@ -18,7 +18,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { useAuth } from '../../../context/auth';
 import ProfileButtons from '../../ProfileButtons';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const Search = styled(props => <Paper elevation={3} {...props}/>)(({ theme }) => ({
   position: 'relative',
@@ -83,6 +83,15 @@ export default function Header() {
   const { isAuthenticated } = useAuth()
   const navigate = useNavigate()
 
+  let [searchParams,setSearchParams] = useSearchParams()
+
+  const [search, setSearch] = React.useState(searchParams.get('query') ?? '')
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setSearchParams(search ? { query: search } : {})
+  }
+
   const profileArea = (<ProfileButtons variant="light" />)
 
   const loginButtons = (<>
@@ -107,7 +116,7 @@ export default function Header() {
           >
             {siteTitle}
           </Typography>
-          <Box sx={{ flexGrow: 1.5 }}>
+          <Box sx={{ flexGrow: 1.5 }} component="form" onSubmit={handleSubmit}>
             <Search>
               <SearchIconWrapper>
                 <SearchIcon />
@@ -115,6 +124,8 @@ export default function Header() {
               <StyledInputBase
                 placeholder="Search…"
                 inputProps={{ 'aria-label': 'search' }}
+                value={search}
+                onChange={e => setSearch(e.target.value)}
               />
             </Search>
           </Box>

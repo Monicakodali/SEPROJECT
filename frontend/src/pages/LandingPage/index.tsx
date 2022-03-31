@@ -11,7 +11,7 @@ export default function LandingPage() {
  
   return (
     <div>
-      <Header handleSearch={s => navigate('/search?query=' + s)} maxWidth="md"/>
+      <Header handleSearch={s => navigate(`/search${s ? `?query=${s}` : ''}`)} maxWidth="md"/>
       <Box sx={{backgroundColor: '#f5f5f5', py: 4}}>
         <Container maxWidth="md">
           <Typography variant="h4" color="primary" sx={{textAlign: 'center', fontSize: 20, mb: 3}}>Yelp UF</Typography>
