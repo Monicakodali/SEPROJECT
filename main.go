@@ -6,6 +6,7 @@ import (
 	"github.com/Monicakodali/SEPROJECT/api/controller"
 	"github.com/Monicakodali/SEPROJECT/api/models"
 	"github.com/Monicakodali/SEPROJECT/api/utils"
+	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )
@@ -38,6 +39,8 @@ func main() {
 			return
 		}
 	})
+
+	router.Use(static.Serve("/", static.LocalFile("./frontend/build", true)))
 
 	router.GET("/api/establishments", establishmentController.ListEstHandler)
 	router.GET("/api/establishments/:id", establishmentController.GetOneEstHandler)
