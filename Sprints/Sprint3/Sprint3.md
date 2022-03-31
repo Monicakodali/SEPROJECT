@@ -1,7 +1,7 @@
 # Sprint 3
 03/05-04/01
 ## Summary
-In Sprint 3, on the frontend, our team successfully created the sign up page.
+In Sprint 3, on the frontend, our team successfully created the sign up page and the landing page was made more user friendly.
 
 ## Links
 ## Completed Stories
