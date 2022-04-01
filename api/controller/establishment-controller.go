@@ -21,7 +21,7 @@ func (eRepo *EstController) Init(db *gorm.DB) {
 
 func (est *EstController) GetOneEstHandler(ctx *gin.Context) {
 
-	eid := ctx.Param("id")
+	eid := ctx.Param("est_id")
 	res, err := est.estRepo.GetEstByID(eid)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{

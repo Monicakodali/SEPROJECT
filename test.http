@@ -1,3 +1,44 @@
+GET http://localhost:8080/api/reviews
+
+DELETE http://localhost:8080/api/reviews
+Content-Type: application/json
+
+
+  {
+    "Review_id": "82"
+  }
+  
+GET http://localhost:8080/api/reviews/user/cpagolu
+
+
+
+POST http://localhost:8080/api/reviews
+Content-Type: application/json
+
+
+  {
+    "Review_id": 82,
+    "Review_user": "cpagolu",
+    "Review": "Great Service!",
+    "Review_est": 82,
+    "Rating": 4
+  }
+
+POST http://localhost:8080/api/reviews
+Content-Type: application/json
+
+
+  {
+    "Review_id": 82,
+    "Review_user": "cpagolu",
+    "Review": "Delicious food",
+    "Review_est": 10,
+    "Rating": 2
+  }
+  
+
+
+
 
 GET http://localhost:8080/api/establishments
 

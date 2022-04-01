@@ -5,7 +5,7 @@ import (
 )
 
 type Review struct {
-	Review_Id   int           `gorm:"primaryKey; not null" json:"Review_id"`
+	Review_Id   int           `gorm:"primaryKey; not null;unique" json:"Review_id"`
 	Review_user string        `json:"Review_user"`
 	Review_est  int           `json:"Review_est"`
 	Review      string        `json:"Review"`
