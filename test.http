@@ -39,7 +39,6 @@ Content-Type: application/json
     "y": -82.34148054394188
     }
 
-<<<<<<< HEAD
 POST http://localhost:8080/api/reviews
 Content-Type: application/json
 
@@ -63,10 +62,6 @@ Content-Type: application/json
 	"Password": "abc123",
 	"Verified": "0"
   }
->>>>>>> e4a7c6ae0b178efeb3585ac843c34d3adca892f6
-
-=======
->>>>>>> 9f4c1a0ec4f56d2a9fb19e558cf27c46d97c7ad7
 
 POST http://localhost:8080/api/establishments
 Content-Type: application/json
