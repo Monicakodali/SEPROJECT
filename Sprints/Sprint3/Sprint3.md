@@ -1,7 +1,7 @@
 # Sprint 3
 03/05-04/01
 ## Summary
-In Sprint 3, on the frontend, our team successfully created the sign up page and the landing page was made more user friendly. User is able to succesfully leave a review on the establishment. Furthermore, a user is able to successfully login. 
+In Sprint 3, on the frontend, our team successfully created the sign up page and the landing page was made more user friendly. User is able to succesfully leave a review on the establishment. Furthermore, a user is able to successfully login and is able to see a profile navigation bar as well.
 
 ## Links
 ## Completed Stories
