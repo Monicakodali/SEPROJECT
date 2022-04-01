@@ -1,12 +1,12 @@
-import { Container, Box, ContainerProps, Typography, Grid, Button as MuiButton, Divider, Paper, List, ListItem, Link, ListItemText } from '@mui/material';
+import { Container, Box, ContainerProps, Typography, Grid, Button as MuiButton, Divider, Paper, List, ListItem, Link, ListItemText, Snackbar, Alert } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import axios from 'axios';
 import * as React from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Navigate,
 } from "react-router-dom";
-import { Rating } from '../../components';
+import { Rating, Stars } from '../../components';
 import Tags from '../../components/Tags/index';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import IosShareIcon from '@mui/icons-material/IosShare';
@@ -16,6 +16,8 @@ import useDiningHours from '../../hooks/dininghours';
 import { addDays, getDay, isAfter, isBefore, isValid, parse } from 'date-fns';
 import MiniMap from './MiniMap'
 import useBuilding from '../../hooks/buildings/index';
+import WriteReviewModal from './WriteReviewModal'
+import { useAuth } from '../../context/auth';
 
 type HeaderProps = {
   name: string,
@@ -32,7 +34,7 @@ function Header({name, maxWidth, rating, numRatings, tags, isOpen, hoursOfOperat
   const hasHourInfo = isOpen !==null && hoursOfOperation !==null
 
   return(
-    <Box sx={{backgroundColor: 'tomato', display: 'flex', alignItems: 'flex-end', height: 300}}>
+    <Box sx={{bgcolor: 'primary.dark', display: 'flex', alignItems: 'flex-end', height: 300}}>
     <Container maxWidth={maxWidth} sx={{p: 3}}>
       <Typography variant="h1" sx={{color: 'white'}}>{name}</Typography>
       <Box sx={{mt:1, mb: 2}}>
@@ -46,6 +48,7 @@ function Header({name, maxWidth, rating, numRatings, tags, isOpen, hoursOfOperat
         <Typography sx={{color: 'white', ml: 2}} component="span">{hoursOfOperation}</Typography>
       </Box>}
     </Container>
+
   </Box>
   )
 }
@@ -63,20 +66,27 @@ const Button = styled(MuiButton)(({ theme }) => {
 export default function Establishment() {
   const { id } = useParams()
   const [data, setData] = React.useState<null | Establishment>(null)
+  const [reviews, setReviews] = React.useState<null | Review[]>(null)
+  const [toastOpen, setToastOpen] = React.useState(false)
   const [err, setErr] = React.useState(false)
+  const [reviewsErr, setReviewsErr] = React.useState(false)
+
+  const navigate = useNavigate()
+  const { isAuthenticated, user } = useAuth()
+
+  const [modalOpen, setModalOpen] = React.useState(false)
 
   const hours = useDiningHours(data)
   const building = useBuilding(data)
 
   // @TODO: populate with actual rating
   // randomly generate rating for now
-  const rating = React.useMemo(() => Math.floor(Math.random() * 5) + 1, [])
+  const rating = React.useMemo(() => Math.random() * 5 + 1, [])
   // @TODO: populate with actual num ratings
   // randomly generate num of ratings for now
   const numRatings = React.useMemo(() => Math.floor(Math.random() * 100) + 10, [])
   // @TODO: populate tags from DB
   const tags = ['Coffee & Tea', 'Fast Food', 'Example Tag 3']
-
 
   const day = (getDay(new Date()) + 6) % 7
   
@@ -124,6 +134,16 @@ export default function Establishment() {
     }
   }, [id])
 
+  React.useEffect(() => {
+    if(data && data.id) {
+      axios.get(`/api/reviews/${data?.id}`).then(res => {
+        setReviews(res.data)
+      }).catch(err => {
+        setReviewsErr(true)
+      })
+    }
+  }, [data])
+
 
   if(!id || err) {
     return (<Navigate to="/search" />)
@@ -133,9 +153,24 @@ export default function Establishment() {
     return <div>Loading...</div>
   }
 
-  console.log({data, hoursOfOperation, isOpen, hours, building})
+  console.log({user, data, hoursOfOperation, isOpen, hours, building})
 
   const { name } = data
+
+
+  //@TODO: hookup this submission
+  const handleSubmit = (data: { review: string, rating: number}): Promise<void> => {
+    return axios.post('/api/reviews', {
+      "Email": user?.Email,
+      "Name": user?.Name,
+      "Est_id": id,
+      "Review": data.review,
+      "Rating": data.rating
+  }).then(res => {
+      setReviews(r => ([res.data, ...(r || [])]))
+      setToastOpen(true)
+    })
+  }
 
   return (
     <Container maxWidth="lg" disableGutters>
@@ -144,7 +179,7 @@ export default function Establishment() {
         <Grid container spacing={3}>
           <Grid item xs={8}>
             <Box sx={{mt: 2, mb: 1}}>
-              <Button size="small" color="primary" variant="contained" startIcon={<StarOutlineIcon />}>
+              <Button size="small" color="primary" variant="contained" startIcon={<StarOutlineIcon />} onClick={isAuthenticated ? () => setModalOpen(true) : () => navigate('/login')}>
                 Write a Review
               </Button>
               <Button size="small" variant="outlined" startIcon={<CameraAltIcon />}>
@@ -162,7 +197,7 @@ export default function Establishment() {
               <Typography component="h2" variant="h5" gutterBottom>Location &amp; Hours</Typography>
               <Grid container spacing={3}>
                 <Grid item xs={5}>
-                  {data?.x && data?.y && <MiniMap height={150} coordinates={[data.x, data.y]} />}
+                  {data?.x && data?.y && <MiniMap height={150} coordinates={[data.y, data.x]} />}
 
 
                   <Box sx={{display: 'flex', alignItems: 'flex-start', py: 2, justifyContent: 'space-between' }}>
@@ -205,7 +240,16 @@ export default function Establishment() {
             <Divider />
             <Box sx={{mt: 2, mb: 1}}>
               <Typography component="h2" variant="h5">Reviews</Typography>
-
+              {reviews?.map((r, i) => {
+                return <><Box key={i} sx={{my: 2}}>
+                  <Typography variant="caption" sx={{fontWeight: 'bold'}}>{r.Name}</Typography>
+                  <Stars rating={r.Rating} size={18} sx={{ mb: 1}}/>
+                  <Typography>{r.Review}</Typography>
+                </Box>
+                <Divider />
+                </>
+              })}
+              {reviews?.length === 0 && <Typography>This place has no reviews yet.</Typography>}
 
             </Box>
 
@@ -229,6 +273,12 @@ export default function Establishment() {
           </Grid>
         </Grid>
       </Container>
+      <Snackbar open={toastOpen} autoHideDuration={4000} onClose={() => setToastOpen(false)} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+        <Alert onClose={() => setToastOpen(false)} severity="success">
+          Your review has been posted successfully!
+        </Alert>
+      </Snackbar>
+      {data !== null && <WriteReviewModal establishment={data} open={modalOpen} handleClose={() => setModalOpen(false)} handleSubmit={handleSubmit}/>}
     </Container>
   );
 };

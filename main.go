@@ -7,6 +7,7 @@ import (
 	"github.com/Monicakodali/SEPROJECT/api/controller"
 	"github.com/Monicakodali/SEPROJECT/api/models"
 	"github.com/Monicakodali/SEPROJECT/api/utils"
+	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )
@@ -19,6 +20,7 @@ func main() {
 	}
 
 	defer db.Close()
+<<<<<<< HEAD
 
 	if !db.HasTable(&models.Establishment{}) {
 		fmt.Println("Table doesnot exist. Creating table establishment")
@@ -41,6 +43,8 @@ func main() {
 	}
 
 	//fmt.Println(db)
+=======
+>>>>>>> 9f4c1a0ec4f56d2a9fb19e558cf27c46d97c7ad7
 
 	router := gin.New()
 
@@ -52,7 +56,10 @@ func main() {
 	revController.Init(db)
 
 	router.Use(func(ctx *gin.Context) {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f4c1a0ec4f56d2a9fb19e558cf27c46d97c7ad7
 		if ctx.Request.Header["Content-Length"] != nil && ctx.Request.Header["Content-Length"][0] == "0" {
 			ctx.JSON(http.StatusBadRequest, gin.H{"message": "Payload should not be empty"})
 			ctx.AbortWithStatus(http.StatusBadRequest)
@@ -60,14 +67,22 @@ func main() {
 		}
 	})
 
+	router.Use(static.Serve("/", static.LocalFile("./frontend/build", true)))
+
 	router.GET("/api/establishments", establishmentController.ListEstHandler)
+	router.GET("/api/establishments/:id", establishmentController.GetOneEstHandler)
 	router.POST("/api/establishments", establishmentController.CreateEstablishments)
 	router.DELETE("/api/establishments", establishmentController.DeleteEstablishment)
+	router.POST("/api/users/login", userController.GetUser)
 	router.GET("/api/users", userController.ListUsers)
 	router.POST("/api/users", userController.SignUp)
 	router.DELETE("/api/users", userController.DeleteUser)
 	router.GET("/api/reviews", revController.ListReviews)
+	router.GET("/api/reviews/:establishmentId", revController.GetReviewsForEst)
 	router.POST("/api/reviews", revController.NewReview)
 	router.Run()
+<<<<<<< HEAD
 	//running
+=======
+>>>>>>> 9f4c1a0ec4f56d2a9fb19e558cf27c46d97c7ad7
 }

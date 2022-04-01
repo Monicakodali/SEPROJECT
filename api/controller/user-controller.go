@@ -21,18 +21,22 @@ func (uInstance *UserController) Init(db *gorm.DB) {
 }
 
 func (usr *UserController) GetUser(ctx *gin.Context) {
-
-	username := ctx.Param("Username")
-	password := ctx.Param("Password")
-	encrypted_password := utils.EncryptPassword(password)
-	res, err := usr.usrRepo.GetUser(username, encrypted_password)
+	var body models.User
+	if err := ctx.BindJSON(&body); err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"error": "Invalid request body",
+		})
+		return
+	}
+	res, err := usr.usrRepo.GetUser(body.Username, body.Password)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": "Invalid Credentials",
 		})
-
-		ctx.JSON(http.StatusOK, &res)
+		return
 	}
+
+	ctx.JSON(http.StatusOK, &res)
 }
 
 func (usr *UserController) ListUsers(c *gin.Context) {

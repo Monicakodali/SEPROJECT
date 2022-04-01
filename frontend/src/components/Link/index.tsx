@@ -6,5 +6,5 @@ import {
 
 
 export default function Link(props: LinkProps & NavLinkProps) {
-  return <MuiLink component={RouterLink} {...props} />
+  return <MuiLink underline="hover" component={RouterLink} {...props} />
 }
