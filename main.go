@@ -24,6 +24,8 @@ func main() {
 
 	router := gin.New()
 
+	//router.Use(static.Serve("/", static.LocalFile("./frontend/App.tsx", true)))
+	//router.StaticFile("/favicon.ico", "./frontend/build/favicon.ico")
 	establishmentController := controller.EstController{}
 	establishmentController.Init(db)
 	userController := controller.UserController{}
@@ -46,8 +48,9 @@ func main() {
 	router.POST("/api/users/login", userController.GetUser)
 	router.GET("/api/users", userController.ListUsers)
 	router.POST("/api/users", userController.SignUp)
-	router.DELETE("/api/users", userController.DeleteUser)
+	router.DELETE("/api/users/:username", userController.DeleteUser)
 	router.GET("/api/reviews", revController.ListReviews)
 	router.POST("/api/reviews", revController.NewReview)
+	//router.Run(":3000")
 	router.Run()
 }

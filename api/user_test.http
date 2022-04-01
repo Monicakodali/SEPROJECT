@@ -1,0 +1,16 @@
+#GET http://localhost:8080/api/users
+
+POST http://localhost:8080/api/users
+Content-Type: application/json
+
+
+  {
+    "Username": "test123",
+    "Email": "manjarimisra94@gmail.com",
+    "Name": "Test Account Check",
+    "Password": "Qwerty@123",
+    "Verified": ""
+  }
+
+DELETE http://localhost:8080/api/users/:test12
+
