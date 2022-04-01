@@ -19,3 +19,11 @@ type Review = {
   Rating: number,
   revTime: string
 }
+
+type User = {
+  Username: string,
+  Email?: string,
+  Name: string,
+  Password?: string,
+  Verified?: string
+}
