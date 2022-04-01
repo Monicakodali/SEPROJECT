@@ -1,16 +1,19 @@
-#GET http://localhost:8080/api/users
+GET http://localhost:8080/api/users
 
 POST http://localhost:8080/api/users
 Content-Type: application/json
 
 
   {
-    "Username": "test123",
-    "Email": "manjarimisra94@gmail.com",
-    "Name": "Test Account Check",
+    "Username": "test3",
+    "Email": "mmisra@ufl.edu",
     "Password": "Qwerty@123",
-    "Verified": ""
+    "FirstName": "ABCD",
+    "LastName": "XYZ1",
+    "Address" : "NewBerry Road",
+    "Verified": 3
   }
 
-DELETE http://localhost:8080/api/users/:test12
+
+# DELETE http://localhost:8080/api/users/:test
 
