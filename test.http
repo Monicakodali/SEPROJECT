@@ -1,6 +1,67 @@
+
 GET http://localhost:8080/api/establishments
 
+POST http://localhost:8080/api/establishments
+Content-Type: application/json
 
+
+  {
+    "est_id": "8990",
+    "type": "DINING",
+    "name": "P.O.D. Market",
+    "building": "0551",
+    "room": "173",
+    "url": "",
+    "x": 29.64636443982178,
+    "y": -82.34148054394188
+    }
+    
+DELETE http://localhost:8080/api/establishments
+Content-Type: application/json
+
+
+  {
+    "id": "8990"
+  }
+
+POST http://localhost:8080/api/establishments
+Content-Type: application/json
+
+
+  {
+    "id": "8990",
+    "type": "DINING",
+    "name": "P.O.D. Market",
+    "building": "0551",
+    "room": "173",
+    "url": "",
+    "x": 29.64636443982178,
+    "y": -82.34148054394188
+    }
+
+POST http://localhost:8080/api/reviews
+Content-Type: application/json
+
+  {
+	"Email": "cpagolu@ufl.edu",
+	"Name": "Carol Navya Pagolu",
+	"Est_id": "78",
+	"Est_name": "0",
+  "Review": "Amazing Service",
+  "Rating": 4.5,
+  "revTime": {{$timestamp}}
+  }
+
+POST http://localhost:8080/api/users
+Content-Type: application/json
+
+  {
+  "Username": "carolnavya",
+	"Email": "cpagolu@ufl.edu",
+	"Name": "Carol Navya Pagolu",
+	"Password": "abc123",
+	"Verified": "0"
+  }
 
 POST http://localhost:8080/api/establishments
 Content-Type: application/json
@@ -16,7 +77,7 @@ Content-Type: application/json
     "x": 29.64636443982178,
     "y": -82.34316087863382
   }
-  /*{
+  {
     "id": "76",
     "type": "DINING",
     "name": "Boar's Head",
@@ -536,4 +597,4 @@ Content-Type: application/json
     "x": 29.650088012733526,
     "y": -82.34632657842418
   }
-]*/
+]

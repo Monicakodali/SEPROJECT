@@ -126,11 +126,13 @@ func (usr *UserController) SignUp(ctx *gin.Context) {
 	}
 
 	user_creds := models.User{
-		Username: uInstance.Username,
-		Email:    uInstance.Email,
-		Name:     uInstance.Name,
-		Password: utils.EncryptPassword(uInstance.Password),
-		Verified: uInstance.Verified,
+		Username:  uInstance.Username,
+		Email:     uInstance.Email,
+		Password:  utils.EncryptPassword(uInstance.Password),
+		FirstName: uInstance.FirstName,
+		LastName:  uInstance.LastName,
+		Address:   uInstance.Address,
+		Verified:  uInstance.Verified,
 	}
 
 	from := "mishramanjari18@gmail.com"
@@ -154,7 +156,7 @@ func (usr *UserController) SignUp(ctx *gin.Context) {
 	}
 
 	fmt.Println("Email sent successfully")
-	user_creds.Verified = "1"
+	user_creds.Verified = 1
 	error := usr.usrRepo.AddUser(user_creds)
 	if error != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{

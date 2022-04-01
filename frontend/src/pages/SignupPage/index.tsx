@@ -1,54 +1,150 @@
-import { useState } from 'react';
-import { AppBar, Toolbar, Container, Box, Grid, Button, Typography, TextField } from '@mui/material';
-import { Link } from '../../components'
+import React, { useState } from 'react';
+import { Container, Box, Grid, Button, Typography, TextField, Alert } from '@mui/material';
+import { SimpleHeader, Link } from '../../components'
+import validate from 'validate.js'
+import { useAuth } from '../../context/auth';
 import { useNavigate } from 'react-router-dom';
-import React from 'react';
-import {Route,Navigate} from "react-router-dom";
+
+type Field = 'username' | 'password' | 'name' | 'confirmPassword'
+
+type Form<T> = Record<Field, T>
+
+var constraints = {
+  username: {
+    presence: {
+      allowEmpty: false
+    },
+  },
+  password: {
+    presence: {
+      allowEmpty: false
+    },
+  },
+  confirmPassword: {
+    presence: {
+      allowEmpty: false
+    },
+    equality: "password"
+  },
+  name: {
+    presence: {
+      allowEmpty: false
+    },
+  },
+};
 
 
-type HeaderProps = {
-  onLogoClick: () => void
-}
+export default function SignUpPage() {
 
-function Header({onLogoClick}: HeaderProps) {
-  return(
-    <AppBar position="static">
-      <Toolbar style={{minHeight: 64, alignItems: 'center', justifyContent: 'center'}}>
-          <img src="/images/logo-white.png" style={{height: 36, width: 'auto', cursor: 'pointer'}}  alt="yelp UF" onClick={() => onLogoClick()} />
-      </Toolbar>
-    </AppBar>
-  )
-}
+  const [form, setForm] = useState<Form<string>>({
+    username: '',
+    password: '',
+    name: '',
+    confirmPassword: ''
+  })
+  const [touched, setTouched] = useState<Form<boolean>>({
+    username: false,
+    password: false,
+    name: false,
+    confirmPassword: false
+  })
+  const [errors, setErrors] = useState<Form<string[]>>({
+    username: [],
+    password: [],
+    name: [],
+    confirmPassword: []
+  })
 
 
-export default function LoginPage() {
 
-  const [u, setU] = useState('')
-  const [p, setP] = useState('')
-  const [n, setN] = useState('')
+  const [init, setInit] = useState(false)
+  const [error, setError] = useState(false)
+  const [success, setSuccess] = useState(false)
+  const [isLoading, setLoading] = useState(false)
+
+  const { isAuthenticated, signUp } = useAuth()
   const navigate = useNavigate()
+
+  React.useEffect(() => {
+    if(!success) {
+      return
+    }
+    const t = setTimeout(() => {
+      navigate('/')
+    }, 3000)
+    return () => clearTimeout(t)
+  }, [success, navigate])
+
+  React.useEffect(() => {
+    if(isAuthenticated && !success && !init) {
+      navigate('/', { replace: true })
+    }
+  }, [isAuthenticated, navigate, success, init])
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm(f => ({...f, [e.target.name]: e.target.value}))
+    setTouched(f => ({...f, [e.target.name]: true}))
+  }
   
   const onSignUp = () => {
-    console.log({username: u, name:n,  password: p})
+    setInit(true)
+    setTouched({username: true, password: true, name: true, confirmPassword: true})
+    const result = validate(form, constraints)
+    if(result) {
+      setErrors(e => ({...e, ...result}))
+      return
+    }
+
+    setLoading(true)
+    setError(false)
+    signUp({
+      Username: form.username,
+      Password: form.password,
+      Name: form.name
+    }).then((result) => {
+      setError(!result)
+      setSuccess(result)
+    }).catch(() => {
+      setError(true)
+    }).finally(() => {
+      setLoading(false)
+    })
+  }
+
+  
+  const hasError = (field: Field): boolean => {
+    if(error) {
+      return true
+    }
+    return !!errors[field] && errors[field].length > 0
+  }
+  const getHelperText = (field: Field): string|undefined => {
+    return errors[field]?.[0]
   }
   
   return (
     <div>
-      <Header onLogoClick={() => navigate('/')} />
+      <SimpleHeader />
         <Container  sx={{py: 4, minHeight: 720, display: 'flex'}} maxWidth="md">
           <Grid container justifyContent="space-between" spacing={4} style={{flex: 1}}>
+            <Grid item container alignItems="flex-end" xs={12}>
+              {error && <Alert onClose={() => setError(false)} severity="error" sx={{flex: 1}}>There was an error creating your account.</Alert>}
+              {success && <Alert severity="success" sx={{flex: 1}}>Your account was created successfully. Redirecting...</Alert>}
+            </Grid>
             <Grid item xs={6} container direction="column" alignItems="center" justifyContent="center">
-              <Typography variant="h4" color="primary" sx={{fontSize: 24, mb: 2, mt: 2}}>Sign up to Yelp UF</Typography>
-              
-                
+              <Typography variant="h4" color="primary" sx={{fontSize: 24, mb: 2, mt: 2}}>Sign Up for Yelp UF</Typography>      
               <Box sx={{my: 3, maxWidth: 300}}>
-                <TextField inputProps={{'aria-label': 'UF Email'}} placeholder="UF Email" margin="dense" size="small" fullWidth value={u} onChange={e => setU(e.target.value)} />
-                <TextField inputProps={{'aria-label': 'Name'}} placeholder="Name" margin="dense" size="small" fullWidth value={n} onChange={e => setN(e.target.value)} />
-                <TextField inputProps={{'aria-label': 'Password'}} type="password" placeholder="Password" margin="dense" size="small" fullWidth value={p} onChange={e => setP(e.target.value)} />
+                <TextField required name="username" inputProps={{'aria-label': 'Username'}} placeholder="Username" margin="dense" size="small" fullWidth value={form.username} onChange={onChange} disabled={isLoading || success} error={(!!form.username || init) && touched.username && hasError('username')} helperText={getHelperText('username')}/>
+                <TextField required name="name" inputProps={{'aria-label': 'Name'}} placeholder="Name" margin="dense" size="small" fullWidth value={form.name} onChange={onChange} disabled={isLoading || success} error={(!!form.name || init) && touched.name && hasError('name')}  helperText={getHelperText('name')} />
+                <TextField required name="password" inputProps={{'aria-label': 'Password'}} type="password" placeholder="Password" margin="dense" size="small" fullWidth value={form.password} onChange={onChange} disabled={isLoading || success} error={(!!form.password || init) && touched.password && hasError('password')}  helperText={getHelperText('password')} />
+                <TextField required name="confirmPassword" inputProps={{'aria-label': 'Confirm Password'}} type="password" placeholder="Confirm Password" margin="dense" size="small" fullWidth value={form.confirmPassword} onChange={onChange} disabled={isLoading || success} error={(!!form.confirmPassword || init) && touched.confirmPassword && hasError('confirmPassword')}  helperText={getHelperText('confirmPassword')} />
                 
-                <Button sx={{mt: 5}} variant="contained" fullWidth onClick={onSignUp}>
+                <Button sx={{mt: 5, mb: 1}} variant="contained" fullWidth onClick={onSignUp}>
                   Sign Up
                 </Button>
+                <div style={{textAlign: 'right'}}>
+                  <Typography color="textSecondary" variant="caption">Already on Yelp UF? <Link to="/login">Log in</Link></Typography>
+                </div>
               </Box>
 
             </Grid>
