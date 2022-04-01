@@ -56,12 +56,15 @@ func (usr *UserController) SignUp(ctx *gin.Context) {
 		})
 		return
 	}
+
 	user_creds := models.User{
-		Username: uInstance.Username,
-		Email:    uInstance.Email,
-		Name:     uInstance.Name,
-		Password: utils.EncryptPassword(uInstance.Password),
-		Verified: uInstance.Verified,
+		Username:  uInstance.Username,
+		Email:     uInstance.Email,
+		Password:  utils.EncryptPassword(uInstance.Password),
+		FirstName: uInstance.FirstName,
+		LastName:  uInstance.LastName,
+		Address:   uInstance.Address,
+		Verified:  uInstance.Verified,
 	}
 
 	err := usr.usrRepo.AddUser(user_creds)

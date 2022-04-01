@@ -56,6 +56,7 @@ func (est *EstController) CreateEstablishments(ctx *gin.Context) {
 	}
 
 	err := est.estRepo.CreateEst(eInstance)
+
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
@@ -67,7 +68,7 @@ func (est *EstController) CreateEstablishments(ctx *gin.Context) {
 }
 
 func (est *EstController) DeleteEstablishment(ctx *gin.Context) {
-	eid := ctx.Param("id")
+	eid := ctx.Param("est_id")
 	err := est.estRepo.DeleteEst(eid)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{

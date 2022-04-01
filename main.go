@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/Monicakodali/SEPROJECT/api/controller"
@@ -17,10 +18,28 @@ func main() {
 		panic("failed to connect database")
 	}
 
-	db.Debug().AutoMigrate(&models.Establishment{})
-	db.Debug().AutoMigrate(&models.User{})
-	db.Debug().AutoMigrate(&models.Review{})
 	defer db.Close()
+
+	if !db.HasTable(&models.Establishment{}) {
+		fmt.Println("Table doesnot exist. Creating table establishment")
+		db.Debug().AutoMigrate(&models.Establishment{})
+	}
+
+	if !db.HasTable(&models.UFDining{}) {
+		fmt.Println("Table doesnot exist. Creating table UFDining")
+		db.Debug().AutoMigrate(&models.UFDining{})
+	}
+
+	if !db.HasTable(&models.User{}) {
+		fmt.Println("Table doesnot exist. Creating table User")
+		db.Debug().AutoMigrate(&models.User{})
+	}
+
+	if !db.HasTable(&models.Review{}) {
+		fmt.Println("Table doesnot exist. Creating table Review")
+		db.Debug().AutoMigrate(&models.Review{})
+	}
+
 	//fmt.Println(db)
 
 	router := gin.New()
@@ -34,7 +53,7 @@ func main() {
 
 	router.Use(func(ctx *gin.Context) {
 
-		if ctx.Request.Header["Content-Length"][0] == "0" {
+		if ctx.Request.Header["Content-Length"] != nil && ctx.Request.Header["Content-Length"][0] == "0" {
 			ctx.JSON(http.StatusBadRequest, gin.H{"message": "Payload should not be empty"})
 			ctx.AbortWithStatus(http.StatusBadRequest)
 			return
@@ -51,5 +70,4 @@ func main() {
 	router.POST("/api/reviews", revController.NewReview)
 	router.Run()
 	//running
-
 }
