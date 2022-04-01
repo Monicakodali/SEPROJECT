@@ -23,7 +23,9 @@ type Review = {
 type User = {
   Username: string,
   Email?: string,
-  Name: string,
+  FirstName: string,
+  LastName: string,
+  Address?: string
   Password?: string,
-  Verified?: string
+  Verified?: 1 | 0
 }
