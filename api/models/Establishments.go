@@ -2,12 +2,9 @@ package models
 
 //establishment structure
 type Establishment struct {
-	ID           string  `json:"id"`
-	TYPE         string  `json:"type"`
-	NAME         string  `json:"name"`
-	BUILDING     string  `json:"building"`
-	ROOM         string  `json:"room"`
-	URL          string  `json:"url"`
-	X_COORDINATE float64 `json:"x"`
-	Y_COORDINATE float64 `json:"y"`
+	Est_Id       string  `gorm:"primaryKey;not null" json:"est_id"`
+	Type         string  `gorm:"not null" json:"Type"`
+	Name         string  `json:"Name"`
+	X_coordinate float64 `json:"x"`
+	Y_coordinate float64 `json:"y"`
 }

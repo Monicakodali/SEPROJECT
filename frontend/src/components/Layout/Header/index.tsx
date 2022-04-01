@@ -5,20 +5,11 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Toolbar from '@mui/material/Toolbar';
 import Paper from '@mui/material/Paper';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import MoreIcon from '@mui/icons-material/MoreVert';
 import { useAuth } from '../../../context/auth';
 import ProfileButtons from '../../ProfileButtons';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const Search = styled(props => <Paper elevation={3} {...props}/>)(({ theme }) => ({
   position: 'relative',
@@ -76,12 +67,19 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
   backgroundColor: 'white'
 }));
 
-const siteTitle = "YelpUF"
-
 export default function Header() {
   
   const { isAuthenticated } = useAuth()
   const navigate = useNavigate()
+
+  let [searchParams,setSearchParams] = useSearchParams()
+
+  const [search, setSearch] = React.useState(searchParams.get('query') ?? '')
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setSearchParams(search ? { query: search } : {})
+  }
 
   const profileArea = (<ProfileButtons variant="light" />)
 
@@ -98,16 +96,10 @@ export default function Header() {
     <>
       <StyledAppBar color="transparent" elevation={0} position="fixed">
         <Toolbar>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: 'none', sm: 'block' }, flexGrow: 1 }}
-            color="primary"
-          >
-            {siteTitle}
-          </Typography>
-          <Box sx={{ flexGrow: 1.5 }}>
+          <Box sx={{ display: { xs: 'none', sm: 'block' }, flexGrow: 1 }}>
+            <img src="/images/logo.png" alt="logo" style={{width: 110, height:'auto', cursor: 'pointer'}} onClick={() => navigate('/')} />
+          </Box>
+          <Box sx={{ flexGrow: 1.5 }} component="form" onSubmit={handleSubmit}>
             <Search>
               <SearchIconWrapper>
                 <SearchIcon />
@@ -115,6 +107,8 @@ export default function Header() {
               <StyledInputBase
                 placeholder="Search…"
                 inputProps={{ 'aria-label': 'search' }}
+                value={search}
+                onChange={e => setSearch(e.target.value)}
               />
             </Search>
           </Box>

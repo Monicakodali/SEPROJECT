@@ -17,7 +17,7 @@ func (estRepo *EstRepo) GetEstByID(eid string) (models.Establishment, error) {
 
 	var establishment models.Establishment
 
-	query := estRepo.db.Where("id = ?", eid).First(&establishment)
+	query := estRepo.db.Where("est_id = ?", eid).First(&establishment)
 	if query.Error != nil {
 		return establishment, query.Error
 	}

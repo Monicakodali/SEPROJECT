@@ -1,28 +1,26 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Container, Box, Grid, Button, Typography, TextField, Alert } from '@mui/material';
-import { Link } from '../../components'
+import { Container, Box, Grid, Button, Typography, TextField, Alert } from '@mui/material';
+import { Link, SimpleHeader } from '../../components'
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/auth';
+import validate from 'validate.js'
 
+type Field = 'username' | 'password'
 
-type HeaderProps = {
-  onLogoClick: () => void
-}
+type Form<T> = Record<Field, T>
 
-function Header({onLogoClick}: HeaderProps) {
-  return(
-    <AppBar position="static">
-      <Toolbar style={{minHeight: 64, alignItems: 'center', justifyContent: 'center'}}>
-          <img src="/images/logo-white.png" style={{height: 36, width: 'auto', cursor: 'pointer'}}  alt="yelp UF" onClick={() => onLogoClick()} />
-      </Toolbar>
-    </AppBar>
-  )
-}
-
-type Form<T> = {
-  username: T
-  password: T
-}
+var constraints = {
+  username: {
+    presence: {
+      allowEmpty: false
+    },
+  },
+  password: {
+    presence: {
+      allowEmpty: false
+    },
+  }
+};
 
 export default function LoginPage() {
 
@@ -34,6 +32,11 @@ export default function LoginPage() {
     username: false,
     password: false
   })
+  const [errors, setErrors] = useState<Form<string[]>>({
+    username: [],
+    password: []
+  })
+
   const [isLoading, setLoading] = useState(false)
   const [error, setError] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -68,20 +71,43 @@ export default function LoginPage() {
   }
 
   const onLogIn = () => {
+
     setInit(true)
     setTouched({username: true, password: true})
+
+    const result = validate(form, constraints)
+
+    if(result) {
+      setErrors(e => ({...e, ...result}))
+      return
+    }
+
     setLoading(true)
     setError(false)
     login(form.username, form.password).then((result) => {
-      setLoading(false)
       setError(!result)
       setSuccess(result)
+    }).catch(() => {
+      setError(true)
+    }).finally(() => {
+      setLoading(false)
     })
+  }
+
+
+  const hasError = (field: Field): boolean => {
+    if(error) {
+      return true
+    }
+    return !!errors[field] && errors[field].length > 0
+  }
+  const getHelperText = (field: Field): string|undefined => {
+    return errors[field]?.[0]
   }
   
   return (
     <div>
-      <Header onLogoClick={() => navigate('/')} />
+      <SimpleHeader />
         <Container  sx={{py: 4, minHeight: 720, display: 'flex'}} maxWidth="md">
           <Grid container justifyContent="space-between" spacing={4} style={{flex: 1}}>
             <Grid item container alignItems="flex-end" xs={12}>
@@ -95,12 +121,12 @@ export default function LoginPage() {
                   New to Yelp UF? <Link to="/signup">Sign up</Link>
                 </Typography>
               <Box component="form" sx={{my: 3, maxWidth: 300}}>
-                <TextField name="username" autoComplete="username" spellCheck={false} disabled={isLoading || success} error={!!form.username && touched.username && error} inputProps={{'aria-label': 'UF Email'}} placeholder="UF Email" margin="dense" size="small" fullWidth value={form.username} onChange={onChange} />
-                <TextField name="password" autoComplete="current-password" disabled={isLoading || success} error={!!form.password && touched.password && error} inputProps={{'aria-label': 'Password'}} type="password" placeholder="Password" margin="dense" size="small" fullWidth value={form.password} onChange={onChange} />
+                <TextField name="username" autoComplete="username" spellCheck={false} disabled={isLoading || success} error={(!!form.username || init) && touched.username && hasError('username')} helperText={getHelperText('username')} inputProps={{'aria-label': 'Username'}} placeholder="Username" margin="dense" size="small" fullWidth value={form.username} onChange={onChange} />
+                <TextField name="password" autoComplete="current-password" disabled={isLoading || success} error={(!!form.username || init) && touched.password && hasError('password')} helperText={getHelperText('password')} inputProps={{'aria-label': 'Password'}} type="password" placeholder="Password" margin="dense" size="small" fullWidth value={form.password} onChange={onChange} />
                 <div style={{textAlign: 'right'}}>
                   <Link sx={{fontSize: 12}} to="/forgot-password">Forgot Password?</Link>
                 </div>
-                <Button sx={{mt: 5}} variant="contained" fullWidth onClick={onLogIn}>
+                <Button sx={{mt: 5, mb: 1}} variant="contained" fullWidth onClick={onLogIn}>
                   Log In
                 </Button>
                 <div style={{textAlign: 'right'}}>
