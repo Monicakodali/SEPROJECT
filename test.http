@@ -1,9 +1,44 @@
+
 GET http://localhost:8080/api/establishments
 
+POST http://localhost:8080/api/establishments
+Content-Type: application/json
 
-<<<<<<< HEAD
-  
-=======
+
+  {
+    "est_id": "8990",
+    "type": "DINING",
+    "name": "P.O.D. Market",
+    "building": "0551",
+    "room": "173",
+    "url": "",
+    "x": 29.64636443982178,
+    "y": -82.34148054394188
+    }
+    
+DELETE http://localhost:8080/api/establishments
+Content-Type: application/json
+
+
+  {
+    "id": "8990"
+  }
+
+POST http://localhost:8080/api/establishments
+Content-Type: application/json
+
+
+  {
+    "id": "8990",
+    "type": "DINING",
+    "name": "P.O.D. Market",
+    "building": "0551",
+    "room": "173",
+    "url": "",
+    "x": 29.64636443982178,
+    "y": -82.34148054394188
+    }
+
 POST http://localhost:8080/api/reviews
 Content-Type: application/json
 
@@ -44,7 +79,7 @@ Content-Type: application/json
     "x": 29.64636443982178,
     "y": -82.34316087863382
   }
-  /*{
+  {
     "id": "76",
     "type": "DINING",
     "name": "Boar's Head",
@@ -564,4 +599,4 @@ Content-Type: application/json
     "x": 29.650088012733526,
     "y": -82.34632657842418
   }
-]*/
+]
