@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/Monicakodali/SEPROJECT/api/models"
@@ -21,7 +22,8 @@ func (eRepo *EstController) Init(db *gorm.DB) {
 
 func (est *EstController) GetOneEstHandler(ctx *gin.Context) {
 
-	eid := ctx.Param("est_id")
+	eid := ctx.Param("id")
+	fmt.Println(eid)
 	res, err := est.estRepo.GetEstByID(eid)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{

@@ -2,6 +2,7 @@ package test
 
 import (
 	"bytes"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -31,30 +32,26 @@ func TestInsertEstablishment(t *testing.T) {
 	router.POST("/api/establishments", establishmentController.CreateEstablishments)
 
 	var jsonStr = []byte(`{
-		"id": "7984",
-		"type": "DINING",
-		"name": "Abras",
-		"building": "0263",
-		"room": "0100X",
-		"url": "",
+		"est_id": "7984444",
+		"Type": "DINING",
+		"Name": "Abras",
 		"x": 29.655182375855586,
 		"y": -82.34634038186434
 	  }`)
+
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("POST", "/api/establishments", bytes.NewBuffer(jsonStr))
 	req.Header.Set("Content-Type", "applocation/json")
 	router.ServeHTTP(w, req)
 
 	var jsonStr2 = []byte(`{
-		"id": "82",
-		"type": "DINING",
-		"name": "P.O.D. Market",
-		"building": "0551",
-		"room": "173",
-		"url": "",
+		"est_id": "82",
+		"Type": "DINING",
+		"Name": "P.O.D. Market",
 		"x": 29.64636443982178,
 		"y": -82.34316087863382
 	  }`)
+
 	w1 := httptest.NewRecorder()
 	req1, _ := http.NewRequest("POST", "/api/establishments", bytes.NewBuffer(jsonStr2))
 	req1.Header.Set("Content-Type", "applocation/json")
@@ -77,14 +74,12 @@ func TestGetEstablishment(t *testing.T) {
 	establishmentController := controller.EstController{}
 	establishmentController.Init(db)
 
-	router.GET("/api/establishments", establishmentController.GetOneEstHandler)
+	router.GET("/api/establishments/", establishmentController.ListEstHandler)
 
-	var jsonStr = []byte(`{"id": "7984"}`)
 	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("GET", "/api/establishments", bytes.NewBuffer(jsonStr))
-	req.Header.Set("Content-Type", "application/json")
-	q := req.URL.Query()
-	q.Add("Establishment ID", string(jsonStr))
+	req, _ := http.NewRequest("GET", "/api/establishments", nil)
+	a := req.Header.Get("Content-Type")
+	fmt.Println(a)
 	router.ServeHTTP(w, req)
 
 }
@@ -109,7 +104,7 @@ func TestRemoveEstablishment(t *testing.T) {
 	//router.GET("/api/establishments", establishmentController.ListEstHandler)
 	router.DELETE("/api/establishments", establishmentController.DeleteEstablishment)
 
-	var jsonStr = []byte(`{}`)
+	var jsonStr = []byte(`{"est_id":798444}`)
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("DELETE", "/api/establishments", bytes.NewBuffer(jsonStr))
 	req.Header.Set("Content-Type", "application/json")

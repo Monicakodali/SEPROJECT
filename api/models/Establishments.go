@@ -7,4 +7,6 @@ type Establishment struct {
 	Name         string  `json:"Name"`
 	X_coordinate float64 `json:"x"`
 	Y_coordinate float64 `json:"y"`
+	Building     string  `json:"Building"`
+	Room         string  `json:"Room"`
 }
