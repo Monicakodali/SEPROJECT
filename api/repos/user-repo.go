@@ -40,6 +40,18 @@ func (usrRepo *UsrRepo) GetUser(username string, password string) (models.User, 
 	return myUser, nil
 }
 
+func (usrRepo *UsrRepo) GetUsername(username string) (models.User, error) {
+
+	var user models.User
+
+	query := usrRepo.db.Where("Username = ?", username).First(&user)
+	if query.Error != nil {
+		return user, query.Error
+	}
+
+	return user, nil
+}
+
 func (usrRepo *UsrRepo) GetUserEmail(email string) (models.User, error) {
 
 	var user models.User

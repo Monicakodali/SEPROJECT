@@ -12,6 +12,10 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )
 
+const userkey = "user"
+
+var secret = []byte("secret")
+
 func main() {
 
 	db, err := utils.GetDBInstance()
@@ -64,11 +68,12 @@ func main() {
 
 	router.Use(static.Serve("/", static.LocalFile("./frontend/build", true)))
 
+	// Login and logout routes
 	router.GET("/api/establishments", establishmentController.ListEstHandler)
 	router.GET("/api/establishments/:id", establishmentController.GetOneEstHandler)
 	router.POST("/api/establishments", establishmentController.CreateEstablishments)
 	router.DELETE("/api/establishments", establishmentController.DeleteEstablishment)
-	router.POST("/api/users/login", userController.GetUser)
+	router.POST("/api/users/login", userController.Login)
 	router.GET("/api/users", userController.ListUsers)
 	router.POST("/api/users", userController.SignUp)
 	router.DELETE("/api/users/:username", userController.DeleteUser)

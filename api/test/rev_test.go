@@ -76,7 +76,7 @@ func TestGetReview(t *testing.T) {
 	userController := controller.UserController{}
 	userController.Init(db)
 
-	router.GET("/api/users", userController.GetUser)
+	router.GET("/api/users", userController.Login)
 
 	var jsonStr = []byte(`{"Email": "mmisra@ufl.edu"}`)
 	w := httptest.NewRecorder()
@@ -105,7 +105,7 @@ func TestRemoveReview(t *testing.T) {
 	userController.Init(db)
 
 	router.POST("/api/establishments", userController.SignUp)
-	router.GET("/api/establishments", userController.GetUser)
+	router.GET("/api/establishments", userController.Login)
 	router.DELETE("/api/establishments", userController.DeleteUser)
 
 	var jsonStr = []byte(`{}`)

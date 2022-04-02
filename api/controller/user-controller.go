@@ -10,6 +10,7 @@ import (
 	"net/smtp"
 	"net/url"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/Monicakodali/SEPROJECT/api/models"
@@ -40,15 +41,20 @@ func (uInstance *UserController) Init(db *gorm.DB) {
 	uInstance.usrRepo.Init(db)
 }
 
-func (usr *UserController) GetUser(ctx *gin.Context) {
+func (usr *UserController) Login(ctx *gin.Context) {
 	var body models.User
-	if err := ctx.BindJSON(&body); err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{
-			"error": "Invalid request body",
-		})
+	// if err := ctx.BindJSON(&body); err != nil {
+	// 	ctx.JSON(http.StatusInternalServerError, gin.H{
+	// 		"error": "Invalid request body",
+	// 	})
+	// 	return
+	// }
+	res, err := usr.usrRepo.GetUser(body.Username, body.Password)
+	// Validate form input
+	if strings.Trim(body.Username, " ") == "" || strings.Trim(body.Password, " ") == "" {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Parameters can't be empty"})
 		return
 	}
-	res, err := usr.usrRepo.GetUser(body.Username, body.Password)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": "Invalid Credentials",
@@ -96,6 +102,12 @@ func (usr *UserController) SignUp(ctx *gin.Context) {
 		return
 	}
 	email := uInstance.Email
+	// Perform a very basic email check. We'll send a validation email anyway.
+	if !strings.Contains(email, "@") {
+		ctx.JSON(http.StatusInternalServerError, "Email wrong")
+		return
+	}
+
 	url := "https://isitarealemail.com/api/email/validate?email=" + url.QueryEscape(email)
 	req, _ := http.NewRequest("GET", url, nil)
 	res, err := http.DefaultClient.Do(req)
@@ -116,6 +128,7 @@ func (usr *UserController) SignUp(ctx *gin.Context) {
 	json.Unmarshal(body, &myJson)
 
 	fmt.Printf("\nstatus for %v is %v", email, myJson.Status)
+	ctx.JSON(http.StatusInternalServerError, "Email wrong")
 
 	user_creds := models.User{
 		Username:  uInstance.Username,

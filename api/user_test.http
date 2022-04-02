@@ -1,19 +1,18 @@
-GET http://localhost:8080/api/users
+# GET http://localhost:8080/api/users
 
-POST http://localhost:8080/api/users
-Content-Type: application/json
-
-
-  {
-    "Username": "test3",
-    "Email": "mmisra@ufl.edu",
-    "Password": "Qwerty@123",
-    "FirstName": "ABCD",
-    "LastName": "XYZ1",
-    "Address" : "NewBerry Road",
-    "Verified": 3
-  }
+# POST http://localhost:8080/api/users
+# Content-Type: application/json
 
 
-# DELETE http://localhost:8080/api/users/:test
+#   {
+#     "Username": "test9",
+#     "Email": "manjarimisra94@gmail.com",
+#     "Password": "Qwerty@123",
+#     "FirstName": "ABCD",
+#     "LastName": "XYZ1",
+#     "Address" : "NewBerry Road",
+#     "Verified": 3
+#   }
 
+
+DELETE http://localhost:8080//api/users/:test9
