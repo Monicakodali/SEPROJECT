@@ -19,6 +19,8 @@ func main() {
 		panic("failed to connect database")
 	}
 
+	db.Debug().AutoMigrate(&models.Establishment{}, &models.Review{}, &models.UFDining{}, &models.User{})
+	db.Model(&models.Establishment{}).AddForeignKey("est_id", "uf_dinings(Diner_id)", "CASCADE", "CASCADE")
 	defer db.Close()
 
 	if !db.HasTable(&models.Establishment{}) {
