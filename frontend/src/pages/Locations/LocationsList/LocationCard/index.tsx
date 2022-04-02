@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 import { Link, Rating, Tags } from '../../../../components'
 
 type LocationsCardProps = {
-  data: Establishment,
+  data: Diner,
   selected?: boolean,
   onClick: () => void
 }
@@ -44,7 +44,7 @@ const names = ['', 'John', 'Mary', 'Sue', 'Bob', 'Mike']
 
 
 type InteractiveElementType = {
-  name: Establishment['name'],
+  name: Diner['Name'],
   id: number | string
   tags: string[],
   rating: number,
@@ -69,7 +69,7 @@ function InteractiveElement({name, id, tags, rating, numRatings}: InteractiveEle
 
 export default function LocationsCard({data, selected, onClick}: LocationsCardProps) {
 
-  const { name, id } = data
+  const { Name: name, est_id: id } = data
 
   // @TODO: populate with actual rating
   // randomly generate rating for now

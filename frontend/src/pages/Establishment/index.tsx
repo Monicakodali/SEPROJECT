@@ -65,7 +65,7 @@ const Button = styled(MuiButton)(({ theme }) => {
 
 export default function Establishment() {
   const { id } = useParams()
-  const [data, setData] = React.useState<null | Establishment>(null)
+  const [data, setData] = React.useState<null | Diner>(null)
   const [reviews, setReviews] = React.useState<null | Review[]>(null)
   const [toastOpen, setToastOpen] = React.useState(false)
   const [err, setErr] = React.useState(false)
@@ -75,6 +75,8 @@ export default function Establishment() {
   const { isAuthenticated, user } = useAuth()
 
   const [modalOpen, setModalOpen] = React.useState(false)
+
+  //console.log(data)
 
   const hours = useDiningHours(data)
   const building = useBuilding(data)
@@ -135,8 +137,8 @@ export default function Establishment() {
   }, [id])
 
   React.useEffect(() => {
-    if(data && data.id) {
-      axios.get(`/api/reviews/${data?.id}`).then(res => {
+    if(data && data.est_id) {
+      axios.get(`/api/reviews/est/${data.est_id}`).then(res => {
         setReviews(res.data)
       }).catch(err => {
         setReviewsErr(true)
@@ -145,25 +147,24 @@ export default function Establishment() {
   }, [data])
 
 
-  if(!id || err) {
-    return (<Navigate to="/search" />)
-  }
+  // if(!id || err) {
+  //   return (<Navigate to="/search" />)
+  // }
 
   if(!data) {
     return <div>Loading...</div>
   }
 
-  console.log({user, data, hoursOfOperation, isOpen, hours, building})
+  //console.log({user, data, hoursOfOperation, isOpen, hours, building})
 
-  const { name } = data
+  const { Name: name } = data
 
 
   //@TODO: hookup this submission
   const handleSubmit = (data: { review: string, rating: number}): Promise<void> => {
     return axios.post('/api/reviews', {
-      "Email": user?.Email,
-      "Name": user?.Name,
-      "Est_id": id,
+      "Review_user": user?.Username,
+      "Review_est": parseInt(id ?? ''),
       "Review": data.review,
       "Rating": data.rating
   }).then(res => {
@@ -197,7 +198,7 @@ export default function Establishment() {
               <Typography component="h2" variant="h5" gutterBottom>Location &amp; Hours</Typography>
               <Grid container spacing={3}>
                 <Grid item xs={5}>
-                  {data?.x && data?.y && <MiniMap height={150} coordinates={[data.y, data.x]} />}
+                  {data?.x && data?.y && <MiniMap height={150} coordinates={[data.x, data.y]} />}
 
 
                   <Box sx={{display: 'flex', alignItems: 'flex-start', py: 2, justifyContent: 'space-between' }}>
@@ -242,7 +243,7 @@ export default function Establishment() {
               <Typography component="h2" variant="h5">Reviews</Typography>
               {reviews?.map((r, i) => {
                 return <><Box key={i} sx={{my: 2}}>
-                  <Typography variant="caption" sx={{fontWeight: 'bold'}}>{r.Name}</Typography>
+                  <Typography variant="caption" sx={{fontWeight: 'bold'}}>@{r?.Review_user}</Typography>
                   <Stars rating={r.Rating} size={18} sx={{ mb: 1}}/>
                   <Typography>{r.Review}</Typography>
                 </Box>
