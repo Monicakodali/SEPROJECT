@@ -1,7 +1,6 @@
 package repos
 
 import (
-	"fmt"
 	"strconv"
 
 	"github.com/Monicakodali/SEPROJECT/api/models"
@@ -20,10 +19,9 @@ func (estRepo *EstRepo) GetEstByID(eid string) (models.Establishment, error) {
 
 	var establishment models.Establishment
 	est_id, _ := strconv.Atoi(eid)
-	fmt.Println(est_id)
 	estRepo.db.Preloads("uf_dinings")
-	//query := estRepo.db.Where("est_id = ?", eid).Find(&establishment)
-	query := estRepo.db.Table("establishments").Select("establishments.est_id,establishments.type, establishments.name, uf_dinings.building, uf_dinings.room, establishments.x_coordinate, establishments.y_coordinate").Joins("JOIN uf_dinings on establishments.est_id = uf_dinings.diner_id").Where("establishments.est_id = ?", eid).Find(&establishment)
+	query := estRepo.db.Where("est_id = ?", eid).Find(&establishment)
+	//query := estRepo.db.Table("establishments").Select("establishments.est_id,establishments.type, establishments.name, uf_dinings.building, uf_dinings.room, establishments.x_coordinate, establishments.y_coordinate").Joins("JOIN uf_dinings on establishments.est_id = uf_dinings.diner_id").Where("establishments.est_id = ?", eid).Find(&establishment)
 	if query.Error != nil {
 		return establishment, query.Error
 	}

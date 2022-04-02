@@ -2,7 +2,6 @@ package test
 
 import (
 	"bytes"
-	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -78,8 +77,8 @@ func TestGetEstablishment(t *testing.T) {
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/api/establishments", nil)
-	a := req.Header.Get("Content-Type")
-	fmt.Println(a)
+	// a := req.Header.Get("Content-Type")
+	// fmt.Println(a)
 	router.ServeHTTP(w, req)
 
 }

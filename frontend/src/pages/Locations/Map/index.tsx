@@ -50,7 +50,7 @@ export default function Map({locations}: MapProps) {
       {userLocation && <Marker position={userLocation} icon={currentLocationIcon}/>}
       {
         locations.map(({id, x, y, name}) => {
-          return (<Marker key={id} position={[y,x]} icon={poiIcon}>
+          return (<Marker key={id} position={[x,y]} icon={poiIcon}>
             <Popup closeButton={false}>
               {name}
             </Popup>

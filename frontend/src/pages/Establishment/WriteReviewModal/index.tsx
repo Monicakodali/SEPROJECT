@@ -5,7 +5,7 @@ import { Stars } from '../../../components'
 type WriteReviewModalProps = {
   open: boolean,
   handleClose: () => void,
-  establishment: Establishment,
+  establishment: Diner,
   handleSubmit: (data: {rating: number, review: string }) => Promise<void> 
 }
 
@@ -30,7 +30,7 @@ export default function WriteReviewModal({open, handleClose, establishment, hand
 
   return (
   <Dialog open={open} onClose={() => !loading && handleClose()} maxWidth="sm" fullWidth>
-        <DialogTitle>{establishment.name}</DialogTitle>
+        <DialogTitle>{establishment.Name}</DialogTitle>
         <DialogContent>
           <Box sx={{display: 'flex', mb: 3, alignItems: 'center'}}>
             <Stars size={40} rating={rating} setRating={setRating} sx={{mr: 3}}/>

@@ -36,8 +36,8 @@ export default function Locations() {
       console.log(res.data)
       //setLocations(res.data)
       if(query) {
-        setLocations(res.data.filter((d: Establishment) => {
-          return d?.name?.replace(/[^a-zA-Z0-9]/g, '')?.toLowerCase().includes(query)
+        setLocations(res.data.filter((d: Diner) => {
+          return d?.Name?.replace(/[^a-zA-Z0-9]/g, '')?.toLowerCase().includes(query.toLowerCase())
         }))
       } else {
         setLocations(res.data)
