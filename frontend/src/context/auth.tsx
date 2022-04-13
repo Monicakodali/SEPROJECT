@@ -45,7 +45,7 @@ const AuthProvider: FC = ({ children }) => {
     setUser(null)
     setIsAuthenticated(false)
     window.location.href = '/login'
-  }, [])
+  }, [setUser, setIsAuthenticated])
 
   const signUp = useCallback((user: User) => {
     return axios.post('/api/users', user).then((res) => {

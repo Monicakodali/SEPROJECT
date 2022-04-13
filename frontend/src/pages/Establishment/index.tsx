@@ -3,9 +3,6 @@ import { styled } from '@mui/material/styles';
 import axios from 'axios';
 import * as React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import {
-  Navigate,
-} from "react-router-dom";
 import { Rating, Stars } from '../../components';
 import Tags from '../../components/Tags/index';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
