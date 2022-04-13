@@ -1,7 +1,7 @@
 
 type Establishment = {
   id: string,
-  name: string
+  Name: string
   building: string,
   room: string,
   url: string,

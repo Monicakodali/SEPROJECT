@@ -23,18 +23,17 @@ export default function Locations() {
   
   const [locations, setLocations] = React.useState([])
   const [loading, setLoading] = React.useState(true)
+
+  const [map, setMap] = React.useState<null | L.Map>(null)
   
   let [searchParams] = useSearchParams()
   const query = searchParams.get('query')
   const searchType = searchParams.get('type')
 
   // currently filtering on the front end
-  // need to move search logic to backend
   React.useEffect(() => {
     setLoading(true)
     axios.get('/api/establishments').then(res => {
-      console.log(res.data)
-      //setLocations(res.data)
       if(query) {
         setLocations(res.data.filter((d: Diner) => {
           return d?.Name?.replace(/[^a-zA-Z0-9]/g, '')?.toLowerCase().includes(query.toLowerCase())
@@ -49,6 +48,24 @@ export default function Locations() {
     })
   }, [query])
 
+  const onLocationClick = React.useCallback((d: Diner) => {
+    if(!map) {
+      return
+    }
+    map.setView([d.x, d.y], 18, {
+      animate: true,
+      duration: 1.5
+    })
+    map.eachLayer((l: L.Layer) => {
+      const latlng = l.getPopup()?.getLatLng()
+      if(latlng?.lat === d.x && latlng?.lng === d.y) {
+        setTimeout(() => {
+          l.openPopup()
+        }, 1600)
+      }
+    })
+  }, [map])
+
   return (
     <div>
       <InsetDrawer anchor="left" width={FILTER_DRAWER_WIDTH}>
@@ -56,10 +73,10 @@ export default function Locations() {
       </InsetDrawer>
       <LocationListContainer>
         <ListHeader />
-        <LocationsList locations={locations} loading={loading} />
+        <LocationsList locations={locations} loading={loading} onLocationClick={onLocationClick} />
       </LocationListContainer>
       <InsetDrawer anchor="right" width={MAP_DRAWER_WIDTH}>
-        <Map locations={locations} />  
+        <Map locations={locations} setMap={setMap} />  
       </InsetDrawer>
     </div>
   );
