@@ -14,7 +14,7 @@ type LoginInfo = {
 
 beforeEach(() => {
   mount(<App />)
-  cy.routerNavigate('/signup')
+  cy.routerNavigate('/login')
 })
 
 it('App loads', () => {
@@ -23,11 +23,7 @@ it('App loads', () => {
 
 const loginInfo: Partial<LoginInfo> = {
   username: 'testUsername',
-  email: 'test@ufl.edu',
-  firstName: 'Test',
-  lastName: 'User',
   password: 'password',
-  confirmPassword: 'password',
 }
 
 const enterCredentials = (info: Record<string, string>) => {
@@ -46,32 +42,20 @@ it('Able to enter credentials', () => {
   }
 })
 
-it('Passwords must match', () => {
-  const botchedLoginInfo = {...loginInfo, confirmPassword: 'notMatching'}
-  enterCredentials(botchedLoginInfo)
-  cy.get('button').click()
-  cy.get('input[name="confirmPassword"]').should('have.attr', 'aria-invalid', 'true')
-})
-
 it('All fields must be filled out', () => {
   const botchedLoginInfo = {...loginInfo}
-  delete botchedLoginInfo['firstName']
-
+  delete botchedLoginInfo['password']
   enterCredentials(botchedLoginInfo)
   cy.get('button').click()
-  cy.get('input[name="firstName"]').should('have.attr', 'aria-invalid', 'true')
+  cy.get('input[name="password"]').should('have.attr', 'aria-invalid', 'true')
 })
 
-it('Able to sign up successfully', () => {
-  cy.intercept('POST', '/api/users').as('createUserEndpoint')
+it('Able to log in successfully', () => {
+  cy.intercept('POST', '/api/users/login').as('loginEndpoint')
   enterCredentials(loginInfo)
   cy.get('button').click()
-
-  return cy.wait('@createUserEndpoint').then(({request}) => {
+  return cy.wait('@loginEndpoint').then(({request}) => {
     expect(request.body).to.deep.equal({
-      Email: loginInfo['email'],
-      FirstName: loginInfo['firstName'],
-      LastName: loginInfo['lastName'],
       Password: loginInfo['password'],
       Username: loginInfo['username'],
     })
