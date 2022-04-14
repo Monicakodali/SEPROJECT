@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Box, Chip, LinkProps, SxProps } from '@mui/material';
+import { Box, Chip, SxProps } from '@mui/material';
 import Link from '../Link'
-import { Link as RouterLink, NavLinkProps } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom'
 
 
 type TagsProps = {
