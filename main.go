@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/Monicakodali/SEPROJECT/api/controller"
@@ -23,7 +22,7 @@ func main() {
 	db.Model(&models.Establishment{}).AddForeignKey("est_id", "uf_dinings(Diner_id)", "CASCADE", "CASCADE")
 	defer db.Close()
 
-	if !db.HasTable(&models.Establishment{}) {
+	/*if !db.HasTable(&models.Establishment{}) {
 		fmt.Println("Table doesnot exist. Creating table establishment")
 		db.Debug().AutoMigrate(&models.Establishment{})
 	}
@@ -41,7 +40,7 @@ func main() {
 	if !db.HasTable(&models.Review{}) {
 		fmt.Println("Table doesnot exist. Creating table Review")
 		db.Debug().AutoMigrate(&models.Review{})
-	}
+	}*/
 
 	//fmt.Println(db)
 
