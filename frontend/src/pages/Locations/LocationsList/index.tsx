@@ -5,8 +5,9 @@ import LocationCard from './LocationCard'
 import { Box } from '@mui/system';
 
 type LocationsListProps = {
-  locations: Establishment[],
-  loading: boolean
+  locations: Diner[],
+  loading: boolean,
+  onLocationClick: (d: Diner) => void
 }
 
 const SkeletonContainer = styled('div')(({ theme }) => {
@@ -23,7 +24,7 @@ const SkeletonContainer = styled('div')(({ theme }) => {
 })
 
 
-export default function LocationsList({locations, loading}: LocationsListProps) {
+export default function LocationsList({locations, loading, onLocationClick}: LocationsListProps) {
 
   const [selected, setSelected] = React.useState<string | null>(null)
 
@@ -44,7 +45,10 @@ export default function LocationsList({locations, loading}: LocationsListProps) 
   }
 
   return <>{
-    locations.map((d) => <LocationCard selected={selected === d.id} key={d.id} data={d} onClick={() => setSelected(d.id)}/>)
+    locations.map((d) => <LocationCard selected={selected === d.est_id} key={d.est_id} data={d} onClick={() => {
+      setSelected(d.est_id)
+      onLocationClick(d)
+    }}/>)
   }
   </>
 

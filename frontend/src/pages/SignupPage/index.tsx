@@ -5,7 +5,7 @@ import validate from 'validate.js'
 import { useAuth } from '../../context/auth';
 import { useNavigate } from 'react-router-dom';
 
-type Field = 'username' | 'password' | 'name' | 'confirmPassword'
+type Field = 'username' | 'password' | 'firstName' | 'lastName' | 'email' | 'confirmPassword'
 
 type Form<T> = Record<Field, T>
 
@@ -26,7 +26,18 @@ var constraints = {
     },
     equality: "password"
   },
-  name: {
+  lastName: {
+    presence: {
+      allowEmpty: false
+    },
+  },
+  firstName: {
+    presence: {
+      allowEmpty: false
+    },
+  },
+  email: {
+    email: true,
     presence: {
       allowEmpty: false
     },
@@ -39,19 +50,25 @@ export default function SignUpPage() {
   const [form, setForm] = useState<Form<string>>({
     username: '',
     password: '',
-    name: '',
+    firstName: '',
+    lastName: '',
+    email: '',
     confirmPassword: ''
   })
   const [touched, setTouched] = useState<Form<boolean>>({
     username: false,
     password: false,
-    name: false,
+    firstName: false,
+    lastName: false,
+    email: false,
     confirmPassword: false
   })
   const [errors, setErrors] = useState<Form<string[]>>({
     username: [],
     password: [],
-    name: [],
+    firstName: [],
+    lastName: [],
+    email: [],
     confirmPassword: []
   })
 
@@ -88,7 +105,15 @@ export default function SignUpPage() {
   
   const onSignUp = () => {
     setInit(true)
-    setTouched({username: true, password: true, name: true, confirmPassword: true})
+    setTouched({username: true, password: true, firstName: true, lastName: true, email: true, confirmPassword: true})
+    setErrors({
+      username: [],
+      password: [],
+      firstName: [],
+      lastName: [],
+      email: [],
+      confirmPassword: []
+    })
     const result = validate(form, constraints)
     if(result) {
       setErrors(e => ({...e, ...result}))
@@ -100,7 +125,9 @@ export default function SignUpPage() {
     signUp({
       Username: form.username,
       Password: form.password,
-      Name: form.name
+      FirstName: form.firstName,
+      LastName: form.lastName,
+      Email: form.email
     }).then((result) => {
       setError(!result)
       setSuccess(result)
@@ -134,8 +161,21 @@ export default function SignUpPage() {
             <Grid item xs={6} container direction="column" alignItems="center" justifyContent="center">
               <Typography variant="h4" color="primary" sx={{fontSize: 24, mb: 2, mt: 2}}>Sign Up for Yelp UF</Typography>      
               <Box sx={{my: 3, maxWidth: 300}}>
-                <TextField required name="username" inputProps={{'aria-label': 'Username'}} placeholder="Username" margin="dense" size="small" fullWidth value={form.username} onChange={onChange} disabled={isLoading || success} error={(!!form.username || init) && touched.username && hasError('username')} helperText={getHelperText('username')}/>
-                <TextField required name="name" inputProps={{'aria-label': 'Name'}} placeholder="Name" margin="dense" size="small" fullWidth value={form.name} onChange={onChange} disabled={isLoading || success} error={(!!form.name || init) && touched.name && hasError('name')}  helperText={getHelperText('name')} />
+                <TextField required name="username" autoComplete="username" inputProps={{'aria-label': 'Username'}} placeholder="Username" margin="dense" size="small" fullWidth value={form.username} onChange={onChange} disabled={isLoading || success} error={(!!form.username || init) && touched.username && hasError('username')} helperText={getHelperText('username')}/>
+
+                <TextField required name="email" inputProps={{'aria-label': 'UF Email'}} placeholder="UF Email" margin="dense" size="small" fullWidth value={form.email} onChange={onChange} disabled={isLoading || success} error={(!!form.email || init) && touched.email && hasError('email')} helperText={getHelperText('email')}/>
+                
+                <Grid container spacing={2} sx={{mb: 2}}>
+                  <Grid item xs={6}>
+                    <TextField required name="firstName" autoComplete="first" inputProps={{'aria-label': 'First Name'}} placeholder="First Name" margin="dense" size="small" fullWidth value={form.firstName} onChange={onChange} disabled={isLoading || success} error={(!!form.firstName || init) && touched.firstName && hasError('firstName')}  helperText={getHelperText('firstName')} />
+                  </Grid>
+                  <Grid item xs={6}>
+                  <TextField required name="lastName" autoComplete="last" inputProps={{'aria-label': 'Last Name'}} placeholder="Last Name" margin="dense" size="small" fullWidth value={form.lastName} onChange={onChange} disabled={isLoading || success} error={(!!form.lastName || init) && touched.lastName && hasError('lastName')}  helperText={getHelperText('lastName')} />
+                  </Grid>
+                </Grid>
+                
+                
+                
                 <TextField required name="password" inputProps={{'aria-label': 'Password'}} type="password" placeholder="Password" margin="dense" size="small" fullWidth value={form.password} onChange={onChange} disabled={isLoading || success} error={(!!form.password || init) && touched.password && hasError('password')}  helperText={getHelperText('password')} />
                 <TextField required name="confirmPassword" inputProps={{'aria-label': 'Confirm Password'}} type="password" placeholder="Confirm Password" margin="dense" size="small" fullWidth value={form.confirmPassword} onChange={onChange} disabled={isLoading || success} error={(!!form.confirmPassword || init) && touched.confirmPassword && hasError('confirmPassword')}  helperText={getHelperText('confirmPassword')} />
                 

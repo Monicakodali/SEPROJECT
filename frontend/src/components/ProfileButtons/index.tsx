@@ -32,7 +32,7 @@ export default function ProfileButtons({ variant } : { variant: 'light' | 'dark'
   const navigate = useNavigate()
   const { user, logout } = useAuth()
 
-  const firstLetter = (user?.Name ?? '')[0] ?? 'Y' 
+  const firstLetter = (user?.FirstName ?? '')[0] ?? 'Y' 
 
   const avatarSize = variant === 'light' ? 42 : 32
 
@@ -99,8 +99,8 @@ export default function ProfileButtons({ variant } : { variant: 'light' | 'dark'
         {firstLetter}
       </Avatar>
       <Box sx={{mx: 0.5}}>
-        <Typography sx={{fontSize: 14, fontWeight: 'bold'}}>{user?.Name}</Typography>
-        <Typography variant="body2" sx={{fontSize: 12}}>{user?.Email}</Typography>
+        <Typography sx={{fontSize: 14, fontWeight: 'bold'}}>{user?.FirstName} {user?.LastName}</Typography>
+        <Typography variant="body2" sx={{fontSize: 12}}>@{user?.Username}</Typography>
       </Box>
     </Box>
     <Divider sx={{my: 1}} />

@@ -64,7 +64,7 @@ func main() {
 	router.Use(static.Serve("/", static.LocalFile("./frontend/build", true)))
 
 	router.GET("/api/establishments", establishmentController.ListEstHandler)
-	router.GET("/api/establishments/:id", establishmentController.GetOneEstHandler)
+	router.GET("/api/establishments/:est_id", establishmentController.GetOneEstHandler)
 	router.POST("/api/establishments", establishmentController.CreateEstablishments)
 	router.DELETE("/api/establishments", establishmentController.DeleteEstablishment)
 	router.POST("/api/users/login", userController.GetUser)
