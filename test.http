@@ -1,57 +1,22 @@
-
-GET http://localhost:8080/api/establishments/86
-
-
-POST http://localhost:8080/api/establishments
-Content-Type: application/json
-
-
-  {
-    "est_id": "8990",
-    "type": "DINING",
-    "name": "P.O.D. Market",
-    "building": "0551",
-    "room": "173",
-    "url": "",
-    "x": 29.64636443982178,
-    "y": -82.34148054394188
-    } 
-    
-DELETE http://localhost:8080/api/establishments
-Content-Type: application/json
-
-
-  {
-    "id": "8990"
-  }
-
-POST http://localhost:8080/api/establishments
-Content-Type: application/json
-
-
-  {
-    "id": "8990",
-    "type": "DINING",
-    "name": "P.O.D. Market",
-    "building": "0551",
-    "room": "173",
-    "url": "",
-    "x": 29.64636443982178,
-    "y": -82.34148054394188
-    }
+  GET http://localhost:8080/api/reviews
 
 POST http://localhost:8080/api/reviews
 Content-Type: application/json
 
-  {
-	"Email": "cpagolu@ufl.edu",
-	"Name": "Carol Navya Pagolu",
-	"Est_id": "78",
-	"Est_name": "0",
+  {"Review_id":44,
+	"Review_user": "carolnavya",
+	"Review_est": 82,
   "Review": "Amazing Service",
   "Rating": 4.5,
-  "revTime": {{$timestamp}}
+  "revTime": "2019-07-04T13:33:03.969Z"
   }
+
+
+
+DELETE http://localhost:8080/api/reviews
+Content-Type: application/json
+
+  {"Review_id":1}
 
 POST http://localhost:8080/api/users
 Content-Type: application/json
@@ -61,7 +26,7 @@ Content-Type: application/json
 	"Email": "cpagolu@ufl.edu",
 	"Name": "Carol Navya Pagolu",
 	"Password": "abc123",
-	"Verified": "0"
+	"Verified": 0
   }
 
 POST http://localhost:8080/api/establishments

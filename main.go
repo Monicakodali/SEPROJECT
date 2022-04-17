@@ -19,6 +19,7 @@ func main() {
 	}
 
 	db.Debug().AutoMigrate(&models.Establishment{}, &models.Review{}, &models.UFDining{}, &models.User{})
+	db.Exec("PRAGMA foreign_keys = ON")
 	db.Model(&models.Establishment{}).AddForeignKey("est_id", "uf_dinings(Diner_id)", "CASCADE", "CASCADE")
 	defer db.Close()
 

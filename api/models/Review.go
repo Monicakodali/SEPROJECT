@@ -11,6 +11,6 @@ type Review struct {
 	Review      string        `json:"Review"`
 	Rating      float64       `gorm:"not null" json:"Rating"`
 	RevTime     time.Time     `json:"revTime"`
-	Username    User          `gorm:"foreignKey:Review_user;references:Username;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;" json:"Username"`
-	Est_id      Establishment `gorm:"foreignKey:Review_est;references:Est_Id;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;" json:"est_id"`
+	Username    User          `gorm:"foreignKey:Review_user;references:Username;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
+	Est_id      Establishment `gorm:"foreignKey:Review_est;references:Est_Id;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 }
