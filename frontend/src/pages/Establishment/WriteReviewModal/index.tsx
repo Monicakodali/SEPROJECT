@@ -32,8 +32,8 @@ export default function WriteReviewModal({open, handleClose, establishment, hand
   <Dialog open={open} onClose={() => !loading && handleClose()} maxWidth="sm" fullWidth>
         <DialogTitle>{establishment.Name}</DialogTitle>
         <DialogContent>
-          <Box sx={{display: 'flex', mb: 3, alignItems: 'center'}}>
-            <Stars size={40} rating={rating} setRating={setRating} sx={{mr: 3}}/>
+          <Box sx={{display: 'inline', mb: 3, alignItems: 'left'}}>
+            <Stars size={50} rating={rating} setRating={setRating} sx={{mr: 3}}/>
             <Typography>
               {rating === 0 ? `Select Your Rating` : `${rating} stars`}
             </Typography>
@@ -45,8 +45,8 @@ export default function WriteReviewModal({open, handleClose, establishment, hand
             margin="dense"
             id="review"
             fullWidth
-            placeholder="Leave a review"
-            variant="outlined"
+            placeholder="Please leave a review!"
+            variant="filled"
             multiline
             minRows={8}
           />
