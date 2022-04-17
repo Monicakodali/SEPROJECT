@@ -1,18 +1,19 @@
-# HAPPY HAP'S YELP
+# UF YELP
 
 
 ## Contributers:
 ```
 Andrew Kuczynski - Frontend
 Monica Bhargavi Kodali - Frontend
+
 Carol Navya Pagolu - Backend
 Manjari Misra - Backend
 ```
 
 ## Overview
-Happy Hap’s Yelp is an application that will allow students to look up, sort, and review different establishments around Gainesville with a great focus on campus. Users will be able to leave detailed reviews, comments, and photos on places in Gainesville including restaurants, attractions, and services, similar to Yelp.com
+UF Yelp is an application that will allow students to look up, sort, and review different establishments around Gainesville with a great focus on campus. Users will be able to leave detailed reviews, comments, and photos on places in Gainesville including restaurants, attractions, and services, similar to Yelp.com
 
-Happy Hap’s Yelp will be a one-stop application where students can find what they want and need on campus and read honest reviews.
+UF Yelp will be a one-stop application where students can find what they want and need on campus and read honest reviews.
 
 ## Basic Functionality
 1. Students will be able to create an account with a UFL email
@@ -35,7 +36,7 @@ To properly view the application during development, both the front and backend 
 To run the backend, ensure all the proper go packages are installed and run
 
 ```
-go run .
+go run main.go
 ```
 
 ### Frontend
