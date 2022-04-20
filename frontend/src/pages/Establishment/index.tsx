@@ -9,12 +9,10 @@ import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
-import useDiningHours from '../../hooks/dininghours';
-import { addDays, getDay, isAfter, isBefore, isValid, parse } from 'date-fns';
 import MiniMap from './MiniMap'
-import useBuilding from '../../hooks/buildings/index';
 import WriteReviewModal from './WriteReviewModal'
 import { useAuth } from '../../context/auth';
+import useEstablishment from '../../hooks/useEstablishment';
 
 type HeaderProps = {
   name: string,
@@ -62,90 +60,18 @@ const Button = styled(MuiButton)(({ theme }) => {
 
 export default function Establishment() {
   const { id } = useParams()
-  const [data, setData] = React.useState<null | Diner>(null)
-  const [reviews, setReviews] = React.useState<null | Review[]>(null)
-  const [toastOpen, setToastOpen] = React.useState(false)
-  const [err, setErr] = React.useState(false)
 
+  const { reviewInfo, hours, building, status, data, tags, isOpen, day } = useEstablishment(id)
+  const { rating, numRatings, reviews, status: reviewStatus, appendReview } = reviewInfo
+
+  const [toastOpen, setToastOpen] = React.useState(false)
+  
   const navigate = useNavigate()
   const { isAuthenticated, user } = useAuth()
 
   const [modalOpen, setModalOpen] = React.useState(false)
 
-  //console.log(data)
-
-  const hours = useDiningHours(data)
-  const building = useBuilding(data)
-
-  const rating = React.useMemo(() => {
-    return (reviews || []).reduce((acc, val) => {
-      acc += val.Rating
-      return acc
-    }, 0)/(reviews?.length || 1)
-  }, [reviews])
-
-  const numRatings = reviews?.length || 0
-  
-  // @TODO: populate tags from DB
-  const tags = ['Coffee & Tea', 'Fast Food', 'Convenience']
-
-
-  const day = (getDay(new Date()) + 6) % 7
-  
-  // for today
-  const hoursOfOperation = React.useMemo<null | Date[]>(() => {
-    if(!hours) {
-      return null
-    } else {
-      const h = hours[day]
-      if(h.hoursOfOperation === 'CLOSED') {
-        return null
-      } else {
-        const [start, end] = h.hoursOfOperation.split(' ‑ ')
-        let open = parse(start, 'h:mm aa', new Date())
-        let close = parse(end, 'h:mm aa', new Date())
-        if(!isValid(open) || !isValid(close)) {
-          return null
-        }
-        if(isBefore(close, open)) {
-          close = addDays(close, 1)
-        }
-        return [open, close]
-      }
-
-    }
-
-  }, [hours, day])
-
-  const isOpen = React.useMemo(() => {
-    if(!hoursOfOperation) {
-      return null
-    } else {
-      const now = new Date()
-      return isAfter(now, hoursOfOperation[0]) && isBefore(now, hoursOfOperation[1])
-    }
-  }, [hoursOfOperation])
- 
-  React.useEffect(() => {
-    if(id) {
-      axios.get(`/api/establishments/${id}`).then(res => {
-        setData(res.data)
-      }).catch(err => {
-        setErr(true)
-      })
-    }
-  }, [id])
-
-  React.useEffect(() => {
-    if(data && data.Est_Id) {
-      axios.get(`/api/reviews/est/${data.Est_Id}`).then(res => {
-        setReviews(res.data)
-      })
-    }
-  }, [data])
-
-
-  if(!id || err) {
+  if(!id || status === 'error') {
     return (<Navigate to="/search" />)
   }
 
@@ -160,7 +86,7 @@ export default function Establishment() {
       "Review": data.review,
       "Rating": data.rating
   }).then(res => {
-      setReviews(r => ([res.data, ...(r || [])]))
+      appendReview(res.data)
       setToastOpen(true)
     })
   }

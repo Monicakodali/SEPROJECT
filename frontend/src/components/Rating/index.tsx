@@ -14,7 +14,7 @@ export default function Rating({rating, numRatings, label, size, labelStyles}: R
   
   return (
     <Box sx={{display: 'flex', alignItems: 'center'}}>
-      <Stars rating={rating} size={size} sx={{mr: 1.5}} />
+      <Stars rating={rating} size={size} sx={{mr: 1.5, display: 'flex', alignItems: 'center'}} />
       <Typography color="text.secondary" sx={{...(labelStyles || {}), fontSize: size*0.6}}>
         {numRatings}{label ? ` ${label}` : ''}
       </Typography>
