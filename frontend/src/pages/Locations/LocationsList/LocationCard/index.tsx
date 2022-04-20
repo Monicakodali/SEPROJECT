@@ -1,6 +1,7 @@
 import { Box, CardContent, Typography, CardMedia, ListItemButton, Skeleton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Link, Rating, Tags } from '../../../../components'
+import BuildingImage from '../../../../components/BuildingImage';
 import useEstablishment from '../../../../hooks/useEstablishment';
 
 type LocationsCardProps = {
@@ -76,7 +77,7 @@ export default function LocationsCard({data, selected, onClick}: LocationsCardPr
 
   const { Name: name, Est_Id: id } = data
 
-  const { reviewInfo, tags, isOpen } = useEstablishment(id, data)
+  const { reviewInfo, tags, isOpen, building } = useEstablishment(id, data)
   const { rating, numRatings, reviews, status } = reviewInfo
 
   const firstReview = reviews?.[0]
@@ -84,12 +85,7 @@ export default function LocationsCard({data, selected, onClick}: LocationsCardPr
   return (
     <Box sx={{position: 'relative'}}>
     <StyledListItem selected={selected} alignItems="flex-start" focusRipple={false} onClick={onClick}>
-      <CardMedia
-        component="img"
-        sx={{ width: 151, padding: 2 }}
-        image={placeholderImageUrl}
-        alt={name + ' image'}
-      />
+      <BuildingImage buildingId={building?.PropCID} style={{ width: 150, height: 150, padding: 16 }}  />
       <Box sx={{ display: 'flex', flexGrow: 1, flexDirection: 'column' }}>
         <CardContent sx={{ flex: '1 0 auto', px: 1, py: 3 }}>
           <Box sx={{minHeight: 100}}/> 
