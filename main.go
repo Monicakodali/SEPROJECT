@@ -19,7 +19,7 @@ func main() {
 	}
 	db.Debug().Exec("PRAGMA foreign_keys = ON")
 
-	db.Debug().AutoMigrate(&models.Establishment{}, &models.UFDining{}, &models.Review{}, &models.User{}, &models.Photos{})
+	db.Debug().AutoMigrate(&models.Establishment{}, &models.UFDining{}, &models.Review{}, &models.User{}, &models.Photos{}, &models.Tags{})
 
 	var PhotoID models.Photos
 	db.Debug().Model(&models.User{}).Related(&PhotoID, "PhotoID")

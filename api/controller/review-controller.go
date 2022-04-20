@@ -60,29 +60,9 @@ func (rev *ReviewController) GetReviewsForUser(c *gin.Context) {
 	c.JSON(http.StatusOK, &res)
 }
 
-// var uInstance models.User
-
-// if err := ctx.ShouldBindJSON(&uInstance); err != nil {
-// 	ctx.JSON(http.StatusBadRequest, gin.H{
-// 		"error": err.Error(),
-// 	})
-// 	return
-// }
-
-// user_creds := models.User{
-// 	Username:  uInstance.Username,
-// 	Email:     uInstance.Email,
-// 	Password:  utils.EncryptPassword(uInstance.Password),
-// 	FirstName: uInstance.FirstName,
-// 	LastName:  uInstance.LastName,
-// 	Address:   uInstance.Address,
-// 	Verified:  uInstance.Verified,
-// }
-
 // Add a new review
 func (rev *ReviewController) NewReview(ctx *gin.Context) {
 	var rInstance models.Review
-
 	if err := ctx.ShouldBindJSON(&rInstance); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
@@ -90,14 +70,7 @@ func (rev *ReviewController) NewReview(ctx *gin.Context) {
 		return
 	}
 
-	review := models.Review{
-		Review_user: rInstance.Review_user,
-		Review_est:  rInstance.Review_est,
-		Review:      rInstance.Review,
-		Rating:      rInstance.Rating,
-	}
-
-	err := rev.revRepo.AddReview(review)
+	err := rev.revRepo.AddReview(rInstance)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),

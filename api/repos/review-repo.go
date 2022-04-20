@@ -1,6 +1,10 @@
 package repos
 
 import (
+	"encoding/json"
+	"fmt"
+	"time"
+
 	"github.com/Monicakodali/SEPROJECT/api/models"
 	"github.com/jinzhu/gorm"
 )
@@ -13,12 +17,22 @@ func (revRepo *RevRepo) Init(db *gorm.DB) {
 	revRepo.db = db
 }
 
+type MyTime time.Time
+
+func (m *MyTime) UnmarshalJSON(data []byte) error {
+	// Ignore null, like in the main JSON package.
+	if string(data) == "null" || string(data) == `""` {
+		return nil
+	}
+	return json.Unmarshal(data, (*time.Time)(m))
+}
+
 // Get all reviews
 func (revRepo *RevRepo) GetAllReviews() ([]models.Review, error) {
 
 	var reviewList []models.Review
 
-	query := revRepo.db.Find(&reviewList)
+	query := revRepo.db.Debug().Find(&reviewList)
 	if query.Error != nil {
 		return nil, query.Error
 	}
@@ -51,8 +65,9 @@ func (revRepo *RevRepo) GetReviewsForUser(username string) ([]models.Review, err
 
 // Add reviews into the table
 func (revRepo *RevRepo) AddReview(newReview models.Review) error {
+	fmt.Println("ADDING.....")
 
-	query := revRepo.db.Create(&newReview)
+	query := revRepo.db.Debug().Create(&newReview)
 	if query.Error != nil {
 		return query.Error
 	}

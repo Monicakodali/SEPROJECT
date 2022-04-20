@@ -27,6 +27,13 @@ type Result struct {
 	Url          string
 }
 
+type Rating struct {
+	Est_Id       int
+	AvgRating    float64
+	TotalRatings int
+	recentRating string
+}
+
 func (estRepo *EstRepo) GetEstByID(eid string) (Result, error) {
 	var res Result
 	//var establishments models.Establishment
@@ -35,22 +42,22 @@ func (estRepo *EstRepo) GetEstByID(eid string) (Result, error) {
 		fmt.Println(err)
 	}
 	fmt.Println(est_id)
-	query := estRepo.db.Debug().Raw("SELECT e.est_id, e.name, e.x_coordinate, e.y_coordinate, d.building, d.room, d.url FROM establishments e INNER JOIN uf_dinings d ON  e.est_id = d.diner_id WHERE e.est_id = ?", est_id).Scan(&res)
+	query := estRepo.db.Debug().Raw("SELECT e.est_id, e.name, e.x_coordinate, e.y_coordinate, e.is_open, d.building, d.room, d.url FROM establishments e INNER JOIN uf_dinings d ON  e.est_id = d.diner_id WHERE e.est_id = ?", est_id).Scan(&res)
 	if query.Error != nil {
 		return res, query.Error
 	}
 	return res, nil
 }
 
-func (estRepo *EstRepo) GetAllEst() ([]models.Establishment, error) {
+func (estRepo *EstRepo) GetAllEst() ([]Result, error) {
 
-	var establishments []models.Establishment
+	var results []Result
 
-	query := estRepo.db.Find(&establishments)
+	query := estRepo.db.Debug().Raw("SELECT e.est_id, e.name, e.x_coordinate, e.y_coordinate, e.is_open, d.building, d.room, d.url FROM establishments e INNER JOIN uf_dinings d ON  e.est_id = d.diner_id").Scan(&results)
 	if query.Error != nil {
 		return nil, query.Error
 	}
-	return establishments, nil
+	return results, nil
 }
 
 func (estRepo *EstRepo) CreateEst(estab models.Establishment) error {

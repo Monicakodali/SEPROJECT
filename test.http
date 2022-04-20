@@ -1,4 +1,4 @@
-GET http://localhost:8080/api/establishments/82
+GET http://localhost:8080/api/establishments
 
 GET http://localhost:8080/api/establishments/44
 
@@ -15,6 +15,22 @@ Content-Type: application/json
     "x": 29.64636443982178,
     "y": -82.34316087863382
   }
+
+GET http://localhost:8080/api/reviews
+
+POST http://localhost:8080/api/reviews
+
+Content-Type: application/json
+
+
+  {
+    "Review_user": "cpagolu",
+    "Review_est": 2,
+    "Review": "Good Dining place!",
+    "Rating":4
+  }
+
+GET http://localhost:8080/api/reviews
 
 POST http://localhost:8080/api/reviews
 Content-Type: application/json
