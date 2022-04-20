@@ -84,7 +84,7 @@ func main() {
 	router.GET("/api/reviews/est/:est_Id", revController.GetReviewsForEst)
 	router.GET("/api/reviews/user/:userId", revController.GetReviewsForUser)
 	router.POST("/api/reviews", revController.NewReview)
-	router.DELETE("/api/reviews", revController.RemoveReview)
+	router.DELETE("/api/reviews/:inputParams", revController.RemoveReview)
 	router.Run()
 	//running
 }

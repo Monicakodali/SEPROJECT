@@ -1,7 +1,9 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/Monicakodali/SEPROJECT/api/models"
 	"github.com/Monicakodali/SEPROJECT/api/repos"
@@ -84,8 +86,11 @@ func (rev *ReviewController) NewReview(ctx *gin.Context) {
 // Remove a review
 
 func (rev *ReviewController) RemoveReview(ctx *gin.Context) {
-	rid := ctx.Param("Review_id")
-	err := rev.revRepo.DeleteReview(rid)
+	rid := ctx.Param("inputParams")
+	fmt.Println(rid)
+	inp := strings.Split(rid, ",")
+
+	err := rev.revRepo.DeleteReview(inp[0], inp[1])
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),

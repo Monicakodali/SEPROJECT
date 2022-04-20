@@ -72,13 +72,14 @@ func (revRepo *RevRepo) AddReview(newReview models.Review) error {
 }
 
 // Delete a review
-func (revRepo *RevRepo) DeleteReview(rev_id string) error {
+func (revRepo *RevRepo) DeleteReview(rev_est string, rev_user string) error {
 
-	rid, err := strconv.Atoi(rev_id)
+	est_id, err := strconv.Atoi(rev_est)
 	if err != nil {
 		fmt.Println(err)
 	}
-	query := revRepo.db.Where("Review_id = ?", rid).Delete(&models.Review{})
+
+	query := revRepo.db.Where("Review_est = ? AND Review_user = ?", est_id, rev_user).Delete(&models.Review{})
 	if query.Error != nil {
 		return query.Error
 	}
