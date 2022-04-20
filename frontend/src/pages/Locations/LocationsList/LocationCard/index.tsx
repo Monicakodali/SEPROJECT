@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { Box, CardContent, Typography, CardMedia, ListItemButton } from '@mui/material';
+import { Box, CardContent, Typography, CardMedia, ListItemButton, Skeleton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Link, Rating, Tags } from '../../../../components'
+import useEstablishment from '../../../../hooks/useEstablishment';
 
 type LocationsCardProps = {
   data: Diner,
@@ -40,52 +40,47 @@ const StyledLink = styled(Link)(({ theme }) => {
   }
 })
 
-const names = ['', 'John', 'Mary', 'Sue', 'Bob', 'Mike']
-
 
 type InteractiveElementType = {
   name: Diner['Name'],
   id: number | string
   tags: string[],
   rating: number,
-  numRatings: number
+  numRatings: number,
+  loading: boolean,
+  onClick: LocationsCardProps['onClick']
 }
 
-function InteractiveElement({name, id, tags, rating, numRatings}: InteractiveElementType) {
-  return (<Box sx={{position: 'absolute', left: 191, top: 24, backgroundColor: 'transparent'}}>
+function InteractiveElement({name, id, tags, rating, numRatings, loading, onClick}: InteractiveElementType) {
+  return (<Box sx={{position: 'absolute', left: 191, top: 24, backgroundColor: 'transparent', cursor: 'pointer'}} onClick={onClick}>
       <StyledLink to={`/est/${id}`} variant="h4">
         {name}
       </StyledLink>
-      <Box sx={{my: 1}}>
-        <Rating rating={rating} numRatings={numRatings} />
-      </Box>
-      <Box sx={{my: 1}}>
-        <Tags variant="chips" tags={tags} />
-      </Box></Box>)
+      {loading ? <Box sx={{my: 1, maxWidth: 600}}>
+        <Skeleton width={110} sx={{mb: 0.5, maxWidth: '100%'}}/>
+        <Skeleton width={200} sx={{maxWidth: '100%'}} />
+      </Box> : <>
+        <Box sx={{my: 1.5}}>
+          <Rating rating={rating} numRatings={numRatings} />
+        </Box>
+        <Box sx={{my: 1}}>
+          <Tags variant="chips" tags={tags} />
+        </Box>
+      </>}
+      
+      </Box>)
 }
-
-
 
 
 export default function LocationsCard({data, selected, onClick}: LocationsCardProps) {
 
   const { Name: name, Est_Id: id } = data
 
-  // @TODO: populate with actual rating
-  // randomly generate rating for now
-  const rating = React.useMemo(() => Math.floor(Math.random() * 5) + 1, [])
+  const { reviewInfo, tags, isOpen } = useEstablishment(id, data)
+  const { rating, numRatings, reviews, status } = reviewInfo
 
-  // @TODO: populate with actual num ratings
-  // randomly generate num of ratings for now
-  const numRatings = React.useMemo(() => Math.floor(Math.random() * 100) + 10, [])
+  const firstReview = reviews?.[0]
 
-  // @TODO: populate with actual isOpen
-  // randomly generate whether open or not
-  const isOpen = React.useMemo(() => Math.random() > 0.5, [])
-
-  // @TODO: populate tags from DB
-  const tags = ['Coffee & Tea', 'Fast Food', 'Convenience']
-  
   return (
     <Box sx={{position: 'relative'}}>
     <StyledListItem selected={selected} alignItems="flex-start" focusRipple={false} onClick={onClick}>
@@ -98,14 +93,14 @@ export default function LocationsCard({data, selected, onClick}: LocationsCardPr
       <Box sx={{ display: 'flex', flexGrow: 1, flexDirection: 'column' }}>
         <CardContent sx={{ flex: '1 0 auto', px: 1, py: 3 }}>
           <Box sx={{minHeight: 100}}/> 
-          <Typography variant="caption" color="text.secondary" component="div">
-            {`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vitae erat vestibulum, convallis risus sit amet, ultrices nisl. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vitae erat vestibulum, convallis risus sit amet, ultrices nisl. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vitae erat vestibulum, convallis risus sit amet, ultrices nisl.`}
-            <span style={{fontWeight: 'bold', marginLeft: 5}}>{'–'}{names[rating]}</span>
-          </Typography>
+          {firstReview && <Typography variant="caption" color="text.secondary" component="div">
+            {firstReview?.Review}
+            <span style={{fontWeight: 'bold', marginLeft: '1.5ch', textTransform: 'capitalize'}}>{'–'}{firstReview?.Review_user}</span>
+          </Typography>}
         </CardContent>
       </Box>
     </StyledListItem>
-    <InteractiveElement id={id} name={name} tags={tags} numRatings={numRatings} rating={rating} />
+    {<InteractiveElement id={id} name={name} tags={tags} numRatings={numRatings} rating={rating} loading={status !== 'success'} onClick={onClick}/>}
     </Box>
   );
 };
