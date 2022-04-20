@@ -19,8 +19,16 @@ const LocationListContainer = styled('div')(({ theme }) => ({
 }));
 
 
+
+
 export default function Locations() {
   
+
+  const [filters, setFilters] = React.useState<EstFilters>({
+    minStars: 0,
+    openNow: false
+  })
+
   const [locations, setLocations] = React.useState([])
   const [loading, setLoading] = React.useState(true)
 
@@ -69,11 +77,11 @@ export default function Locations() {
   return (
     <div>
       <InsetDrawer anchor="left" width={FILTER_DRAWER_WIDTH}>
-        <Filters />
+        <Filters {...{filters, setFilters}}/>
       </InsetDrawer>
       <LocationListContainer>
         <ListHeader />
-        <LocationsList locations={locations} loading={loading} onLocationClick={onLocationClick} />
+        <LocationsList locations={locations} loading={loading} onLocationClick={onLocationClick} {...{filters, setFilters}} />
       </LocationListContainer>
       <InsetDrawer anchor="right" width={MAP_DRAWER_WIDTH}>
         <Map locations={locations} setMap={setMap} />  
