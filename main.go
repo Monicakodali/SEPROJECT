@@ -17,10 +17,14 @@ func main() {
 	if err != nil {
 		panic("failed to connect database")
 	}
+	db.Debug().Exec("PRAGMA foreign_keys = ON")
 
-	db.Debug().AutoMigrate(&models.Establishment{}, &models.Review{}, &models.UFDining{}, &models.User{})
-	db.Exec("PRAGMA foreign_keys = ON")
-	db.Model(&models.Establishment{}).AddForeignKey("est_id", "uf_dinings(Diner_id)", "CASCADE", "CASCADE")
+	db.Debug().AutoMigrate(&models.Establishment{}, &models.UFDining{}, &models.Review{}, &models.User{}, &models.Photos{})
+
+	var PhotoID models.Photos
+	db.Debug().Model(&models.User{}).Related(&PhotoID, "PhotoID")
+	db.Debug().Model(&models.Establishment{}).Related(&models.UFDining{}, "Diner_Id")
+
 	defer db.Close()
 
 	/*if !db.HasTable(&models.Establishment{}) {
@@ -41,6 +45,10 @@ func main() {
 	if !db.HasTable(&models.Review{}) {
 		fmt.Println("Table doesnot exist. Creating table Review")
 		db.Debug().AutoMigrate(&models.Review{})
+	}
+	if !db.HasTable(&models.Photos{}) {
+		fmt.Println("Table doesnot exist. Creating table Review")
+		db.Debug().AutoMigrate(&models.Photos{})
 	}*/
 
 	//fmt.Println(db)
@@ -67,7 +75,7 @@ func main() {
 	router.GET("/api/establishments", establishmentController.ListEstHandler)
 	router.GET("/api/establishments/:est_id", establishmentController.GetOneEstHandler)
 	router.POST("/api/establishments", establishmentController.CreateEstablishments)
-	router.DELETE("/api/establishments", establishmentController.DeleteEstablishment)
+	router.DELETE("/api/establishments/:est_id", establishmentController.DeleteEstablishment)
 	router.POST("/api/users/login", userController.GetUser)
 	router.GET("/api/users", userController.ListUsers)
 	router.POST("/api/users", userController.SignUp)

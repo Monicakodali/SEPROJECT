@@ -1,6 +1,9 @@
 package repos
 
 import (
+	"fmt"
+	"strconv"
+
 	"github.com/Monicakodali/SEPROJECT/api/models"
 	"github.com/jinzhu/gorm"
 )
@@ -13,17 +16,30 @@ func (estRepo *EstRepo) Init(db *gorm.DB) {
 	estRepo.db = db
 }
 
-func (estRepo *EstRepo) GetEstByID(eid string) (models.Establishment, error) {
+type Result struct {
+	Est_Id       int
+	Name         string
+	X_coordinate float64
+	Y_coordinate float64
+	IsOpen       int
+	Building     string
+	Room         string
+	Url          string
+}
 
-	var establishment models.Establishment
-	// est_id, _ := strconv.Atoi(eid)
-	estRepo.db.Preloads("uf_dinings")
-	query := estRepo.db.Where("est_id = ?", eid).Find(&establishment)
-	//query := estRepo.db.Table("establishments").Select("establishments.est_id,establishments.type, establishments.name, uf_dinings.building, uf_dinings.room, establishments.x_coordinate, establishments.y_coordinate").Joins("JOIN uf_dinings on establishments.est_id = uf_dinings.diner_id").Where("establishments.est_id = ?", eid).Find(&establishment)
-	if query.Error != nil {
-		return establishment, query.Error
+func (estRepo *EstRepo) GetEstByID(eid string) (Result, error) {
+	var res Result
+	//var establishments models.Establishment
+	est_id, err := strconv.Atoi(eid)
+	if err != nil {
+		fmt.Println(err)
 	}
-	return establishment, nil
+	fmt.Println(est_id)
+	query := estRepo.db.Debug().Raw("SELECT e.est_id, e.name, e.x_coordinate, e.y_coordinate, d.building, d.room, d.url FROM establishments e INNER JOIN uf_dinings d ON  e.est_id = d.diner_id WHERE e.est_id = ?", est_id).Scan(&res)
+	if query.Error != nil {
+		return res, query.Error
+	}
+	return res, nil
 }
 
 func (estRepo *EstRepo) GetAllEst() ([]models.Establishment, error) {
@@ -48,7 +64,12 @@ func (estRepo *EstRepo) CreateEst(estab models.Establishment) error {
 
 func (estRepo *EstRepo) DeleteEst(eid string) error {
 
-	query := estRepo.db.Delete(&models.Establishment{}, eid)
+	est_id, err := strconv.Atoi(eid)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(est_id)
+	query := estRepo.db.Where("est_id = ?", est_id).Delete(&models.Establishment{})
 	if query.Error != nil {
 		return query.Error
 	}
