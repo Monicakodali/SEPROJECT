@@ -1,8 +1,8 @@
 package repos
 
 import (
-	"encoding/json"
 	"fmt"
+	"strconv"
 	"time"
 
 	"github.com/Monicakodali/SEPROJECT/api/models"
@@ -15,16 +15,6 @@ type RevRepo struct {
 
 func (revRepo *RevRepo) Init(db *gorm.DB) {
 	revRepo.db = db
-}
-
-type MyTime time.Time
-
-func (m *MyTime) UnmarshalJSON(data []byte) error {
-	// Ignore null, like in the main JSON package.
-	if string(data) == "null" || string(data) == `""` {
-		return nil
-	}
-	return json.Unmarshal(data, (*time.Time)(m))
 }
 
 // Get all reviews
@@ -42,8 +32,13 @@ func (revRepo *RevRepo) GetAllReviews() ([]models.Review, error) {
 // Get all the reviews for an establishment
 func (revRepo *RevRepo) GetReviewsForEst(est_id string) ([]models.Review, error) {
 
+	eid, err := strconv.Atoi(est_id)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(est_id, eid)
 	var reviewList []models.Review
-	query := revRepo.db.Where("Review_est = ?", est_id).Find(&reviewList)
+	query := revRepo.db.Debug().Where("Review_est = ?", eid).Find(&reviewList)
 
 	if query.Error != nil {
 		return nil, query.Error
@@ -66,8 +61,10 @@ func (revRepo *RevRepo) GetReviewsForUser(username string) ([]models.Review, err
 // Add reviews into the table
 func (revRepo *RevRepo) AddReview(newReview models.Review) error {
 	fmt.Println("ADDING.....")
-
+	newReview.RevTime = time.Now()
 	query := revRepo.db.Debug().Create(&newReview)
+	//Raw("INSERT INTO reviews (review_user, review_est,review, rating, rev_time ) VALUES (?,?,?,?)", newReview.Review_user, newReview.Review_est, newReview.Review, newReview.Rating, newReview.RevTime).Scan(&newReview)
+	//revRepo.db.Debug().Create(&newReview)
 	if query.Error != nil {
 		return query.Error
 	}
@@ -77,7 +74,11 @@ func (revRepo *RevRepo) AddReview(newReview models.Review) error {
 // Delete a review
 func (revRepo *RevRepo) DeleteReview(rev_id string) error {
 
-	query := revRepo.db.Where("Review_id = ?", rev_id).Delete(&models.Review{})
+	rid, err := strconv.Atoi(rev_id)
+	if err != nil {
+		fmt.Println(err)
+	}
+	query := revRepo.db.Where("Review_id = ?", rid).Delete(&models.Review{})
 	if query.Error != nil {
 		return query.Error
 	}

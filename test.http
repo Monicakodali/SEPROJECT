@@ -1,4 +1,18 @@
-GET http://localhost:8080/api/establishments
+
+
+
+GET http://localhost:8080/api/reviews/user/monica
+
+POST http://localhost:8080/api/reviews
+Content-Type: application/json
+
+
+  {
+    "Review_user": "monica",
+    "Review_est": 7,
+    "Review": "Good food",
+    "Rating":2
+  }
 
 GET http://localhost:8080/api/establishments/44
 

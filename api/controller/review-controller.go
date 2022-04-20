@@ -35,7 +35,7 @@ func (rev *ReviewController) ListReviews(c *gin.Context) {
 // Get all reviews for an establishment
 func (rev *ReviewController) GetReviewsForEst(c *gin.Context) {
 
-	eid := c.Param("establishmentId")
+	eid := c.Param("est_Id")
 	res, err := rev.revRepo.GetReviewsForEst(eid)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
