@@ -1,5 +1,6 @@
 import { Box, CardContent, Typography, CardMedia, ListItemButton, Skeleton } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { format } from 'date-fns';
 import { Link, Rating, Tags } from '../../../../components'
 import BuildingImage from '../../../../components/BuildingImage';
 import useEstablishment from '../../../../hooks/useEstablishment';
@@ -7,10 +8,9 @@ import useEstablishment from '../../../../hooks/useEstablishment';
 type LocationsCardProps = {
   data: Diner,
   selected?: boolean,
-  onClick: () => void
+  onClick: () => void,
+  filters: EstFilters
 }
-
-const placeholderImageUrl = 'https://thelivingstonpost.com/wp-content/themes/fox/images/placeholder.jpg'
 
 const StyledListItem = styled(ListItemButton)(({ theme }) => {
 
@@ -73,25 +73,36 @@ function InteractiveElement({name, id, tags, rating, numRatings, loading, onClic
 }
 
 
-export default function LocationsCard({data, selected, onClick}: LocationsCardProps) {
+export default function LocationsCard({data, selected, onClick, filters}: LocationsCardProps) {
 
   const { Name: name, Est_Id: id } = data
 
-  const { reviewInfo, tags, isOpen, building } = useEstablishment(id, data)
+  const { reviewInfo, tags, isOpen, building, hoursOfOperation } = useEstablishment(id, data)
   const { rating, numRatings, reviews, status } = reviewInfo
 
   const firstReview = reviews?.[0]
+
+  if(status === 'success') {
+    if(rating < filters.minStars || (filters.openNow ? !isOpen : false)) {
+      return null
+    }
+  }
 
   return (
     <Box sx={{position: 'relative'}}>
     <StyledListItem selected={selected} alignItems="flex-start" focusRipple={false} onClick={onClick}>
       <BuildingImage buildingId={building?.PropCID} style={{ width: 150, height: 150, padding: 16 }}  />
       <Box sx={{ display: 'flex', flexGrow: 1, flexDirection: 'column' }}>
-        <CardContent sx={{ flex: '1 0 auto', px: 1, py: 3 }}>
-          <Box sx={{minHeight: 100}}/> 
-          {firstReview && <Typography variant="caption" color="text.secondary" component="div">
+        <CardContent sx={{ flex: '1 0 auto', px: 1, pt: 2 }}>
+          <Box sx={{minHeight: 110}}/> 
+          <Typography sx={{fontWeight: 'bold', color: 'darkgreen', fontSize: 14}} gutterBottom>
+            {isOpen ? <>Open {hoursOfOperation && <Typography variant="caption" style={{fontSize: 14, color: 'initial'}}>until {format(hoursOfOperation[1], 'p')}</Typography>}</> : ""}
+          </Typography>
+          {firstReview ? <Typography variant="caption" color="text.secondary" component="div">
             {firstReview?.Review}
             <span style={{fontWeight: 'bold', marginLeft: '1.5ch', textTransform: 'capitalize'}}>{'–'}{firstReview?.Review_user}</span>
+          </Typography> : <Typography variant="caption" color="text.secondary" component="div">
+            No Reviews yet.
           </Typography>}
         </CardContent>
       </Box>

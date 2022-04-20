@@ -39,3 +39,8 @@ type User = {
   Password?: string,
   Verified?: 1 | 0
 }
+
+type EstFilters = {
+  minStars: number,
+  openNow: boolean
+}
