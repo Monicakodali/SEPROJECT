@@ -25,6 +25,7 @@ const Star = styled('div', {
   cursor: 'inherit',
   fontSize: size*0.8,
   boxSizing: 'border-box',
+  verticalAlign: 'middle',
   paddingBottom: size/10,
   borderRadius: size/4,
   color: '#FFF',

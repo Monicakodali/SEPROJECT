@@ -19,8 +19,16 @@ const LocationListContainer = styled('div')(({ theme }) => ({
 }));
 
 
+
+
 export default function Locations() {
   
+
+  const [filters, setFilters] = React.useState<EstFilters>({
+    minStars: 0,
+    openNow: false
+  })
+
   const [locations, setLocations] = React.useState([])
   const [loading, setLoading] = React.useState(true)
 
@@ -52,13 +60,13 @@ export default function Locations() {
     if(!map) {
       return
     }
-    map.setView([d.x, d.y], 18, {
+    map.setView([d.X_coordinate, d.Y_coordinate], 18, {
       animate: true,
       duration: 1.5
     })
     map.eachLayer((l: L.Layer) => {
       const latlng = l.getPopup()?.getLatLng()
-      if(latlng?.lat === d.x && latlng?.lng === d.y) {
+      if(latlng?.lat === d.X_coordinate && latlng?.lng === d.Y_coordinate) {
         setTimeout(() => {
           l.openPopup()
         }, 1600)
@@ -69,11 +77,11 @@ export default function Locations() {
   return (
     <div>
       <InsetDrawer anchor="left" width={FILTER_DRAWER_WIDTH}>
-        <Filters />
+        <Filters {...{filters, setFilters}}/>
       </InsetDrawer>
       <LocationListContainer>
         <ListHeader />
-        <LocationsList locations={locations} loading={loading} onLocationClick={onLocationClick} />
+        <LocationsList locations={locations} loading={loading} onLocationClick={onLocationClick} {...{filters, setFilters}} />
       </LocationListContainer>
       <InsetDrawer anchor="right" width={MAP_DRAWER_WIDTH}>
         <Map locations={locations} setMap={setMap} />  
