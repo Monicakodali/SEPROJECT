@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/Monicakodali/SEPROJECT/api/controller"
@@ -22,10 +21,17 @@ func main() {
 	if err != nil {
 		panic("failed to connect database")
 	}
+	db.Debug().Exec("PRAGMA foreign_keys = ON")
+
+	db.Debug().AutoMigrate(&models.Establishment{}, &models.UFDining{}, &models.Review{}, &models.User{}, &models.Photos{}, &models.Tags{})
+
+	var PhotoID models.Photos
+	db.Debug().Model(&models.User{}).Related(&PhotoID, "PhotoID")
+	db.Debug().Model(&models.Establishment{}).Related(&models.UFDining{}, "Diner_Id")
 
 	defer db.Close()
 
-	if !db.HasTable(&models.Establishment{}) {
+	/*if !db.HasTable(&models.Establishment{}) {
 		fmt.Println("Table doesnot exist. Creating table establishment")
 		db.Debug().AutoMigrate(&models.Establishment{})
 	}
@@ -44,6 +50,10 @@ func main() {
 		fmt.Println("Table doesnot exist. Creating table Review")
 		db.Debug().AutoMigrate(&models.Review{})
 	}
+	if !db.HasTable(&models.Photos{}) {
+		fmt.Println("Table doesnot exist. Creating table Review")
+		db.Debug().AutoMigrate(&models.Photos{})
+	}*/
 
 	//fmt.Println(db)
 
@@ -70,17 +80,27 @@ func main() {
 
 	// Login and logout routes
 	router.GET("/api/establishments", establishmentController.ListEstHandler)
-	router.GET("/api/establishments/:id", establishmentController.GetOneEstHandler)
+	router.GET("/api/establishments/:est_id", establishmentController.GetOneEstHandler)
 	router.POST("/api/establishments", establishmentController.CreateEstablishments)
+<<<<<<< HEAD
 	router.DELETE("/api/establishments", establishmentController.DeleteEstablishment)
 	router.POST("/api/users/login", userController.Login)
+=======
+	router.DELETE("/api/establishments/:est_id", establishmentController.DeleteEstablishment)
+	router.POST("/api/users/login", userController.GetUser)
+>>>>>>> 94abff89ddbc2da1891d119f9eb7ad1818643a60
 	router.GET("/api/users", userController.ListUsers)
 	router.POST("/api/users", userController.SignUp)
 	router.DELETE("/api/users/:username", userController.DeleteUser)
 	router.GET("/api/reviews", revController.ListReviews)
-	router.GET("/api/reviews/:establishmentId", revController.GetReviewsForEst)
+	router.GET("/api/reviews/est/:est_Id", revController.GetReviewsForEst)
+	router.GET("/api/reviews/user/:userId", revController.GetReviewsForUser)
 	router.POST("/api/reviews", revController.NewReview)
+<<<<<<< HEAD
 	//router.Run(":3000")
+=======
+	router.DELETE("/api/reviews/:inputParams", revController.RemoveReview)
+>>>>>>> 94abff89ddbc2da1891d119f9eb7ad1818643a60
 	router.Run()
 	//running
 }

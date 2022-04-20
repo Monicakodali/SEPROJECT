@@ -3,6 +3,7 @@ package test
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -29,30 +30,26 @@ func TestCreateReview(t *testing.T) {
 	reviewController.Init(db)
 
 	router.POST("/api/users", reviewController.NewReview)
+
 	var jsonStr = []byte(`{
-		"Email": "mmisra@ufl.edu",
-			"Name":    "m misra",
-			"Est_id":     "78",
-			"Est_name": "KFC",
-			"Review": "Amazing",
-			"Rating": 4.5,
-			"revTime": Time.Now()
-	  }`)
+		"Review_id": 88,
+    "Review_user": "cpagolu",
+    "Review": "Great Service!",
+    "Review_est": 82,
+    "Rating": 4}`)
+
 	w := httptest.NewRecorder()
-	b, _ := json.Marshal(jsonStr)
-	req, _ := http.NewRequest("POST", "/api/users", bytes.NewBuffer(b))
-	req.Header.Set("Content-Type", "application/json; charset=UTF-8")
+	//b, _ := json.Marshal(jsonStr)
+	req, _ := http.NewRequest("POST", "/api/users", bytes.NewBuffer(jsonStr))
+	req.Header.Set("Content-Type", "application/json")
 	router.ServeHTTP(w, req)
 
 	var jsonStr2 = []byte(`{
-		"Email": "cpagolu@ufl.edu",
-			"Name":    "c pagolu",
-			"Est_id":     "78",
-			"Est_name": "KFC",
-			"Review": "Amazing",
-			"Rating": 4.0,
-			"revTime": Time.Now()
-	  }`)
+		"Review_id": 82,
+		"Review_user": "cpagolu",
+		"Review": "Great Service!",
+		"Review_est": 82,
+		"Rating": 4}`)
 	w1 := httptest.NewRecorder()
 	b1, _ := json.Marshal(jsonStr2)
 	req1, _ := http.NewRequest("POST", "/api/users", bytes.NewBuffer(b1))
@@ -79,11 +76,13 @@ func TestGetReview(t *testing.T) {
 	router.GET("/api/users", userController.Login)
 
 	var jsonStr = []byte(`{"Email": "mmisra@ufl.edu"}`)
+	b, _ := json.Marshal(jsonStr)
 	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("GET", "/api/users", bytes.NewBuffer(jsonStr))
+	req, _ := http.NewRequest("GET", "/api/users", bytes.NewBuffer(b))
 	req.Header.Set("Content-Type", "application/json")
 	q := req.URL.Query()
-	q.Add("User Email", string(jsonStr))
+	q.Encode()
+	fmt.Println(q)
 	router.ServeHTTP(w, req)
 
 }

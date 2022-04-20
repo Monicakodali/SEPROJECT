@@ -6,7 +6,8 @@ import './index.css'
 
 
 type MapProps = {
-  locations: Establishment[]
+  locations: Diner[],
+  setMap: (map: L.Map) => void
 }
 
 const position: LatLngTuple = [29.6382, -82.3566]
@@ -28,7 +29,7 @@ var poiIcon = L.divIcon({
 
 
 
-export default function Map({locations}: MapProps) {
+export default function Map({locations, setMap}: MapProps) {
 
   const [userLocation, setUserLocation] = React.useState<LatLngTuple | null>(null)
 
@@ -42,6 +43,7 @@ export default function Map({locations}: MapProps) {
           watch: true,
           enableHighAccuracy: true
         })
+        setMap(map)
       }}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -49,8 +51,8 @@ export default function Map({locations}: MapProps) {
       />
       {userLocation && <Marker position={userLocation} icon={currentLocationIcon}/>}
       {
-        locations.map(({id, x, y, name}) => {
-          return (<Marker key={id} position={[y,x]} icon={poiIcon}>
+        locations.map(({Est_Id: id, X_coordinate: x, Y_coordinate: y, Name: name}) => {
+          return (<Marker key={id} position={[x,y]} icon={poiIcon}>
             <Popup closeButton={false}>
               {name}
             </Popup>

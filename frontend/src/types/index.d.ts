@@ -1,7 +1,7 @@
 
 type Establishment = {
   id: string,
-  name: string
+  Name: string
   building: string,
   room: string,
   url: string,
@@ -10,11 +10,21 @@ type Establishment = {
   type: 'restaurant' | 'museum' | 'library' | 'building'
 }
 
-type Review = {
-  Email: string,
+type Diner = {
+  Est_Id: string,
+  Type: string
   Name: string,
-  Est_id: string,
-  Est_name: string,
+  Building: string,
+  Room: string,
+  Url: string,
+  X_coordinate: number,
+  Y_coordinate: number
+}
+
+type Review = {
+  Review_Id: number,
+  Review_user: string,
+  Review_est: int,
   Review: string,
   Rating: number,
   revTime: string
@@ -23,7 +33,14 @@ type Review = {
 type User = {
   Username: string,
   Email?: string,
-  Name: string,
+  FirstName: string,
+  LastName: string,
+  Address?: string
   Password?: string,
-  Verified?: string
+  Verified?: 1 | 0
+}
+
+type EstFilters = {
+  minStars: number,
+  openNow: boolean
 }

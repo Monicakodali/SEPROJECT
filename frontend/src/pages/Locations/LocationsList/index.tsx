@@ -5,8 +5,11 @@ import LocationCard from './LocationCard'
 import { Box } from '@mui/system';
 
 type LocationsListProps = {
-  locations: Establishment[],
-  loading: boolean
+  locations: Diner[],
+  loading: boolean,
+  onLocationClick: (d: Diner) => void,
+  filters: EstFilters,
+  setFilters: (newFilters: EstFilters) => void
 }
 
 const SkeletonContainer = styled('div')(({ theme }) => {
@@ -23,7 +26,7 @@ const SkeletonContainer = styled('div')(({ theme }) => {
 })
 
 
-export default function LocationsList({locations, loading}: LocationsListProps) {
+export default function LocationsList({locations, loading, onLocationClick, filters}: LocationsListProps) {
 
   const [selected, setSelected] = React.useState<string | null>(null)
 
@@ -44,7 +47,10 @@ export default function LocationsList({locations, loading}: LocationsListProps) 
   }
 
   return <>{
-    locations.map((d) => <LocationCard selected={selected === d.id} key={d.id} data={d} onClick={() => setSelected(d.id)}/>)
+    locations.map((d) => <LocationCard selected={selected === d.Est_Id} key={d.Est_Id} data={d} onClick={() => {
+      setSelected(d.Est_Id)
+      onLocationClick(d)
+    }} {...{filters}}/>)
   }
   </>
 
