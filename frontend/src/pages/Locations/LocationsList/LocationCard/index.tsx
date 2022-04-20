@@ -84,7 +84,7 @@ export default function LocationsCard({data, selected, onClick}: LocationsCardPr
   const isOpen = React.useMemo(() => Math.random() > 0.5, [])
 
   // @TODO: populate tags from DB
-  const tags = ['Coffee & Tea', 'Fast Food', 'Example Tag 3']
+  const tags = ['Coffee & Tea', 'Fast Food', 'Convenience']
   
   return (
     <Box sx={{position: 'relative'}}>
