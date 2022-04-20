@@ -69,7 +69,7 @@ function InteractiveElement({name, id, tags, rating, numRatings}: InteractiveEle
 
 export default function LocationsCard({data, selected, onClick}: LocationsCardProps) {
 
-  const { Name: name, est_id: id } = data
+  const { Name: name, Est_Id: id } = data
 
   // @TODO: populate with actual rating
   // randomly generate rating for now

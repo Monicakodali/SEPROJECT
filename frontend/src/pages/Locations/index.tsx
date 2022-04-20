@@ -52,13 +52,13 @@ export default function Locations() {
     if(!map) {
       return
     }
-    map.setView([d.x, d.y], 18, {
+    map.setView([d.X_coordinate, d.Y_coordinate], 18, {
       animate: true,
       duration: 1.5
     })
     map.eachLayer((l: L.Layer) => {
       const latlng = l.getPopup()?.getLatLng()
-      if(latlng?.lat === d.x && latlng?.lng === d.y) {
+      if(latlng?.lat === d.X_coordinate && latlng?.lng === d.Y_coordinate) {
         setTimeout(() => {
           l.openPopup()
         }, 1600)

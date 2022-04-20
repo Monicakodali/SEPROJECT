@@ -11,13 +11,14 @@ type Establishment = {
 }
 
 type Diner = {
-  est_id: string,
+  Est_Id: string,
   Type: string
   Name: string,
   Building: string,
   Room: string,
-  x: number,
-  y: number
+  Url: string,
+  X_coordinate: number,
+  Y_coordinate: number
 }
 
 type Review = {

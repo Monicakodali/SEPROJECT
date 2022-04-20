@@ -2,7 +2,7 @@ import { Container, Box, ContainerProps, Typography, Grid, Button as MuiButton, 
 import { styled } from '@mui/material/styles';
 import axios from 'axios';
 import * as React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { Rating, Stars } from '../../components';
 import Tags from '../../components/Tags/index';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
@@ -66,7 +66,6 @@ export default function Establishment() {
   const [reviews, setReviews] = React.useState<null | Review[]>(null)
   const [toastOpen, setToastOpen] = React.useState(false)
   const [err, setErr] = React.useState(false)
-  const [reviewsErr, setReviewsErr] = React.useState(false)
 
   const navigate = useNavigate()
   const { isAuthenticated, user } = useAuth()
@@ -78,14 +77,18 @@ export default function Establishment() {
   const hours = useDiningHours(data)
   const building = useBuilding(data)
 
-  // @TODO: populate with actual rating
-  // randomly generate rating for now
-  const rating = React.useMemo(() => Math.random() * 5 + 1, [])
-  // @TODO: populate with actual num ratings
-  // randomly generate num of ratings for now
-  const numRatings = React.useMemo(() => Math.floor(Math.random() * 100) + 10, [])
+  const rating = React.useMemo(() => {
+    return (reviews || []).reduce((acc, val) => {
+      acc += val.Rating
+      return acc
+    }, 0)/(reviews?.length || 1)
+  }, [reviews])
+
+  const numRatings = reviews?.length || 0
+  
   // @TODO: populate tags from DB
-  const tags = ['Coffee & Tea', 'Fast Food', 'Example Tag 3']
+  const tags = ['Coffee & Tea', 'Fast Food', 'Convenience']
+
 
   const day = (getDay(new Date()) + 6) % 7
   
@@ -134,30 +137,22 @@ export default function Establishment() {
   }, [id])
 
   React.useEffect(() => {
-    if(data && data.est_id) {
-      axios.get(`/api/reviews/est/${data.est_id}`).then(res => {
+    if(data && data.Est_Id) {
+      axios.get(`/api/reviews/est/${data.Est_Id}`).then(res => {
         setReviews(res.data)
-      }).catch(err => {
-        setReviewsErr(true)
       })
     }
   }, [data])
 
 
-  // if(!id || err) {
-  //   return (<Navigate to="/search" />)
-  // }
+  if(!id || err) {
+    return (<Navigate to="/search" />)
+  }
 
   if(!data) {
     return <div>Loading...</div>
   }
 
-  //console.log({user, data, hoursOfOperation, isOpen, hours, building})
-
-  const { Name: name } = data
-
-
-  //@TODO: hookup this submission
   const handleSubmit = (data: { review: string, rating: number}): Promise<void> => {
     return axios.post('/api/reviews', {
       "Review_user": user?.Username,
@@ -172,7 +167,7 @@ export default function Establishment() {
 
   return (
     <Container maxWidth="lg" disableGutters>
-      <Header maxWidth="md" hoursOfOperation={hours ? hours[day].hoursOfOperation : null} {...{name, rating, numRatings, tags, isOpen}} />
+      <Header maxWidth="md" hoursOfOperation={hours ? hours[day].hoursOfOperation : null} {...{name: data?.Name, rating, numRatings, tags, isOpen}} />
       <Container maxWidth="md">
         <Grid container spacing={3}>
           <Grid item xs={8}>
@@ -195,7 +190,7 @@ export default function Establishment() {
               <Typography component="h2" variant="h5" gutterBottom>Location &amp; Hours</Typography>
               <Grid container spacing={3}>
                 <Grid item xs={5}>
-                  {data?.x && data?.y && <MiniMap height={150} coordinates={[data.x, data.y]} />}
+                  {data?.X_coordinate && data?.Y_coordinate && <MiniMap height={150} coordinates={[data.X_coordinate, data.Y_coordinate]} />}
 
 
                   <Box sx={{display: 'flex', alignItems: 'flex-start', py: 2, justifyContent: 'space-between' }}>
@@ -239,13 +234,13 @@ export default function Establishment() {
             <Box sx={{mt: 2, mb: 1}}>
               <Typography component="h2" variant="h5">Reviews</Typography>
               {reviews?.map((r, i) => {
-                return <><Box key={i} sx={{my: 2}}>
+                return <React.Fragment key={i}><Box sx={{my: 2}}>
                   <Typography variant="caption" sx={{fontWeight: 'bold'}}>@{r?.Review_user}</Typography>
                   <Stars rating={r.Rating} size={18} sx={{ mb: 1}}/>
                   <Typography>{r.Review}</Typography>
                 </Box>
                 <Divider />
-                </>
+                </React.Fragment>
               })}
               {reviews?.length === 0 && <Typography>This place has no reviews yet.</Typography>}
 
@@ -257,14 +252,14 @@ export default function Establishment() {
           <Grid item xs={4} >
             <Paper square variant="outlined" sx={{p: 1.5, mt: 3}}>
               <List dense disablePadding>
-                <ListItem divider>
-                  <ListItemText primary={<Link href={'http://www.example.com'}>http://www.example.com</Link>} />
-                </ListItem>
+                {data?.Url && <ListItem divider>
+                  <ListItemText primary={<Link href={data?.Url} sx={{wordBreak: 'break-all'}}>{data?.Url}</Link>} />
+                </ListItem>}
                 <ListItem divider>
                   <ListItemText primary={'(352) 371-2323'} />
                 </ListItem>
                 <ListItem>
-                  <ListItemText primary={<Link href={'#'}>Get Directions</Link>} secondary={'123 Main St.'}/>
+                  <ListItemText primary={<Link href={'#'}>Get Directions</Link>} secondary={building !== null ? building.PropName : null}/>
                 </ListItem>
               </List>
             </Paper>
