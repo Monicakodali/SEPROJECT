@@ -3,6 +3,7 @@ package repos
 import (
 	"fmt"
 	"strconv"
+	"time"
 
 	"github.com/Monicakodali/SEPROJECT/api/models"
 	"github.com/jinzhu/gorm"
@@ -25,13 +26,20 @@ type Result struct {
 	Building     string
 	Room         string
 	Url          string
-}
-
-type Rating struct {
-	Est_Id       int
 	AvgRating    float64
 	TotalRatings int
-	recentRating string
+	RecentRating string
+	RatingTime   time.Time
+}
+
+type RevCount struct {
+	AvgRating   float64
+	TotalRating int
+}
+
+type RecentReview struct {
+	RevTime time.Time
+	Review  string
 }
 
 func (estRepo *EstRepo) GetEstByID(eid string) (Result, error) {
@@ -46,6 +54,26 @@ func (estRepo *EstRepo) GetEstByID(eid string) (Result, error) {
 	if query.Error != nil {
 		return res, query.Error
 	}
+
+	recentRev, err := estRepo.GetRecentRevForEst(est_id)
+
+	if err != nil {
+		return res, err
+	}
+
+	ratings, err := estRepo.CountReviewsForEst(est_id)
+
+	if err != nil {
+		return res, err
+	}
+
+	fmt.Println(ratings)
+
+	res.TotalRatings = ratings.TotalRating
+	res.AvgRating = ratings.AvgRating
+	res.RecentRating = recentRev.Review
+	res.RatingTime = recentRev.RevTime
+
 	return res, nil
 }
 
@@ -57,6 +85,7 @@ func (estRepo *EstRepo) GetAllEst() ([]Result, error) {
 	if query.Error != nil {
 		return nil, query.Error
 	}
+
 	return results, nil
 }
 
@@ -81,4 +110,26 @@ func (estRepo *EstRepo) DeleteEst(eid string) error {
 		return query.Error
 	}
 	return nil
+}
+
+func (estRepo *EstRepo) CountReviewsForEst(est_id int) (RevCount, error) {
+
+	var total_revs RevCount
+	query := estRepo.db.Debug().Raw("SELECT AVG(reviews.rating) as AvgRating, COUNT(*) as totalRating FROM reviews where reviews.review_est=?", est_id).Scan(&total_revs)
+	if query.Error != nil {
+		return total_revs, query.Error
+	}
+	fmt.Println(total_revs)
+	return total_revs, nil
+}
+
+func (estRepo *EstRepo) GetRecentRevForEst(est_id int) (RecentReview, error) {
+
+	var reviewList RecentReview
+	query := estRepo.db.Debug().Raw("SELECT  reviews.rev_time, reviews.review FROM reviews where reviews.review_est=? ORDER BY reviews.rev_time DESC LIMIT 1", est_id).Scan(&reviewList)
+
+	if query.Error != nil {
+		return reviewList, query.Error
+	}
+	return reviewList, nil
 }
