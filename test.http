@@ -1,6 +1,6 @@
 
 
-//GET http://localhost:8080/api/reviews
+GET http://localhost:8080/api/reviews/user/monica
 
 DELETE http://localhost:8080/api/reviews/56,monica
 
