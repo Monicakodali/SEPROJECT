@@ -1,5 +1,6 @@
 import { Box, Button, Checkbox, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography} from '@mui/material';
 import * as React from 'react';
+import { Stars } from '../../../components';
 
 type FilterDrawerProps = {
   filters: EstFilters,
@@ -33,7 +34,7 @@ export default function FilterDrawer({filters, setFilters}: FilterDrawerProps) {
         onChange={handleStarChange}
       >
         {
-          [1,2,3,4,5].map(num => <FormControlLabel key={num} value={num} control={<Radio />} label={`${num} Stars & Above`} />)
+          [1,2,3,4,5].map(num => <FormControlLabel key={num} value={num} disableTypography control={<Radio />} label={<Stars sx={{display: 'flex', alignItems: 'center'}} rating={num} size={20}/>} />)
         }
       </RadioGroup>
       {filters.minStars > 0 && <Button onClick={e => setFilters({...filters, minStars: 0})}>Clear Rating Filter</Button>}
