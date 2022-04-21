@@ -85,6 +85,32 @@ func TestGetEstablishment(t *testing.T) {
 
 }
 
+func TestGetOneEstablishment(t *testing.T) {
+
+	//check DB connection
+	db, err := utils.GetDBInstance()
+	if err != nil {
+		t.Fatal("Couldn't connect to Database")
+	}
+	db.LogMode(true)
+	db.Debug().AutoMigrate(&models.Establishment{})
+	defer db.Close()
+
+	router := gin.New()
+
+	establishmentController := controller.EstController{}
+	establishmentController.Init(db)
+
+	router.GET("/api/establishments/:est_id", establishmentController.GetOneEstHandler)
+
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest("GET", "/api/establishments/87", nil)
+	// a := req.Header.Get("Content-Type")
+	// fmt.Println(a)
+	router.ServeHTTP(w, req)
+
+}
+
 func TestRemoveEstablishment(t *testing.T) {
 
 	//check DB connection
