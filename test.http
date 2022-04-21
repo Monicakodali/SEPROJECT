@@ -1,6 +1,21 @@
+GET http://localhost:8080/api/establishments
+
+POST http://localhost:8080/api/establishments
+Content-Type: application/json
 
 
-//GET http://localhost:8080/api/reviews
+  {
+    "est_id": 82,
+    "type": "DINING",
+    "name": "P.O.D. Market",
+    "building": "0551",
+    "room": "173",
+    "url": "",
+    "x": 29.64636443982178,
+    "y": -82.34316087863382
+  }
+
+GET http://localhost:8080/api/establishments
 
 DELETE http://localhost:8080/api/reviews/56,monica
 
@@ -58,26 +73,6 @@ Content-Type: application/json
   "revTime": "2019-07-04T13:33:03.969Z"
   }
 
-<<<<<<< HEAD
-=======
-
-
-DELETE http://localhost:8080/api/reviews
-Content-Type: application/json
-
-  {"Review_id":1}
-
-POST http://localhost:8080/api/users
-Content-Type: application/json
-
-  {
-  "Username": "carolnavya",
-	"Email": "cpagolu@ufl.edu",
-	"Name": "Carol Navya Pagolu",
-	"Password": "abc123",
-	"Verified": 0
-  }
->>>>>>> 94abff89ddbc2da1891d119f9eb7ad1818643a60
 
 POST http://localhost:8080/api/establishments
 Content-Type: application/json

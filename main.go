@@ -82,13 +82,8 @@ func main() {
 	router.GET("/api/establishments", establishmentController.ListEstHandler)
 	router.GET("/api/establishments/:est_id", establishmentController.GetOneEstHandler)
 	router.POST("/api/establishments", establishmentController.CreateEstablishments)
-<<<<<<< HEAD
 	router.DELETE("/api/establishments", establishmentController.DeleteEstablishment)
 	router.POST("/api/users/login", userController.Login)
-=======
-	router.DELETE("/api/establishments/:est_id", establishmentController.DeleteEstablishment)
-	router.POST("/api/users/login", userController.GetUser)
->>>>>>> 94abff89ddbc2da1891d119f9eb7ad1818643a60
 	router.GET("/api/users", userController.ListUsers)
 	router.POST("/api/users", userController.SignUp)
 	router.DELETE("/api/users/:username", userController.DeleteUser)
@@ -96,11 +91,7 @@ func main() {
 	router.GET("/api/reviews/est/:est_Id", revController.GetReviewsForEst)
 	router.GET("/api/reviews/user/:userId", revController.GetReviewsForUser)
 	router.POST("/api/reviews", revController.NewReview)
-<<<<<<< HEAD
 	//router.Run(":3000")
-=======
-	router.DELETE("/api/reviews/:inputParams", revController.RemoveReview)
->>>>>>> 94abff89ddbc2da1891d119f9eb7ad1818643a60
 	router.Run()
 	//running
 }

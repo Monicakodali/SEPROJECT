@@ -12,18 +12,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func TestInsertEstablishment(t *testing.T) {
+func TestSignup(t *testing.T) {
 
 	//check DB connection
 	db, err := utils.GetDBInstance()
 	if err != nil {
-		panic("failed to connect database")
+		t.Fatal("Couldn't connect to Database")
 	}
-	db.Debug().Exec("PRAGMA foreign_keys = ON")
-
-	db.Debug().AutoMigrate(&models.Establishment{}, &models.UFDining{})
-	db.Debug().Model(&models.Establishment{}).Related(&models.UFDining{}, "Diner_Id")
 	db.LogMode(true)
+	db.Debug().AutoMigrate(&models.Establishment{}, &models.UFDining{})
 	defer db.Close()
 
 	router := gin.New()
@@ -32,29 +29,31 @@ func TestInsertEstablishment(t *testing.T) {
 	establishmentController.Init(db)
 
 	router.POST("/api/establishments", establishmentController.CreateEstablishments)
+
 	var jsonStr = []byte(`{
-		"est_id": 82,
-    	"type": "DINING",
-    	"name": "P.O.D. Market",
-    	"x": 29.64636443982178,
-    	"y": -82.34316087863382,
-		"is_open": 1,
-		"image_id": ''
-		}
+		"Est_Id": 7983,
+		"Name": "P.O.D. Market",
+		"X_coordinate": 29.64636443982178,
+		"Y_coordinate": -82.34316087863382,
+		"IsOpen": 1,
+		"Building": "551",
+    "Room": "173",
+    "Url": "https://gatordining.campusdish.com/LocationsAndMenus/BeatyPODMarket"
 	  }`)
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("POST", "/api/establishments", bytes.NewBuffer(jsonStr))
 	req.Header.Set("Content-Type", "applocation/json")
 	router.ServeHTTP(w, req)
+
 	var jsonStr2 = []byte(`{
-		"est_id": 76,
-    	"type": "DINING",
-    	"name": "Boar's Head",
-    	"x": 29.648720068154468,
-    	"y": -82.34128718387561,
-		"is_open": 1,
-		"image_id": ''
-		}
+		"Est_Id": 76,
+		"Name": "Boar's Head",
+		"X_coordinate": 29.648720068154468,
+		"Y_coordinate": -82.34128718387561,
+		"IsOpen": 1,
+		"Building": "556",
+    	"Room": "104",
+    	"Url": ""
 	  }`)
 	w1 := httptest.NewRecorder()
 	req1, _ := http.NewRequest("POST", "/api/establishments", bytes.NewBuffer(jsonStr2))
@@ -62,48 +61,15 @@ func TestInsertEstablishment(t *testing.T) {
 	router.ServeHTTP(w1, req1)
 
 }
-func TestGetEstablishment(t *testing.T) {
-
-	db, err := utils.GetDBInstance()
-	if err != nil {
-		panic("failed to connect database")
-	}
-	db.Debug().Exec("PRAGMA foreign_keys = ON")
-
-	db.Debug().AutoMigrate(&models.Establishment{}, &models.UFDining{})
-	db.Debug().Model(&models.Establishment{}).Related(&models.UFDining{}, "Diner_Id")
-	db.LogMode(true)
-	defer db.Close()
-
-	router := gin.New()
-
-	establishmentController := controller.EstController{}
-	establishmentController.Init(db)
-
-	router.GET("/api/establishments", establishmentController.ListEstHandler)
-
-	//var jsonStr = []byte(`{"est_id": 76}`)
-	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("GET", "/api/establishments", nil)
-	req.Header.Set("Content-Type", "application/json")
-	//q := req.URL.Query()
-	//q.Add("Establishment ID", string(jsonStr))
-	router.ServeHTTP(w, req)
-
-}
-
-func TestRemoveEstablishment(t *testing.T) {
+func TestLogin(t *testing.T) {
 
 	//check DB connection
 	db, err := utils.GetDBInstance()
 	if err != nil {
-		panic("failed to connect database")
+		t.Fatal("Couldn't connect to Database")
 	}
-	db.Debug().Exec("PRAGMA foreign_keys = ON")
-
-	db.Debug().AutoMigrate(&models.Establishment{}, &models.UFDining{})
-	db.Debug().Model(&models.Establishment{}).Related(&models.UFDining{}, "Diner_Id")
 	db.LogMode(true)
+	db.Debug().AutoMigrate(&models.Establishment{}, &models.UFDining{})
 	defer db.Close()
 
 	router := gin.New()
@@ -111,9 +77,39 @@ func TestRemoveEstablishment(t *testing.T) {
 	establishmentController := controller.EstController{}
 	establishmentController.Init(db)
 
-	router.DELETE("/api/establishments", establishmentController.GetOneEstHandler)
+	router.GET("/api/establishments", establishmentController.GetOneEstHandler)
 
 	var jsonStr = []byte(`{"est_id": 76}`)
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest("GET", "/api/establishments", bytes.NewBuffer(jsonStr))
+	req.Header.Set("Content-Type", "application/json")
+	q := req.URL.Query()
+	q.Add("Establishment ID", string(jsonStr))
+	router.ServeHTTP(w, req)
+
+}
+
+func TestDeleteUser(t *testing.T) {
+
+	//check DB connection
+	db, err := utils.GetDBInstance()
+	if err != nil {
+		t.Fatal("Couldn't connect to Database")
+	}
+	db.LogMode(true)
+	db.Debug().AutoMigrate(&models.Establishment{}, &models.UFDining{})
+	defer db.Close()
+
+	router := gin.New()
+
+	establishmentController := controller.EstController{}
+	establishmentController.Init(db)
+
+	router.POST("/api/establishments", establishmentController.GetOneEstHandler)
+	router.GET("/api/establishments", establishmentController.GetOneEstHandler)
+	router.DELETE("/api/establishments", establishmentController.GetOneEstHandler)
+
+	var jsonStr = []byte(`{}`)
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("DELETE", "/api/establishments", bytes.NewBuffer(jsonStr))
 	req.Header.Set("Content-Type", "application/json")
