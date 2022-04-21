@@ -15,7 +15,11 @@ Content-Type: application/json
     "y": -82.34316087863382
   }
 
+<<<<<<< HEAD
 GET http://localhost:8080/api/establishments
+=======
+GET http://localhost:8080/api/reviews/user/monica
+>>>>>>> 2fd7dd1460ec924a0e23f1e87185b2e7efcc3fa6
 
 DELETE http://localhost:8080/api/reviews/56,monica
 

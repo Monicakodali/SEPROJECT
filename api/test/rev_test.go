@@ -3,7 +3,6 @@ package test
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -32,10 +31,9 @@ func TestCreateReview(t *testing.T) {
 	router.POST("/api/users", reviewController.NewReview)
 
 	var jsonStr = []byte(`{
-		"Review_id": 88,
     "Review_user": "cpagolu",
     "Review": "Great Service!",
-    "Review_est": 82,
+    "Review_est": 6,
     "Rating": 4}`)
 
 	w := httptest.NewRecorder()
@@ -45,10 +43,9 @@ func TestCreateReview(t *testing.T) {
 	router.ServeHTTP(w, req)
 
 	var jsonStr2 = []byte(`{
-		"Review_id": 82,
 		"Review_user": "cpagolu",
 		"Review": "Great Service!",
-		"Review_est": 82,
+		"Review_est": 87,
 		"Rating": 4}`)
 	w1 := httptest.NewRecorder()
 	b1, _ := json.Marshal(jsonStr2)
@@ -57,7 +54,7 @@ func TestCreateReview(t *testing.T) {
 	router.ServeHTTP(w1, req1)
 }
 
-func TestGetReview(t *testing.T) {
+func TestGetReviewForEst(t *testing.T) {
 
 	//check DB connection
 	db, err := utils.GetDBInstance()
@@ -70,21 +67,35 @@ func TestGetReview(t *testing.T) {
 
 	router := gin.New()
 
-	userController := controller.UserController{}
-	userController.Init(db)
+	revController := controller.ReviewController{}
+	revController.Init(db)
 
 	router.GET("/api/users", userController.Login)
 
-	var jsonStr = []byte(`{"Email": "mmisra@ufl.edu"}`)
-	b, _ := json.Marshal(jsonStr)
+func TestGetReviewForUser(t *testing.T) {
+
+	//check DB connection
+	db, err := utils.GetDBInstance()
+	if err != nil {
+		t.Fatal("Couldn't connect to Database")
+	}
+	db.LogMode(true)
+	db.Debug().AutoMigrate(&models.User{})
+	defer db.Close()
+
+	router := gin.New()
+
+	revController := controller.ReviewController{}
+	revController.Init(db)
+
+	router.GET("/api/reviews/user/:userId", revController.GetReviewsForUser)
 	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("GET", "/api/users", bytes.NewBuffer(b))
-	req.Header.Set("Content-Type", "application/json")
-	q := req.URL.Query()
-	q.Encode()
-	fmt.Println(q)
+	req, _ := http.NewRequest("GET", "/api/reviews/user/monica", nil)
 	router.ServeHTTP(w, req)
 
+	w1 := httptest.NewRecorder()
+	req1, _ := http.NewRequest("GET", "/api/reviews/user/gggggf", nil)
+	router.ServeHTTP(w1, req1)
 }
 
 func TestRemoveReview(t *testing.T) {
@@ -107,10 +118,9 @@ func TestRemoveReview(t *testing.T) {
 	router.GET("/api/establishments", userController.Login)
 	router.DELETE("/api/establishments", userController.DeleteUser)
 
-	var jsonStr = []byte(`{}`)
+	router.DELETE("/api/reviews/:inputParams", revController.RemoveReview)
 	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("DELETE", "/api/users", bytes.NewBuffer(jsonStr))
-	req.Header.Set("Content-Type", "application/json")
+	req, _ := http.NewRequest("DELETE", "/api/reviews/4,cpagolu", nil)
 	router.ServeHTTP(w, req)
 
 }

@@ -17,10 +17,12 @@ func TestInsertEstablishment(t *testing.T) {
 	//check DB connection
 	db, err := utils.GetDBInstance()
 	if err != nil {
-		t.Fatal("Couldn't connect to Database")
+		panic("failed to connect database")
 	}
 	db.LogMode(true)
-	db.Debug().AutoMigrate(&models.Establishment{})
+	db.Debug().Exec("PRAGMA foreign_keys = ON")
+
+	db.Debug().AutoMigrate(&models.Establishment{}, &models.UFDining{}, &models.Review{}, &models.User{}, &models.Photos{}, &models.Tags{})
 	defer db.Close()
 
 	router := gin.New()
@@ -31,7 +33,7 @@ func TestInsertEstablishment(t *testing.T) {
 	router.POST("/api/establishments", establishmentController.CreateEstablishments)
 
 	var jsonStr = []byte(`{
-		"est_id": "7984444",
+		"est_id": 4,
 		"Type": "DINING",
 		"Name": "Abras",
 		"x": 29.655182375855586,
@@ -44,7 +46,7 @@ func TestInsertEstablishment(t *testing.T) {
 	router.ServeHTTP(w, req)
 
 	var jsonStr2 = []byte(`{
-		"est_id": "82",
+		"est_id": 82,
 		"Type": "DINING",
 		"Name": "P.O.D. Market",
 		"x": 29.64636443982178,
@@ -73,7 +75,7 @@ func TestGetEstablishment(t *testing.T) {
 	establishmentController := controller.EstController{}
 	establishmentController.Init(db)
 
-	router.GET("/api/establishments/", establishmentController.ListEstHandler)
+	router.GET("/api/establishments", establishmentController.ListEstHandler)
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/api/establishments", nil)
@@ -99,13 +101,10 @@ func TestRemoveEstablishment(t *testing.T) {
 	establishmentController := controller.EstController{}
 	establishmentController.Init(db)
 
-	//router.POST("/api/establishments", establishmentController.CreateEstablishments)
-	//router.GET("/api/establishments", establishmentController.ListEstHandler)
-	router.DELETE("/api/establishments", establishmentController.DeleteEstablishment)
+	router.DELETE("/api/establishments/:est_id", establishmentController.DeleteEstablishment)
 
-	var jsonStr = []byte(`{"est_id":798444}`)
 	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("DELETE", "/api/establishments", bytes.NewBuffer(jsonStr))
+	req, _ := http.NewRequest("DELETE", "/api/establishments/4", nil)
 	req.Header.Set("Content-Type", "application/json")
 	router.ServeHTTP(w, req)
 
